@@ -3,11 +3,11 @@
         <title>login form</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
-         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     </head>
 
     <body>
-<!--        //////////////////////////////////////////NAVIGATION BAR//////////////////////////////////////////////////////////////////////////-->
+        <!--        //////////////////////////////////////////NAVIGATION BAR//////////////////////////////////////////////////////////////////////////-->
         <div class="container-fluid bg-dark ">
             <nav class="navbar navbar-expand-lg bg-dark">
                 <a class="navbar-brand" href="index.php">
@@ -33,11 +33,11 @@
                 <a href="login.php"> <button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit">  Login  </button></a>
             </nav>
         </div>
-        
-<!--        ////////////////////////////////////////////////////////////////////////LOGIN SECTION///////////////////////////////////////////////////////////////////////-->
+
+        <!--        ////////////////////////////////////////////////////////////////////////LOGIN SECTION///////////////////////////////////////////////////////////////////////-->
         <div class="login-box mx-auto mt-5" >
             <div class="card card-outline card-primary">
-                <div class="card-header"> <a href="../index2.html" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
+                <div class="card-header bg-info"> <a href="../index2.html" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
                         <h1 class="mb-0"> <b>Everest</b>Fitness
                         </h1>
                     </a> </div>
@@ -45,8 +45,8 @@
                     <p class="login-box-msg">Sign in to start your session</p>
                     <form action="../index3.html" method="post">
                         <div class="input-group mb-1">
-                            <div class="form-floating"> <input id="loginEmail" type="email" class="form-control" value="" placeholder=""> <label for="loginEmail">Email</label> </div>
-                            <div class="input-group-text"> <span class="bi bi-envelope"></span> </div>
+                            <div class="form-floating"> <input id="loginEmail" type="email" class="form-control" value="" placeholder=""> <label for="loginEmail">UserName</label> </div>
+                            <div class="input-group-text"> <span class="bi bi-person-fill"></span> </div>
                         </div>
                         <div class="input-group mb-1">
                             <div class="form-floating"> <input id="loginPassword" type="password" class="form-control" placeholder=""> <label for="loginPassword">Password</label> </div>
