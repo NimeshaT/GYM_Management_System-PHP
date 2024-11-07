@@ -2,10 +2,11 @@
     <head>
         <title>Register Page</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
+
     </head>
-    
+
     <body>
-         <!--        //////////////////////////////////////NAVIGATION BAR///////////////////////////////////////////////////////////////////////////////-->
+        <!--        //////////////////////////////////////NAVIGATION BAR///////////////////////////////////////////////////////////////////////////////-->
         <div class="container-fluid bg-dark">
             <nav class="navbar navbar-expand-lg bg-dark">
                 <a class="navbar-brand" href="index.php">
@@ -31,8 +32,8 @@
                 <a href="login.php"> <button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit">  Login  </button></a>
             </nav>
         </div>
-         
-         <!--        =================================Member/Student Registration Form Section=======================================-->
+
+        <!--        =================================Member/Student Registration Form Section=======================================-->
         <div class="container mt-3 mb-3">
             <div class="card mx-auto" style="width: 60%">
                 <?php
@@ -323,7 +324,25 @@
                 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>?current=<?php echo $_GET["current"] ?>" method="post" enctype="multipart/form-data">
                     <div class="card-body">
                         <fieldset class="border border-2 p-2">
-                            <legend  class="float-none w-auto p-2 mb-0"><h5>Customer Information</h5></legend>
+                            <legend  class="float-none w-auto p-2 mb-0"><h5>Membership Type</h5></legend>
+
+                            <div class="mb-3 ms-2 mt-0">
+                                <div class="row">
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Dropdown button
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="border border-2 p-2">
+                            <legend  class="float-none w-auto p-2 mb-0"><h5>Personal Information</h5></legend>
                             <div class="mb-3 ms-2 mt-0">
                                 <div class="row">
                                     <div class="col">
@@ -365,36 +384,36 @@
                                     </div>
                                 </div>
                             </div>
-<!--                            <div class="mb-3 ms-2 mt-0">
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="City" class="form-label">City</label>
-                                        <input type="text" class="form-control" id="City" name="City" placeholder="Enter City" value="<?php echo @$City; ?>">
-                                        <div class="text-danger"><?php echo @$message['City']; ?></div>
-                                    </div>
-                                    <div class="col">
-                                        <?php
-                                        $db = dbConn();
-                                        $sql = "SELECT * FROM tbl_districts";
-                                        $result = $db->query($sql);
-                                        ?>
-                                        <label for="DistrictId" class="form-label">District</label>
-                                        <select class="form-control form-select" name="DistrictId" id="DistrictId">
-                                            <option value="">--</option>
-                                            <?php
-                                            if ($result->num_rows > 0) {
-                                                while ($row = $result->fetch_assoc()) {
-                                                    ?>
-                                                    <option value="<?php echo $row['DistrictId']; ?>" <?php if (@$DistrictId == $row['DistrictId']) { ?> selected <?php } ?>><?php echo $row['DistrictName']; ?></option>
-                                                    <?php
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                        <div class="text-danger"><?php echo @$message['DistrictId']; ?></div>
-                                    </div>
-                                </div>
-                            </div>-->
+                            <!--                            <div class="mb-3 ms-2 mt-0">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <label for="City" class="form-label">City</label>
+                                                                    <input type="text" class="form-control" id="City" name="City" placeholder="Enter City" value="<?php echo @$City; ?>">
+                                                                    <div class="text-danger"><?php echo @$message['City']; ?></div>
+                                                                </div>
+                                                                <div class="col">
+                            <?php
+                            $db = dbConn();
+                            $sql = "SELECT * FROM tbl_districts";
+                            $result = $db->query($sql);
+                            ?>
+                                                                    <label for="DistrictId" class="form-label">District</label>
+                                                                    <select class="form-control form-select" name="DistrictId" id="DistrictId">
+                                                                        <option value="">--</option>
+                            <?php
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                                                                        <option value="<?php echo $row['DistrictId']; ?>" <?php if (@$DistrictId == $row['DistrictId']) { ?> selected <?php } ?>><?php echo $row['DistrictName']; ?></option>
+                                    <?php
+                                }
+                            }
+                            ?>
+                                                                    </select>
+                                                                    <div class="text-danger"><?php echo @$message['DistrictId']; ?></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
                             <div class="mb-3 ms-2">
                                 <label class="NicNumber">NicNumber</label>
                                 <input type="text" class="form-control" id="NicNumber" name="NicNumber" placeholder="Enter NIC Number" value="<?php echo @$NicNumber; ?>">
@@ -426,7 +445,7 @@
                             </div>
                         </fieldset>
                         <fieldset class="border border-2 p-2">
-                            <legend  class="float-none w-auto p-2 mb-0"><h5>Customer Account Information</h5></legend>
+                            <legend  class="float-none w-auto p-2 mb-0"><h5>Account Information</h5></legend>
                             <div class="mb-3 ms-2">
                                 <label class="UserName">UserName</label>
                                 <input type="text" class="form-control" id="UserName" name="UserName" placeholder="Enter User Name" value="<?php echo @$UserName; ?>">
@@ -455,7 +474,7 @@
                 </form>
             </div>
         </div>
-         <!--       =======================Footer Section========================-->
+        <!--       =======================Footer Section========================-->
         <footer class="p-0 m-0"> 
             <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">Copyright 1990-2020 by Data. All Rights Reserved.</p>
         </footer>
