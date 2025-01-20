@@ -70,6 +70,11 @@
                 </div> <!-- /.login-card-body -->
             </div>
         </div> 
+        
+<!--        ////////////////////////////Footer////////////////////////////-->
+        <footer class="p-0 m-0 fixed-bottom"> 
+            <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">Copyright 1990-2020 by Data. All Rights Reserved.</p>
+        </footer>
 
         <script src="js/bootstrap.bundle.min.js "></script>
         <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
