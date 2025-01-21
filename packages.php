@@ -34,7 +34,7 @@
                             <a class="nav-link text-info" href="packages.php">Packages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="#">Our Instructors</a>
+                            <a class="nav-link text-info" href="instructor.php">Our Instructors</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-info" href="#">My Profile</a>
@@ -55,7 +55,7 @@
                         <img src="images/package1.png" class="card-img-top" alt="...">
                         <div class="card-body text-center">
                             <h5 class="card-title">One-to-One Training</h5>
-                            <a href="#" class="btn btn-primary btn-sm">View more</a>
+                            <a href="packages2.php" class="btn btn-primary btn-sm">View more</a>
                         </div>
                     </div>
                 </div>

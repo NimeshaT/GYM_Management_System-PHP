@@ -33,7 +33,7 @@
                             <a class="nav-link text-info" href="packages.php">Packages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="#">Our Instructors</a>
+                            <a class="nav-link text-info" href="instructor.php">Our Instructors</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-info" href="#">My Profile</a>

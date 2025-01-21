@@ -48,63 +48,35 @@
 
         <!--        ///////////////////////////////////////////////////workout section///////////////////////////////////////////////////////////////////////-->
         <div class="container mb-5">
-            <h1 class="text-center">Workouts</h1>
-            <h4 class="text-center">Unlock your potential with guided workouts tailored for all fitness levels.</h4>
-            <div class="row mt-5">
-                <div class="col-3 mb-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/benchPress.jpg" class="card-img-top" alt="...">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Bench Press</h5>
-                            <a href="workout3.php" class="btn btn-primary btn-sm">View Details</a>
+            <h1 class="mt-5 text-center">Our Instructors</h1>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="images/instructor.jpeg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Instructor Name</h5>
+                            <p class="card-text">Expertise in areas</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-3 mb-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/benchPress.jpg" class="card-img-top" alt="...">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Squat</h5>
-                            <a href="#" class="btn btn-primary btn-sm">View Details</a>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="images/instructor.jpeg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Instructor Name</h5>
+                            <p class="card-text">Expertise in areas</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-3 mb-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/benchPress.jpg" class="card-img-top" alt="...">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Push-Ups</h5>
-                            <a href="#" class="btn btn-primary btn-sm">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3 mb-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/benchPress.jpg" class="card-img-top" alt="...">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Bench Press</h5>
-                            <a href="#" class="btn btn-primary btn-sm">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3 mb-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/benchPress.jpg" class="card-img-top" alt="...">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Bench Press</h5>
-                            <a href="#" class="btn btn-primary btn-sm">View Details</a>
-                        </div>
-                    </div>
-                </div>
+                
                
-
             </div>
         </div>
 
 
         <!--        ///////////////////////////////////////////////////FOOTER///////////////////////////////////////////////////////////////////////-->
 
-        <footer class="p-0 m-0 "> 
+        <footer class="p-0 m-0 fixed-bottom"> 
             <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">Copyright 1990-2020 by Data. All Rights Reserved.</p>
         </footer>
 

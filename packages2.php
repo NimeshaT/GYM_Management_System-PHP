@@ -48,63 +48,35 @@
 
         <!--        ///////////////////////////////////////////////////workout section///////////////////////////////////////////////////////////////////////-->
         <div class="container mb-5">
-            <h1 class="text-center">Workouts</h1>
-            <h4 class="text-center">Unlock your potential with guided workouts tailored for all fitness levels.</h4>
-            <div class="row mt-5">
+            <h1 class="mt-5">Packages</h1>
+            <div class="row mt-3">
                 <div class="col-3 mb-3">
                     <div class="card" style="width: 16rem;">
-                        <img src="images/benchPress.jpg" class="card-img-top" alt="...">
+                        <img src="images/package1.png" class="card-img-top" alt="...">
                         <div class="card-body text-center">
-                            <h5 class="card-title">Bench Press</h5>
-                            <a href="workout3.php" class="btn btn-primary btn-sm">View Details</a>
+<!--                            <h5 class="card-title">Bench Press</h5>-->
+                            <a href="#" class="btn btn-primary btn-sm">Get Package</a>
                         </div>
                     </div>
-                </div>
-                <div class="col-3 mb-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/benchPress.jpg" class="card-img-top" alt="...">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Squat</h5>
-                            <a href="#" class="btn btn-primary btn-sm">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3 mb-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/benchPress.jpg" class="card-img-top" alt="...">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Push-Ups</h5>
-                            <a href="#" class="btn btn-primary btn-sm">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3 mb-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/benchPress.jpg" class="card-img-top" alt="...">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Bench Press</h5>
-                            <a href="#" class="btn btn-primary btn-sm">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3 mb-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/benchPress.jpg" class="card-img-top" alt="...">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Bench Press</h5>
-                            <a href="#" class="btn btn-primary btn-sm">View Details</a>
-                        </div>
-                    </div>
-                </div>
-               
 
+                </div>
+                <div class="col-9">
+                    <ul class="list-group">
+                        <li class="list-group-item active" aria-current="true">Package Name</li>
+                        <li class="list-group-item">Description</li>
+                        <li class="list-group-item">Duration</li>
+                        <li class="list-group-item">Features</li>
+                        <li class="list-group-item">Price</li>
+                        <li class="list-group-item">Discount</li>
+                    </ul>
+                </div>
             </div>
         </div>
 
 
         <!--        ///////////////////////////////////////////////////FOOTER///////////////////////////////////////////////////////////////////////-->
 
-        <footer class="p-0 m-0 "> 
+        <footer class="p-0 m-0 fixed-bottom"> 
             <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">Copyright 1990-2020 by Data. All Rights Reserved.</p>
         </footer>
 
