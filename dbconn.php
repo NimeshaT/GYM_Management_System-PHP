@@ -13,3 +13,9 @@ if($conn->connect_error){
     echo 'Database Connected';
 }
 
+//$sql="SELECT * FROM tbl_registers";
+//$result=$conn->query($sql);
+//while ($row=$result->fetch_assoc()){
+//    echo $row['FirstName'];
+//}
+
