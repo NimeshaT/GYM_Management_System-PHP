@@ -25,30 +25,60 @@
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="../../index3.html" method="post">
-        <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Username">
+      <?php
+      include 'function.php';
+      extract($_POST);
+      
+      if($_SERVER['REQUEST_METHOD']=='POST' && @$action=='login'){
+          $UserName= dataClean($UserName);
+          
+          $message=array();
+          
+          if(empty($UserName)){
+              $message['UserName']="User Name should not be empty..!";
+          }
+          if(empty($Password)){
+              $message['Password']="Password should not be empty..!";
+          }
+          
+          if(empty($message)){
+              $db= dbConn();
+              $sql="SELECT * FROM tbl_instructors WHERE userName='$UserName' and password='".sha1($Password)."'";
+              $result=$db->query($sql);
+              if($result->num_rows==1){
+                  header("Location:index.php");
+              } else {
+                  $message['Password']="Username or Password invalid..";
+              }
+          }
+      }
+      ?>
+      <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
+        <div class="input-group mt-3">
+            <input type="text" class="form-control" placeholder="Username" id="UserName" name="UserName">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
             </div>
           </div>
         </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <div class="text-danger"><?php echo @$message['UserName'];?></div>
+        <div class="input-group mt-3 mb-2">
+            <input type="password" class="form-control" placeholder="Password" id="Password" name="Password">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
             </div>
           </div>
         </div>
+          <div class="text-danger"><?php echo @$message['Password'];?></div>
         <div class="row">
           <div class="col-8">
             
           </div>
           <!-- /.col -->
           <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+              <button type="submit" class="btn btn-primary btn-block" name="action" value="login">Sign In</button>
           </div>
           <!-- /.col -->
         </div>
