@@ -1,3 +1,9 @@
+<?php
+
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,7 +52,17 @@
               $sql="SELECT * FROM tbl_instructors WHERE userName='$UserName' and password='".sha1($Password)."'";
               $result=$db->query($sql);
               if($result->num_rows==1){
-                  header("Location:index.php");
+                  
+                  //create session variables
+                  
+                  while ($row=$result->fetch_assoc()){
+                      $_SESSION['INSTRUCTORID']=$row['instructorId'];
+                      $_SESSION['FIRSTNAME']=$row['firstName'];
+                      $_SESSION['LASTNAME']=$row['lastName'];
+                  }
+                  
+                 header("Location:index.php");
+                 
               } else {
                   $message['Password']="Username or Password invalid..";
               }
