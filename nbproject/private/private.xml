@@ -3,11 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/XAMPP/htdocs/gms/system/header.php</file>
-            <file>file:/D:/XAMPP/htdocs/gms/system/footer.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/classes.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/nav.php</file>
-            <file>file:/D:/XAMPP/htdocs/gms/system/config.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/content.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/index.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/workout2.php</file>
@@ -21,7 +18,6 @@
             <file>file:/D:/XAMPP/htdocs/gms/system/index.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/login.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/instructor.php</file>
-            <file>file:/D:/XAMPP/htdocs/gms/system/function.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/workout3.php</file>
         </group>
     </open-files>
