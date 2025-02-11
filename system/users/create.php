@@ -24,7 +24,7 @@ include '../nav.php';
                 <div class="col">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Quick Example</h3>
+                            <h3 class="card-title">Create User Account</h3>
                         </div>
                         <?php
                         extract($_POST);
@@ -42,6 +42,9 @@ include '../nav.php';
                             //validation start
                             if (empty($firstName)) {
                                 $message['firstName'] = "FirstName should not be empty..!";
+                            }
+                            if (empty($lastName)) {
+                                $message['lastName'] = "LastName should not be empty..!";
                             }
                             //validation end
                             //Insert Record
@@ -68,45 +71,74 @@ include '../nav.php';
                                 $db->query($sql);
                             }
                         }
+                        
+//                        ---------------------Edit account-----------------------------
+                        if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'edit_account') {
+                            
+                            //echo 'edit';
+                            //echo $instructorId;
+                            $db= dbConn();
+                            $sql="SELECT * FROM tbl_instructors WHERE instructorId='$instructorId'";
+                            $result=$db->query($sql);
+                            
+                            $row=$result->fetch_assoc();
+                            
+                            $title=$row['title'];
+                            $firstName=$row['firstName'];
+                            $lastName=$row['lastName'];
+                            $address=$row['address'];
+                            $email=$row['email'];
+                            $telNo=$row['telNo'];
+                            $userName=$row['userName'];
+                            $password=$row['password'];
+                            $instructorId=$row['instructorId'];
+                            
+                        }
                         ?>
                         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                             <div class="card-body">
                                 <div class="form-group">
+                                    <?php
+                                    //$title='';
+                                    ?>
                                     <label for="title">Select Title</label>
                                     <select class="form-control" name="title" id="title">
                                         <option value="">--</option>
-                                        <option value="Mr.">Mr.</option>
-                                        <option value="Miss.">Miss.</option>
+                                        <option value="Mr." <?php if(@$title=='Mr.'){?> selected <?php }?>>Mr.</option>
+                                        <option value="Miss."<?php if(@$title=='Miss.'){?> selected <?php }?>>Miss.</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="firstName">First Name</label>
-                                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter First Name">
+                                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter First Name" value="<?php echo @$firstName ?>">
                                 </div>
                                 <div class="text-danger"><?php echo @$message['firstName']; ?></div>
+                                
                                 <div class="form-group">
                                     <label for="lastName">Last Name</label>
-                                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter Last Name">
+                                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter Last Name" value="<?php echo @$lastName ?>">
                                 </div>
+                                <div class="text-danger"><?php echo @$message['lastName']; ?></div>
+                                
                                 <div class="form-group">
                                     <label for="address">Address</label>
-                                    <textarea class="form-control" id="address" name="address" placeholder="Enter Address"></textarea>
+                                    <textarea class="form-control" id="address" name="address" placeholder="Enter Address"><?php echo @$address ?></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="emal">Email address</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                                    <label for="email">Email address</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" value="<?php echo @$email ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="telNo">Telephone No:</label>
-                                    <input type="text" class="form-control" id="telNo" name="telNo" placeholder="Enter Telephone No.">
+                                    <input type="text" class="form-control" id="telNo" name="telNo" placeholder="Enter Telephone No." value="<?php echo @$telNo ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="userName">UserName</label>
-                                    <input type="text" class="form-control" id="userName" name="userName" placeholder="Enter userName">
+                                    <input type="text" class="form-control" id="userName" name="userName" placeholder="Enter userName" value="<?php echo @$userName ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="<?php echo @$password ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputFile">File input</label>
@@ -129,7 +161,7 @@ include '../nav.php';
                 <div class="col">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">DataTable with minimal features & hover style</h3>
+                            <h3 class="card-title">Table of User Details</h3>
                         </div>
                         <div class="card-body">
                             <?php
@@ -140,6 +172,7 @@ include '../nav.php';
                             <table id="user_list" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Profile Image</th>
@@ -147,18 +180,24 @@ include '../nav.php';
                                 </thead>
                                 <tbody>
                                     <?php
-                    if($result->num_rows>0){
-                        while ($row=$result->fetch_assoc()){
-                            ?>
-                                    <tr>
-                                        <td><?php echo $row['firstName'];?> <?php echo $row['lastName'];?></td>
-                                        <td><?php echo $row['email'];?></td>
-                                        <td><?php echo $row['profilePhoto'];?></td>
-                                    </tr>
-                                        <?php  
-                        }
-                    }
-                    ?>
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            ?>
+                                            <tr>
+                                                <td>
+                                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                                                        <input type="hidden" name="instructorId" value="<?php echo $row['instructorId']; ?>">
+                                                        <button type="submit" name="action" value="edit_account">Edit</button>
+                                                    </form>
+                                                </td>
+                                                <td><?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></td>
+                                                <td><?php echo $row['email']; ?></td>
+                                                <td><?php echo $row['profilePhoto']; ?></td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>

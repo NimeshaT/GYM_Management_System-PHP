@@ -49,7 +49,7 @@ session_start();
           
           if(empty($message)){
               $db= dbConn();
-              $sql="SELECT * FROM tbl_instructors WHERE userName='$UserName' and password='".sha1($Password)."'";
+              $sql="SELECT * FROM tbl_instructors WHERE userName='$UserName' and password='".sha1($Password)."' and status='1'";
               $result=$db->query($sql);
               if($result->num_rows==1){
                   
