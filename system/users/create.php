@@ -23,11 +23,19 @@ include '../nav.php';
             <div class="row">
                 <div class="col">
                     <div class="card card-primary">
-                        <div class="card-header">
+<!--                        <div class="card-header">
                             <h3 class="card-title">Create User Account</h3>
-                        </div>
+                        </div>-->
                         <?php
                         extract($_POST);
+                        
+                        if(empty($action)){
+                            $action='create_account';
+                            $form_title='Create';
+                            $submit='Create';
+                            $btn='primary';
+                        }
+                        
                         if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'create_account') {
 
                             $firstName = dataClean($firstName);
@@ -70,6 +78,11 @@ include '../nav.php';
 
                                 $db->query($sql);
                             }
+                            
+                            $action='create_account';
+                            $form_title='Create';
+                            $submit='Create';
+                            $btn='primary';
                         }
                         
 //                        ---------------------Edit account-----------------------------
@@ -93,8 +106,32 @@ include '../nav.php';
                             $password=$row['password'];
                             $instructorId=$row['instructorId'];
                             
+                            $action='update_account';
+                            $form_title='Update';
+                            $submit='Update';
+                            $btn='success';
+                        }
+                        
+                        //                        ---------------------Update account-----------------------------
+                        if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'update_account') {
+                            
+                            $db= dbConn();
+                            $sql="UPDATE tbl_instructors SET "
+                                    . "title='$title',"
+                                    . "firstName='$firstName',"
+                                    . "lastName='$lastName',"
+                                    . "address='$address',"
+                                    . "email='$email',"
+                                    . "telNo='$telNo' "
+                                    . "WHERE instructorId='$instructorId'";
+                            $db->query($sql);
+                            $submit='Update';
+                            $btn='success';
                         }
                         ?>
+                        <div class="card-header">
+                            <h3 class="card-title"><?php echo @$form_title; ?> User Account</h3>
+                        </div>
                         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                             <div class="card-body">
                                 <div class="form-group">
@@ -153,7 +190,9 @@ include '../nav.php';
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary" name="action" value="create_account">Submit</button>
+                                <input type="hidden" name="instructorId" value="<?php echo @$instructorId ?>">
+                                <button type="submit" class="btn btn-<?php echo @$btn; ?>" name="action" value="<?php echo @$action; ?>"><?php echo @$submit; ?></button>
+                                <button type="submit" class="btn btn-danger" name="action" value="cancel">Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -172,10 +211,11 @@ include '../nav.php';
                             <table id="user_list" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th></th>
+                                        
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Profile Image</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -184,15 +224,16 @@ include '../nav.php';
                                         while ($row = $result->fetch_assoc()) {
                                             ?>
                                             <tr>
-                                                <td>
-                                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-                                                        <input type="hidden" name="instructorId" value="<?php echo $row['instructorId']; ?>">
-                                                        <button type="submit" name="action" value="edit_account">Edit</button>
-                                                    </form>
-                                                </td>
+                                                
                                                 <td><?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></td>
                                                 <td><?php echo $row['email']; ?></td>
                                                 <td><?php echo $row['profilePhoto']; ?></td>
+                                                <td>
+                                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                                                        <input type="hidden" name="instructorId" value="<?php echo $row['instructorId']; ?>">
+                                                        <button type="submit" class="btn btn-warning" name="action" value="edit_account">Edit</button>
+                                                    </form>
+                                                </td>
                                             </tr>
                                             <?php
                                         }
