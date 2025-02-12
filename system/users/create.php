@@ -21,21 +21,24 @@ include '../nav.php';
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col">
+                <div class="col-5">
                     <div class="card card-primary">
-<!--                        <div class="card-header">
-                            <h3 class="card-title">Create User Account</h3>
-                        </div>-->
+                        <!--                        <div class="card-header">
+                                                    <h3 class="card-title">Create User Account</h3>
+                                                </div>-->
                         <?php
                         extract($_POST);
-                        
-                        if(empty($action)){
-                            $action='create_account';
-                            $form_title='Create';
-                            $submit='Create';
-                            $btn='primary';
+
+                        if (empty($action)) {
+                            $action = 'create_account';
+                            $form_title = 'Create';
+                            $submit = 'Create';
+                            $btn = 'primary';
                         }
-                        
+
+                        $submit = 'Save';
+                        $btn = 'primary';
+
                         if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'create_account') {
 
                             $firstName = dataClean($firstName);
@@ -78,45 +81,45 @@ include '../nav.php';
 
                                 $db->query($sql);
                             }
-                            
-                            $action='create_account';
-                            $form_title='Create';
-                            $submit='Create';
-                            $btn='primary';
+
+                            $action = 'create_account';
+                            $form_title = 'Create';
+                            $submit = 'Create';
+                            $btn = 'primary';
                         }
-                        
+
 //                        ---------------------Edit account-----------------------------
                         if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'edit_account') {
-                            
+
                             //echo 'edit';
                             //echo $instructorId;
-                            $db= dbConn();
-                            $sql="SELECT * FROM tbl_instructors WHERE instructorId='$instructorId'";
-                            $result=$db->query($sql);
-                            
-                            $row=$result->fetch_assoc();
-                            
-                            $title=$row['title'];
-                            $firstName=$row['firstName'];
-                            $lastName=$row['lastName'];
-                            $address=$row['address'];
-                            $email=$row['email'];
-                            $telNo=$row['telNo'];
-                            $userName=$row['userName'];
-                            $password=$row['password'];
-                            $instructorId=$row['instructorId'];
-                            
-                            $action='update_account';
-                            $form_title='Update';
-                            $submit='Update';
-                            $btn='success';
+                            $db = dbConn();
+                            $sql = "SELECT * FROM tbl_instructors WHERE instructorId='$instructorId'";
+                            $result = $db->query($sql);
+
+                            $row = $result->fetch_assoc();
+
+                            $title = $row['title'];
+                            $firstName = $row['firstName'];
+                            $lastName = $row['lastName'];
+                            $address = $row['address'];
+                            $email = $row['email'];
+                            $telNo = $row['telNo'];
+                            $userName = $row['userName'];
+                            $password = $row['password'];
+                            $instructorId = $row['instructorId'];
+
+                            $action = 'update_account';
+                            $form_title = 'Update';
+                            $submit = 'Update';
+                            $btn = 'success';
                         }
-                        
+
                         //                        ---------------------Update account-----------------------------
                         if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'update_account') {
-                            
-                            $db= dbConn();
-                            $sql="UPDATE tbl_instructors SET "
+
+                            $db = dbConn();
+                            $sql = "UPDATE tbl_instructors SET "
                                     . "title='$title',"
                                     . "firstName='$firstName',"
                                     . "lastName='$lastName',"
@@ -125,9 +128,11 @@ include '../nav.php';
                                     . "telNo='$telNo' "
                                     . "WHERE instructorId='$instructorId'";
                             $db->query($sql);
-                            $submit='Update';
-                            $btn='success';
+                            $submit = 'Update';
+                            $btn = 'success';
                         }
+
+//                        ---------------------Delete account-----------------------------
                         ?>
                         <div class="card-header">
                             <h3 class="card-title"><?php echo @$form_title; ?> User Account</h3>
@@ -136,13 +141,13 @@ include '../nav.php';
                             <div class="card-body">
                                 <div class="form-group">
                                     <?php
-                                    //$title='';
+//$title='';
                                     ?>
                                     <label for="title">Select Title</label>
                                     <select class="form-control" name="title" id="title">
                                         <option value="">--</option>
-                                        <option value="Mr." <?php if(@$title=='Mr.'){?> selected <?php }?>>Mr.</option>
-                                        <option value="Miss."<?php if(@$title=='Miss.'){?> selected <?php }?>>Miss.</option>
+                                        <option value="Mr." <?php if (@$title == 'Mr.') { ?> selected <?php } ?>>Mr.</option>
+                                        <option value="Miss."<?php if (@$title == 'Miss.') { ?> selected <?php } ?>>Miss.</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -150,13 +155,13 @@ include '../nav.php';
                                     <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter First Name" value="<?php echo @$firstName ?>">
                                 </div>
                                 <div class="text-danger"><?php echo @$message['firstName']; ?></div>
-                                
+
                                 <div class="form-group">
                                     <label for="lastName">Last Name</label>
                                     <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter Last Name" value="<?php echo @$lastName ?>">
                                 </div>
                                 <div class="text-danger"><?php echo @$message['lastName']; ?></div>
-                                
+
                                 <div class="form-group">
                                     <label for="address">Address</label>
                                     <textarea class="form-control" id="address" name="address" placeholder="Enter Address"><?php echo @$address ?></textarea>
@@ -197,7 +202,43 @@ include '../nav.php';
                         </form>
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-7">
+                    <!--                    -----------Confirmation message----------->
+                    <?php
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'delete_account') {
+
+                        //echo 'Do you want to?';
+//                            $db= dbConn();
+//                            $sql="DELETE FROM tbl_instructors WHERE instructorId='$instructorId'";
+//                            $db->query($sql);
+//                            
+//                            $submit='Save';
+                        ?>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Delete Confirmation</h3>
+                        </div>
+                        <div class="card-body">
+                            
+                            Are you sure want to delete this record?
+                            <br><br> 
+                        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                            <input type="hidden" name="instructorId" value="<?php echo $instructorId; ?>">
+                            <button type="submit" class="btn btn-warning" name="action" value="delete_account_confirm">Yes</button>
+                            <button type="submit" class="btn btn-danger" name="action" value="delete_account_cancel">No</button>
+                        </form>
+                            </div>
+                    </div>
+                        <?php
+                    }
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'delete_account_confirm') {
+                            
+                            $db= dbConn();
+                            $sql="DELETE FROM tbl_instructors WHERE instructorId='$instructorId'";
+                            $db->query($sql);
+                            
+                    }
+                    ?>
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Table of User Details</h3>
@@ -211,10 +252,11 @@ include '../nav.php';
                             <table id="user_list" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        
+
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Profile Image</th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -224,7 +266,7 @@ include '../nav.php';
                                         while ($row = $result->fetch_assoc()) {
                                             ?>
                                             <tr>
-                                                
+
                                                 <td><?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></td>
                                                 <td><?php echo $row['email']; ?></td>
                                                 <td><?php echo $row['profilePhoto']; ?></td>
@@ -232,6 +274,12 @@ include '../nav.php';
                                                     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                                                         <input type="hidden" name="instructorId" value="<?php echo $row['instructorId']; ?>">
                                                         <button type="submit" class="btn btn-warning" name="action" value="edit_account">Edit</button>
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                                                        <input type="hidden" name="instructorId" value="<?php echo $row['instructorId']; ?>">
+                                                        <button type="submit" class="btn btn-danger" name="action" value="delete_account">Delete</button>
                                                     </form>
                                                 </td>
                                             </tr>
