@@ -8,7 +8,7 @@
 
     <body>
         <!--        //////////////////////////////////////////NAVIGATION BAR//////////////////////////////////////////////////////////////////////////-->
-        <div class="container-fluid bg-dark ">
+        <div class="container-fluid bg-dark">
             <nav class="navbar navbar-expand-lg bg-dark">
                 <a class="navbar-brand" href="index.php">
                     <img src="images/logo.png" width="100" height="100" alt="">
@@ -35,13 +35,13 @@
         </div>
 
         <!--        ////////////////////////////////////////////////////////////////////////LOGIN SECTION///////////////////////////////////////////////////////////////////////-->
-        <div class="login-box mx-auto mt-5" >
+        <div class="login-box mx-auto mt-4" >
             <div class="card card-outline card-primary">
                 <div class="card-header bg-info"> <a href="../index2.html" class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
                         <h1 class="mb-0"> <b>Everest</b>Fitness
                         </h1>
                     </a> </div>
-                <div class="card-body login-card-body">
+                <div class="card-body login-card-body mt">
                     <p class="login-box-msg">Sign in to start your session</p>
                     <form action="../index3.html" method="post">
                         <div class="input-group mb-1">
@@ -66,14 +66,14 @@
                     <p class="mb-1"> <a href="forgot-password.html">I forgot my password</a> </p>
                     <p class="mb-0"> <a href="register.html" class="text-center">
                             Register a new membership
-                        </a> </p>
-                </div> <!-- /.login-card-body -->
+                        </a> 
+                    </p>
+                </div>
             </div>
-        </div> 
-        
+        </div>
 <!--        ////////////////////////////Footer////////////////////////////-->
-        <footer class="p-0 m-0 fixed-bottom"> 
-            <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">Copyright 1990-2020 by Data. All Rights Reserved.</p>
+<footer class="fixed-bottom"> 
+    <p class="text-center bg-dark  p-2 mb-0" style="color: #0dcaf0!important;">All Rights Reserved-Everest Fitness Center</p>
         </footer>
 
         <script src="js/bootstrap.bundle.min.js "></script>

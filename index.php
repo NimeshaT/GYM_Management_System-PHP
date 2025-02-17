@@ -5,9 +5,8 @@
         <meta charset="UTF-8">
         <title>Gym Management System</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <!--        <link href="css/app.css" rel="stylesheet">-->
+        <link href="css/app.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
 
     </head>
 
@@ -17,15 +16,18 @@
         <div class="container-fluid bg-dark">
             <nav class="navbar navbar-expand-lg bg-dark">
                 <a class="navbar-brand" href="index.php">
-                    <img src="images/logo.png" width="100" height="100" alt="">
+                    <img src="images/logo.png" width="150" alt="gym logo">
                 </a>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
                             <a class="nav-link text-info" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="workout.php">Workouts</a>
+                            <a class="nav-link text-info" href="workout.php">Personal Workouts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-info" href="fitness.php">Fitness</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-info" href="classes.php">Classes</a>
@@ -47,7 +49,6 @@
         </div>
 
         <!--////////////////////////////////////////////////CAROUSAL SECTION////////////////////////////////////////////////////////////////////////////-->
-
         <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -56,24 +57,24 @@
             </div>
             <div class="carousel-inner"  >
                 <div class="carousel-item active" style="height: 550px">
-                    <img src="images/carousal1.jpg" class="d-block w-100" alt="..." >
+                    <img src="images/carousal1.jpg" class="d-block w-100" alt="carousalImage1" >
                     <div class="carousel-caption d-none d-md-block">
                         <h1>WORKOUTS</h1>
                         <p>Unlock your potential with guided workouts tailored for all fitness levels</p>
                     </div>
                 </div>
                 <div class="carousel-item" style="height: 550px">
-                    <img src="images/carousal2.jpg" class="d-block w-100" alt="...">
+                    <img src="images/carousal4.jpg" class="d-block w-100" alt="carousalImage2">
                     <div class="carousel-caption d-none d-md-block">
                         <h1>Classes</h1>
                         <p>Welcome to Your Fitness Journey</p>
                     </div>
                 </div>
                 <div class="carousel-item" style="height: 550px">
-                    <img src="images/carousal3.jpg" class="d-block w-100" alt="...">
+                    <img src="images/carousal3.png" class="d-block w-100" alt="carousalImage3">
                     <div class="carousel-caption d-none d-md-block">
                         <h1>Packages</h1>
-                        <p>Track progress and celebrate every milestone</p>
+                        <p>Track progress and celebrate every milestone via Packages</p>
                     </div>
                 </div>
             </div>
@@ -88,231 +89,182 @@
         </div>
 
         <!--        ////////////////////////////////////////////////////OUR SERVICES/////////////////////////////////////////////////////////////////////////////////-->
-
         <div class="container mt-5 mb-5">
-            <h1 class="text-center">Our Services</h1>
-            <h4 class="text-center">Workouts | Fitness Classes | Personal Training</h4>
+            <h1 class="text-center">| Our Services |</h1>
+            <h4 class="text-center">Personal Workouts | Fitness | Classes</h4>
+            <?php
+            include 'system/function.php';
+            $db = dbConn();
+            $sql = "SELECT * FROM tbl_service_type WHERE serviceTypeId !=4 LIMIT 10";
+            $result = $db->query($sql);
+            //extract($POST);
+            ?>
             <div class="row mt-5">
-                <div class="col-6">
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="images/service2.jpg" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">Workout</h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                    <a href="workout.php" class="btn btn-primary btn-sm">View more...</a>
+                <?php
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        //$serviceTypeId;
+                        ?>
+                        <div class="col-4">
+                            <div class="card mb-3">
+                                <div class="row g-0">
+                                    <div class="col-md-5">
+                                        <img class="img-fluid" src="system/uploads/<?php echo $row['serviceTypeImage']; ?>" style="width: 100%;height: 250px;object-fit: cover;">                            
+                                    </div>
+
+                                    <div class="col-md-7">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><?php echo $row['serviceTypeName']; ?></h5>
+                                            <p class="card-text"><?php echo $row['serviceTypeDesc']; ?></p>
+                                            <?php
+                                            if ($row['serviceTypeId'] == 1) {
+                                                ?>
+                                                <a href="workout.php" class="btn btn-primary btn-sm">View more...</a>
+                                                <?php
+                                            } elseif ($row['serviceTypeId'] == 2) {
+                                                ?>
+                                                <a href="fitness.php" class="btn btn-primary btn-sm">View more...</a>
+                                                <?php
+                                            } elseif ($row['serviceTypeId'] == 3) {
+                                                ?>
+                                                <a href="classes.php" class="btn btn-primary btn-sm">View more...</a>
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <a href="index.php" class="btn btn-primary btn-sm">View more...</a>
+                                                <?php
+                                            }
+                                            ?>
+                                            <!--                                    <a href="workout.php" class="btn btn-primary btn-sm">View more...</a>-->
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="images/service2.jpg" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">Fitness</h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                    <a href="classes.php" class="btn btn-primary btn-sm">View more...</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <?php
+    }
+}
+?>
             </div>
         </div>
 
         <!--        ///////////////////////////////////////////////////OUR PACKAGES///////////////////////////////////////////////////////////////////////-->
         <div class="container mb-5">
-            <h1 class="text-center">Our Packages</h1>
-            <h4 class="text-center">- We have basic three packages -</h4>
+            <h1 class="text-center">| Our Packages |</h1>
+            <h4 class="text-center">We have basic three packages</h4>
+            <?php
+            //include 'system/function.php';
+            //$db = dbConn();
+            $sql = "SELECT * FROM tbl_gym_packages";
+            $result = $db->query($sql);
+            //extract($POST);
+            ?>
             <div class="row mt-5">
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="images/package1.png" class="card-img-top" alt="...">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">One-to-One Training</h5>
-                            <a href="#" class="btn btn-primary btn-sm">View more</a>
+                <?php
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <div class="col-4">
+                            <div class="card" style="width: 18rem;">
+                                <img class="img-fluid" src="system/uploads/<?php echo $row['gymPackageImage']; ?>">                            
+                                <div class="card-body text-center">
+                                    <h5 class="card-title"><?php echo $row['gymPackageName']; ?></h5>
+                                    <a href="packages.php" class="btn btn-primary btn-sm">View more</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="images/package2.png" class="card-img-top" alt="...">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Package Base Training</h5>
-                            <a href="#" class="btn btn-primary btn-sm">View more</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="images/package3.png" class="card-img-top" alt="...">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Normal Training</h5>
-                            <a href="#" class="btn btn-primary btn-sm">View more</a>
-                        </div>
-                    </div>
-                </div>
+                        <?php
+                    }
+                }
+                ?>
             </div>
         </div>
+
         <!--        ///////////////////////////////////////////////////Our Instructors///////////////////////////////////////////////////////////////////////-->
-        <div class="container-fluid bg-dark">
-            <h1 class="text-center text-white">Our Instructors</h1>
-            <h4 class="text-center text-white">Certified Professionals | Diverse Expertise | Passionate & Friendly</h4>
+        <div class="container-fluid bg-dark pb-3">
+            <div class="container pt-5">
+                <h1 class="text-center text-white">Our Instructors</h1>
+                <h4 class="text-center text-white">Certified Professionals | Diverse Expertise | Passionate & Friendly</h4>
+            </div>
+
             <div class="container">
+                <?php
+                $sql = "SELECT * FROM tbl_instructors LIMIT 5";
+                $result = $db->query($sql);
+                ?>
                 <div class="row mt-5">
-                <div class="col-3 mb-3 text-center">
-                        <img src="images/user.png" class="rounded-circle" width="200px">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-white">Instructor Name</h5>
-                        </div>
-                </div>
-                <div class="col-3 mb-3 text-center">
-                        <img src="images/user.png" class="rounded-circle" width="200px">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-white">Instructor Name</h5>
-                        </div>
-                </div>
-                <div class="col-3 mb-3 text-center">
-                        <img src="images/user.png" class="rounded-circle" width="200px">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-white">Instructor Name</h5>
-                        </div>
-                </div>
-                <div class="col-3 mb-3 text-center">
-                        <img src="images/user.png" class="rounded-circle" width="200px">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-white">Instructor Name</h5>
-                        </div>
-                </div>
-                <div class="col-3 mb-3 text-center">
-                        <img src="images/user.png" class="rounded-circle" width="200px">
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-white">Instructor Name</h5>
-                        </div>
+                    <?php
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            ?>
+                            <div class="col-3 mb-5 text-center">
+                                <img src="system/uploads/<?php echo $row['profilePhoto']; ?>" class="rounded-circle" width="200px" height="200px">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title text-white"><?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></h5>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
                 </div>
             </div>
+            <div class="container  d-flex justify-content-center">
+                <a href="instructor.php" class="btn btn-primary">Visit Instructor Page...</a>
             </div>
-            
         </div>
-        <!--        ///////////////////////////////////////////////////CUSTOMER REVIEWS///////////////////////////////////////////////////////////////////////-->
+
+        <!--        ///////////////////////////////////////////////////MEMBER REVIEWS///////////////////////////////////////////////////////////////////////-->
         <div class="container mt-5">
-            <h1 class="text-center">Customer Reviews</h1>
-            <h4 class="text-center">- customer reviews---</h4>
+            <h1 class="text-center">| Member Reviews |</h1>
+            <h4 class="text-center">Success stories from our gym members</h4>
             <div class="container mt-5 mb-5">
+                <?php
+                $sql = "SELECT * FROM tbl_reviews LIMIT 3";
+                $result = $db->query($sql);
+                ?>
                 <div class="row g-2">
-                    <div class="col-md-4">
-                        <div class="card p-3 text-center px-4">
-                            <div class="user-image">
-                                <img src="https://i.imgur.com/PKHvlRS.jpg" class="rounded-circle" width="80">
+                    <?php
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            ?>
+                            <div class="col-md-4">
+                                <div class="card p-3 text-center px-4">
+                                    <div class="user-image">
+                                        <img src="https://i.imgur.com/PKHvlRS.jpg" class="rounded-circle" width="80">
+                                    </div>
+                                    <div class="user-content">
+                                        <h5 class="mb-0">Bruce Hardy</h5>
+                                        <span>Software Developer</span>
+                                        <p><?php echo $row['review']; ?></p>
+                                    </div>
+                                    <div class="ratings">
+                                        <i class="bi bi-star-fill" style="color: blue"></i>
+                                        <i class="bi bi-star-fill" style="color: blue"></i>
+                                        <i class="bi bi-star-fill" style="color: blue"></i>
+                                        <i class="bi bi-star-fill" style="color: blue"></i>
+                                        <i class="bi bi-star-fill" style="color: blue"></i>
+
+                                    </div>
+
+                                </div>
                             </div>
-                            <div class="user-content">
-                                <h5 class="mb-0">Bruce Hardy</h5>
-                                <span>Software Developer</span>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                            </div>
-                            <div class="ratings">
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-
-                        <div class="card p-3 text-center px-4">
-
-                            <div class="user-image">
-
-                                <img src="https://i.imgur.com/w2CKRB9.jpg" class="rounded-circle" width="80">
-
-                            </div>
-
-                            <div class="user-content">
-
-                                <h5 class="mb-0">Mark Smith</h5>
-                                <span>Web Developer</span>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-                            </div>
-
-                            <div class="ratings">
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-4">
-
-                        <div class="card p-3 text-center px-4">
-
-                            <div class="user-image">
-
-                                <img src="https://i.imgur.com/ACeArwY.jpg" class="rounded-circle" width="80" >
-
-                            </div>
-
-                            <div class="user-content">
-
-                                <h5 class="mb-0">Veera  Duncan</h5>
-                                <span>Software Architect</span>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-
-                            </div>
-
-                            <div class="ratings">
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-                                <i class="bi bi-star-fill" style="color: blue"></i>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
+                            <?php
+                        }
+                    }
+                    ?>
                 </div>
-
             </div>
         </div>
         <!--        ///////////////////////////////////////////////////BODY TRANSFORMATIONS///////////////////////////////////////////////////////////////////////-->
-        <div class="container">
-            <h1 class="text-center">Body Transformations</h1>
-        </div>
+        <!--        <div class="container">
+                    <h1 class="text-center">Body Transformations</h1>
+                </div>-->
 
         <!--        ///////////////////////////////////////////////////FOOTER///////////////////////////////////////////////////////////////////////-->
-
         <footer class="p-0 m-0"> 
-            <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">Copyright 1990-2020 by Data. All Rights Reserved.</p>
+            <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">All Rights Reserved-Everest Fitness Center</p>
         </footer>
-
-        <?php
-//        echo 'hello';
-        ?>
 
         <script src="js/bootstrap.bundle.min.js "></script>
 

@@ -5,9 +5,8 @@
         <meta charset="UTF-8">
         <title>Gym Management System</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/app.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-
     </head>
 
     <body>
@@ -16,15 +15,18 @@
         <div class="container-fluid bg-dark">
             <nav class="navbar navbar-expand-lg bg-dark">
                 <a class="navbar-brand" href="index.php">
-                    <img src="images/logo.png" width="100" height="100" alt="">
+                    <img src="images/logo.png" width="150" alt="gym logo">
                 </a>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link text-info" href="index.php">Home</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link text-info" href="workout.php">Workouts</a>
+                            <a class="nav-link text-info" href="workout.php">Personal Workouts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-info" href="fitness.php">Fitness</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-info" href="classes.php">Classes</a>
@@ -47,82 +49,57 @@
 
 
         <!--        ///////////////////////////////////////////////////workout section///////////////////////////////////////////////////////////////////////-->
-        <div class="container mb-5">
-            <h1 class="text-center">Workouts Category</h1>
-            <h4 class="text-center">Every day is another chance to get stronger!</h4>
-            <div class="row mt-5">
-                <div class="col-3 mb-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/strengthT.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Strength Training</h5>
-                             <p class="card-text">Focuses on building muscle strength and endurance</p>
-                            <ul>
-                                <li>Bench press</li>
-                                <li>Squats</li>
-                                <li>Push-ups</li>
-                                <li>Pull-ups</li>
-                                <li>Overhead press</li>
-                            </ul>
-                           
-                             <a href="workout2.php" class="btn btn-primary btn-sm">View workouts</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/strengthT.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Cardio Training</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary btn-sm">View workouts</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/strengthT.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Functional Training</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary btn-sm">View workouts</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/strengthT.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Power Training</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary btn-sm">View workouts</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card" style="width: 16rem;">
-                        <img src="images/strengthT.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Recovery Training</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary btn-sm">View workouts</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
+        <?php
+        echo '<div class="container mb-5 mt-3">';
+        echo '<h1 class="text-center">Personal Training Workouts</h1>';
+        echo '<h2 class="text-center text-primary">Personal Training Session</h2>';
+        echo '<h4 class="text-center">Every day is another chance to get stronger</h4>';
+        
+        include 'system/function.php';
+        $db = dbConn();
+        $sql="SELECT * FROM tbl_personal_workouts";
+        
+        echo '<div class="row mt-5">';
+        
+        $result=$db->query($sql);
+        while ($row=$result->fetch_assoc()){
+        $workoutId=$row['workoutId'];
+        $workoutImage=$row['workoutImage'];
+        $workoutName=$row['workoutName'];
+        $workoutDescription=$row['workoutDescription'];
+        
+        echo '<div class="col-3 mb-3">';
+        echo '<div class="card" style="width: 16rem;">';
+        echo '<img class="card-img-top" src="system/uploads/' . $workoutImage . '">';
+        echo '<div class="card-body">';
+        echo '<h5 class="card-title">'.$workoutName.'</h5>';
+        echo '<p class="card-text">'.$workoutDescription.'</p>';
+        echo '<ul>';
+        $sql="SELECT * FROM tbl_fitness INNER JOIN tbl_personal_workouts ON tbl_fitness.workoutId=tbl_personal_workouts.workoutId WHERE tbl_fitness.workoutId='$workoutId'";
+        $result1=$db->query($sql);
+        if($result1->num_rows>0){
+            while ($row1=$result1->fetch_assoc()){
+                $fitnessName=$row1['fitnessName'];
+                    echo '<li>'.$fitnessName.'</li>';
+            }
+        }
+        echo '</ul>';
+//        echo '<a href="workout2.php" class="btn btn-primary btn-sm">View workouts</a>';
+        echo '<a href="login.php" class="btn btn-success btn-sm d-block">Login</a>';
+        echo '<br>';
+        echo '<a href="register.php" class="btn btn-primary btn-sm d-block">Register</a>';
+        echo '</div>';
+        echo '</div>';
+        echo '</div>';
+        }
+        echo '</div>';
+        echo '</div>';
+        ?>
 
         <!--        ///////////////////////////////////////////////////FOOTER///////////////////////////////////////////////////////////////////////-->
-
         <footer class="p-0 m-0"> 
-            <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">Copyright 1990-2020 by Data. All Rights Reserved.</p>
+            <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">All Rights Reserved-Everest Fitness Center</p>
         </footer>
-
-        <?php
-//        echo 'hello';
-        ?>
 
         <script src="js/bootstrap.bundle.min.js "></script>
 
