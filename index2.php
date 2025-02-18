@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (!isset($_SESSION['MEMBERID'])) {
+    header("Location:login.php");
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -7,21 +13,29 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/app.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
     </head>
 
     <body>
 
         <!--        //////////////////////////////////////NAVIGATION BAR///////////////////////////////////////////////////////////////////////////////-->
         <div class="container-fluid bg-dark">
-            <nav class="navbar navbar-expand-lg bg-dark">
+            
+<!--            <nav class="navbar navbar-light bg-dark">-->
+            <div class="container-fluid p-3 m-0 pb-0">
+                <span class="navbar-text mt-3">
+                    <h6 class="text-primary text-center">Welcome <?php echo $_SESSION['FIRSTNAME']; ?> <?php echo $_SESSION['LASTNAME']; ?> !</h6>
+                </span>
+            </div>
+            <!--</nav>-->
+<!--            <div class="pt-1 mb-2 bg-dark text-white text-center">.bg-primary</div>-->
+            <nav class="navbar navbar-expand-lg bg-dark p-0 m-0 mt-0">
                 <a class="navbar-brand" href="index.php">
                     <img src="images/logo.png" width="150" alt="gym logo">
                 </a>
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link text-info" href="index.php">Home</a>
+                            <a class="nav-link text-info" href="index2.php">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-info" href="workout.php">Personal Workouts</a>
@@ -44,7 +58,8 @@
                     </ul>
                 </div>
                 <a href="register.php"><button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Register Now  </button></a>
-                <a href="login.php"> <button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit">  Login  </button></a>
+                <a href="login.php"> <button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Login  </button></a>
+                <a href="index.php"> <button class="btn btn-outline-danger btn-sm my-2 my-sm-0" type="submit">  Logout  </button></a>
             </nav>
         </div>
 
@@ -220,7 +235,7 @@
             <h4 class="text-center">Success stories from our gym members</h4>
             <div class="container mt-5 mb-5">
                 <?php
-                $sql = "SELECT * FROM tbl_reviews INNER JOIN tbl_members ON tbl_reviews.memberId=tbl_members.memberId LIMIT 3";
+                $sql = "SELECT * FROM tbl_reviews LIMIT 3";
                 $result = $db->query($sql);
                 ?>
                 <div class="row g-2">
@@ -234,9 +249,9 @@
                                         <img src="https://i.imgur.com/PKHvlRS.jpg" class="rounded-circle" width="80">
                                     </div>
                                     <div class="user-content">
-                                        <h5 class="mb-1"><?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></h5>
+                                        <h5 class="mb-0">Bruce Hardy</h5>
+                                        <span>Software Developer</span>
                                         <p><?php echo $row['review']; ?></p>
-                                        <span><?php echo $row['reviewDate']; ?></span>
                                     </div>
                                     <div class="ratings">
                                         <i class="bi bi-star-fill" style="color: blue"></i>

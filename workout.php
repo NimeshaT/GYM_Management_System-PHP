@@ -38,7 +38,7 @@
                             <a class="nav-link text-info" href="instructor.php">Our Instructors</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="#">My Profile</a>
+                            <a class="nav-link text-info" href="myProfile.php">My Profile</a>
                         </li>
                     </ul>
                 </div>

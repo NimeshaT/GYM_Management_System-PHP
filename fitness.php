@@ -40,7 +40,7 @@
                             <a class="nav-link text-info" href="instructor.php">Our Instructors</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="#">My Profile</a>
+                            <a class="nav-link text-info" href="myProfile.php">My Profile</a>
                         </li>
                     </ul>
                 </div>
@@ -65,7 +65,7 @@
             $workoutId = $row['workoutId'];
             $workoutName = $row['workoutName'];
 
-            echo '<h3 class="text-info bg-secondary font-weight-bold mt-2">' . $workoutName . '</h3>';
+            echo '<h3 class="text-primary bg-dark font-weight-bold mt-2">' . $workoutName . '</h3>';
 //            echo '<div class="row">';
 
             $sql1 = "SELECT * FROM tbl_fitness INNER JOIN tbl_personal_workouts ON tbl_fitness.workoutId=tbl_personal_workouts.workoutId WHERE tbl_fitness.workoutId='$workoutId'";

@@ -40,7 +40,7 @@
                             <a class="nav-link text-info" href="instructor.php">Our Instructors</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="#">My Profile</a>
+                            <a class="nav-link text-info" href="myProfile.php">My Profile</a>
                         </li>
                     </ul>
                 </div>
@@ -59,28 +59,38 @@
         ?>
         <div class="container mb-5 mt-3">
             <h1 class="">Fitness</h1>
-            <h4 class="">Unlock your potential with guided workouts tailored for all fitness levels.</h4>
+            <h4 class="">Unlock your potential with guided workouts tailored for all fitness levels!</h4>
             <div class="row mt-5">
+                <?php
+                $sql="SELECT * FROM tbl_fitness INNER JOIN tbl_personal_workouts ON tbl_fitness.workoutId=tbl_personal_workouts.workoutId WHERE tbl_fitness.fitnessId='$fitnessId'";
+                $result=$db->query($sql);
+                if($result->num_rows>0){
+                    while ($row=$result->fetch_assoc()){
+                ?>
                 <div class="col-3 mb-3">
                     <div class="card" style="width: 16rem;">
-                        <img src="images/benchPress.jpg" class="card-img-top" alt="...">
+                        <img src="system/uploads/<?php echo $row['fitnessImage']; ?>" class="card-img-top" alt="fitnessImage">
                         <div class="card-body text-center">
 <!--                            <h5 class="card-title">Bench Press</h5>-->
-                            <a href="#" class="btn btn-primary btn-sm">Create Schedule</a>
+                            <a href="login.php" class="btn btn-success btn-sm d-block">Login</a>
+                            <br>
+                            <a href="register.php" class="btn btn-primary btn-sm d-block">Register</a>
                         </div>
                     </div>
 
                 </div>
                 <div class="col-9">
                     <ul class="list-group">
-                        <li class="list-group-item active" aria-current="true">Bench Press</li>
-                        <li class="list-group-item">Category</li>
-                        <li class="list-group-item">Brief explanation of workout</li>
-                        <li class="list-group-item">Target muscle group</li>
-                        <li class="list-group-item">Monthly charge</li>
-                        <li class="list-group-item">Weekly charge</li>
+                        <li class="list-group-item active" aria-current="true"><h4><?php echo $row['fitnessName']; ?></h4></li>
+                        <li class="list-group-item"><?php echo $row['workoutName']; ?></li>
+                        <li class="list-group-item"><?php echo $row['fitnessDesc']; ?></li>
+                        <li class="list-group-item"><?php echo $row['fitnessMuscleGroup']; ?></li>
                     </ul>
                 </div>
+                <?php
+                    }
+                }
+                ?>
             </div>
         </div>
 
@@ -88,12 +98,10 @@
         <!--        ///////////////////////////////////////////////////FOOTER///////////////////////////////////////////////////////////////////////-->
 
         <footer class="p-0 m-0 fixed-bottom"> 
-            <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">Copyright 1990-2020 by Data. All Rights Reserved.</p>
+            <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">All Rights Reserved-Everest Fitness Center</p>
         </footer>
 
-        <?php
-//        echo 'hello';
-        ?>
+      
 
         <script src="js/bootstrap.bundle.min.js "></script>
 

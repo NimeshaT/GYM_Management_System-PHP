@@ -30,16 +30,16 @@
                         <li class="nav-item ">
                             <a class="nav-link text-info" href="fitness.php">Fitness</a>
                         </li>
-                        <li class="nav-item ">
+                        <li class="nav-item">
                             <a class="nav-link text-info" href="classes.php">Classes</a>
                         </li>
-                        <li class="nav-item ">
+                        <li class="nav-item">
                             <a class="nav-link text-info" href="packages.php">Packages</a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link text-info" href="instructor.php">Our Instructors</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item active">
                             <a class="nav-link text-info" href="myProfile.php">My Profile</a>
                         </li>
                     </ul>
@@ -50,40 +50,25 @@
         </div>
 
 
-        <!--        ///////////////////////////////////////////////////workout section///////////////////////////////////////////////////////////////////////-->
-        <div class="container mb-5">
-            <h1 class="mt-3 text-center">Our Instructors</h1>
-            <h3 class="text-center">Strong minds, strong bodies - our instructors guide you to both!</h3>
-            <br>
-            <?php
-            include 'system/function.php';
-            $db= dbConn();
-            $sql="SELECT * FROM tbl_instructors LIMIT 5";
-            $result=$db->query($sql);
-            ?>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                <?php
-                if($result->num_rows>0){
-                while ($row=$result->fetch_assoc()){
-                ?>
-
-                <div class="col-3">
-                    <div class="card " style="width: 18rem;">
-                        <img src="system/uploads/<?php echo $row['profilePhoto']; ?>" class="card-img-top" alt="instructorImage">
-                        <div class="card-body">
-                            <h5 class="card-title text-center"><?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></h5>
-                            <p class="card-text">Expertise in areas</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <?php
-                }
-                }
-                ?>
+        <!--        ///////////////////////////////////////////////////profile section///////////////////////////////////////////////////////////////////////-->
+        <div class="d-flex justify-content-center">
+        <div class="card border-info mb-3 mt-5" style="max-width: 50rem;">
+            <div class="card-header bg-dark text-primary border-info d-flex">
+                <img src="images/sad.png" width="50px">
+                <span><h6>Oops !</h6></span>
+            </div>
+            <div class="card-body text-secondary">
+                <h5 class="card-title">Please log into the system</h5>
+                <p class="card-text">Please log into the system before viewing your profile.</p>
+            </div>
+            <div class="card-footer bg-transparent border-info">
+                <a href="login.php" class="btn btn-primary">Login</a>
+                <a href="register.php" class="btn btn-warning">Register</a>
             </div>
         </div>
-
+        </div>
+        
+        
         <!--        ///////////////////////////////////////////////////FOOTER///////////////////////////////////////////////////////////////////////-->
 
         <footer class="p-0 m-0 fixed-bottom"> 
@@ -94,3 +79,5 @@
 
     </body>
 </html>
+
+
