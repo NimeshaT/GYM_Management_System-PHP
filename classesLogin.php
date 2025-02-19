@@ -37,23 +37,23 @@ if (!isset($_SESSION['MEMBERID'])) {
                         <li class="nav-item ">
                             <a class="nav-link text-info" href="index2.php">Home</a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item ">
                             <a class="nav-link text-info" href="workout2.php">Personal Workouts</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item ">
                             <a class="nav-link text-info" href="fitnessLogin.php">Fitness</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-info" href="classes.php">Classes</a>
+                        <li class="nav-item active">
+                            <a class="nav-link text-info" href="classesLogin.php">Classes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="packages.php">Packages</a>
+                            <a class="nav-link text-info" href="packagesLogin.php">Packages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="instructor.php">Our Instructors</a>
+                            <a class="nav-link text-info" href="instructor2.php">Our Instructors</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="myProfile.php">My Profile</a>
+                            <a class="nav-link text-info" href="myProfile2.php">My Profile</a>
                         </li>
                     </ul>
                 </div>
@@ -64,64 +64,56 @@ if (!isset($_SESSION['MEMBERID'])) {
         </div>
 
 
-        <!--        ///////////////////////////////////////////////////workout section///////////////////////////////////////////////////////////////////////-->
-        <?php
-        echo '<div class="container mb-5 mt-3">';
-        echo '<h1 class="text-center">Personal Training Workouts</h1>';
-        echo '<h2 class="text-center text-primary">Personal Training Session</h2>';
-        echo '<h4 class="text-center">Every day is another chance to get stronger</h4>';
-        
-        include 'system/function.php';
-        $db = dbConn();
-        $sql="SELECT * FROM tbl_personal_workouts";
-        
-        echo '<div class="row mt-5">';
-        
-        $result=$db->query($sql);
-        while ($row=$result->fetch_assoc()){
-        $workoutId=$row['workoutId'];
-        $workoutImage=$row['workoutImage'];
-        $workoutName=$row['workoutName'];
-        $workoutDescription=$row['workoutDescription'];
-        
-        echo '<div class="col-3 mb-3">';
-        echo '<div class="card" style="width: 16rem;">';
-        echo '<img class="card-img-top" src="system/uploads/' . $workoutImage . '">';
-        echo '<div class="card-body">';
-        echo '<h5 class="card-title">'.$workoutName.'</h5>';
-        echo '<p class="card-text">'.$workoutDescription.'</p>';
-        echo '<ul>';
-        $sql="SELECT * FROM tbl_fitness INNER JOIN tbl_personal_workouts ON tbl_fitness.workoutId=tbl_personal_workouts.workoutId WHERE tbl_fitness.workoutId='$workoutId'";
-        $result1=$db->query($sql);
-        if($result1->num_rows>0){
-            while ($row1=$result1->fetch_assoc()){
-                $fitnessName=$row1['fitnessName'];
-                    echo '<li>'.$fitnessName.'</li>';
-            }
-        }
-        echo '</ul>';
-//        echo '<a href="workout2.php" class="btn btn-primary btn-sm">View workouts</a>';
-        echo '<a href="reserveWorkoutForm.php" class="btn btn-success btn-sm d-block">Reserve Workout</a>';
-        //echo '<br>';
-        //echo '<a href="register.php" class="btn btn-primary btn-sm d-block">Register</a>';
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-        }
-        echo '</div>';
-        echo '</div>';
-        ?>
-
+        <!--        ///////////////////////////////////////////////////classes section///////////////////////////////////////////////////////////////////////-->
+        <div class="container mb-5 mt-3">
+            <h1 class="text-center">Fitness Class</h1>
+            <h2 class="text-center text-primary">General Group Class</h2>
+            <h4 class="text-center">Guiding you every step of the way to success!</h4>
+            <?php
+            include 'system/function.php';
+            $db= dbConn();
+            $sql="SELECT * FROM tbl_instructors INNER JOIN tbl_classes ON tbl_instructors.instructorId=tbl_classes.instructorId INNER JOIN tbl_instructor_title ON tbl_instructors.titleId=tbl_instructor_title.titleId ORDER BY tbl_classes.classId";
+            $result=$db->query($sql);
+            ?>
+            <div class="row mt-5">
+                <?php
+                if($result->num_rows>0){
+                    while ($row=$result->fetch_assoc()){
+                ?>
+                <div class="col-4 mb-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="system/uploads/<?php echo $row['classImage']; ?>" class="card-img-top" alt="classImage">
+                        <div class="card-body">
+                            <h5 class="card-title text-center"><?php echo $row['className']; ?></h5>
+                            <h6 class="card-title text-center">(<?php echo $row['titleName']; ?> <?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?>)</h6>
+                             <p class="card-text"><?php echo $row['classDesc']; ?></p>
+                             <ul>
+                                 <li><?php echo $row['classDay']; ?></li>
+                                <!--Convert Time-->
+                                 <?php
+                                 $startTime=$row['classStartTime'];
+                                 $endTime=$row['classEndTime'];
+                                 ?>
+                                 <li><?php echo date("g:i A", strtotime($startTime)); ?> - <?php echo date("g:i A", strtotime($endTime)); ?></li>
+                                 <li><?php echo $row['classDuration']; ?></li>
+                             </ul>
+                                     <a href="joiningClassForm.php" class="btn btn-success btn-sm d-block">Join Now</a>
+                                 
+                        </div>
+                    </div>
+                </div>
+                <?php
+                    }
+                }
+                ?>
+            </div>
+        </div>
 
         <!--        ///////////////////////////////////////////////////FOOTER///////////////////////////////////////////////////////////////////////-->
 
         <footer class="p-0 m-0 "> 
             <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">All Rights Reserved-Everest Fitness Center</p>
         </footer>
-
-        <?php
-//        echo 'hello';
-        ?>
 
         <script src="js/bootstrap.bundle.min.js "></script>
 

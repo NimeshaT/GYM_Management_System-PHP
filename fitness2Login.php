@@ -37,23 +37,23 @@ if (!isset($_SESSION['MEMBERID'])) {
                         <li class="nav-item ">
                             <a class="nav-link text-info" href="index2.php">Home</a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item ">
                             <a class="nav-link text-info" href="workout2.php">Personal Workouts</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item active">
                             <a class="nav-link text-info" href="fitnessLogin.php">Fitness</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="classes.php">Classes</a>
+                            <a class="nav-link text-info" href="classesLogin.php">Classes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="packages.php">Packages</a>
+                            <a class="nav-link text-info" href="packagesLogin.php">Packages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="instructor.php">Our Instructors</a>
+                            <a class="nav-link text-info" href="instructor2.php">Our Instructors</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="myProfile.php">My Profile</a>
+                            <a class="nav-link text-info" href="myProfile2.php">My Profile</a>
                         </li>
                     </ul>
                 </div>
@@ -65,63 +65,55 @@ if (!isset($_SESSION['MEMBERID'])) {
 
 
         <!--        ///////////////////////////////////////////////////workout section///////////////////////////////////////////////////////////////////////-->
-        <?php
-        echo '<div class="container mb-5 mt-3">';
-        echo '<h1 class="text-center">Personal Training Workouts</h1>';
-        echo '<h2 class="text-center text-primary">Personal Training Session</h2>';
-        echo '<h4 class="text-center">Every day is another chance to get stronger</h4>';
-        
+<?php
         include 'system/function.php';
         $db = dbConn();
-        $sql="SELECT * FROM tbl_personal_workouts";
-        
-        echo '<div class="row mt-5">';
-        
-        $result=$db->query($sql);
-        while ($row=$result->fetch_assoc()){
-        $workoutId=$row['workoutId'];
-        $workoutImage=$row['workoutImage'];
-        $workoutName=$row['workoutName'];
-        $workoutDescription=$row['workoutDescription'];
-        
-        echo '<div class="col-3 mb-3">';
-        echo '<div class="card" style="width: 16rem;">';
-        echo '<img class="card-img-top" src="system/uploads/' . $workoutImage . '">';
-        echo '<div class="card-body">';
-        echo '<h5 class="card-title">'.$workoutName.'</h5>';
-        echo '<p class="card-text">'.$workoutDescription.'</p>';
-        echo '<ul>';
-        $sql="SELECT * FROM tbl_fitness INNER JOIN tbl_personal_workouts ON tbl_fitness.workoutId=tbl_personal_workouts.workoutId WHERE tbl_fitness.workoutId='$workoutId'";
-        $result1=$db->query($sql);
-        if($result1->num_rows>0){
-            while ($row1=$result1->fetch_assoc()){
-                $fitnessName=$row1['fitnessName'];
-                    echo '<li>'.$fitnessName.'</li>';
-            }
-        }
-        echo '</ul>';
-//        echo '<a href="workout2.php" class="btn btn-primary btn-sm">View workouts</a>';
-        echo '<a href="reserveWorkoutForm.php" class="btn btn-success btn-sm d-block">Reserve Workout</a>';
-        //echo '<br>';
-        //echo '<a href="register.php" class="btn btn-primary btn-sm d-block">Register</a>';
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-        }
-        echo '</div>';
-        echo '</div>';
+        extract($_POST);
+        //echo $fitnessId;
         ?>
+        <div class="container mb-5 mt-3">
+            <h1 class="">Fitness</h1>
+            <h4 class="">Unlock your potential with guided workouts tailored for all fitness levels!</h4>
+            <p class="text-danger">Don't Worry! If you intend to apply multiple fitnesses, We provide facilities through the Booking Form.</p>
+            <div class="row mt-5">
+                <?php
+                $sql="SELECT * FROM tbl_fitness INNER JOIN tbl_personal_workouts ON tbl_fitness.workoutId=tbl_personal_workouts.workoutId WHERE tbl_fitness.fitnessId='$fitnessId'";
+                $result=$db->query($sql);
+                if($result->num_rows>0){
+                    while ($row=$result->fetch_assoc()){
+                ?>
+                <div class="col-3 mb-3">
+                    <div class="card" style="width: 16rem;">
+                        <img src="system/uploads/<?php echo $row['fitnessImage']; ?>" class="card-img-top" alt="fitnessImage">
+                        <div class="card-body text-center">
+<!--                            <h5 class="card-title">Bench Press</h5>-->
+                            <a href="bookingFitnessForm.php" class="btn btn-success btn-sm d-block">Book Now</a>
+<!--                            <br>
+                            <a href="register.php" class="btn btn-primary btn-sm d-block">Register</a>-->
+                        </div>
+                    </div>
 
+                </div>
+                <div class="col-9">
+                    <ul class="list-group">
+                        <li class="list-group-item active" aria-current="true"><h4><?php echo $row['fitnessName']; ?></h4></li>
+                        <li class="list-group-item"><?php echo $row['workoutName']; ?></li>
+                        <li class="list-group-item"><?php echo $row['fitnessDesc']; ?></li>
+                        <li class="list-group-item"><?php echo $row['fitnessMuscleGroup']; ?></li>
+                    </ul>
+                </div>
+                <?php
+                    }
+                }
+                ?>
+            </div>
+        </div>
 
         <!--        ///////////////////////////////////////////////////FOOTER///////////////////////////////////////////////////////////////////////-->
 
         <footer class="p-0 m-0 "> 
             <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">All Rights Reserved-Everest Fitness Center</p>
         </footer>
-
-        <?php
-//        echo 'hello';
-        ?>
 
         <script src="js/bootstrap.bundle.min.js "></script>
 

@@ -38,22 +38,22 @@ if (!isset($_SESSION['MEMBERID'])) {
                             <a class="nav-link text-info" href="index2.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="workout.php">Personal Workouts</a>
+                            <a class="nav-link text-info" href="workout2.php">Personal Workouts</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="fitness.php">Fitness</a>
+                            <a class="nav-link text-info" href="fitnessLogin.php">Fitness</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="classes.php">Classes</a>
+                            <a class="nav-link text-info" href="classesLogin.php">Classes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="packages.php">Packages</a>
+                            <a class="nav-link text-info" href="packagesLogin.php">Packages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="instructor.php">Our Instructors</a>
+                            <a class="nav-link text-info" href="instructor2.php">Our Instructors</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="myProfile.php">My Profile</a>
+                            <a class="nav-link text-info" href="myProfile2.php">My Profile</a>
                         </li>
                     </ul>
                 </div>

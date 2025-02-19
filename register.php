@@ -1,3 +1,9 @@
+<?php
+ob_start();
+//A session is a way to store information (in variables) to be used across multiple pages.Not a computer
+session_start();
+//include 'system/plugins/mail.php';
+?>
 <html>
     <head>
         <title>Register Page</title>
@@ -10,21 +16,30 @@
         <div class="container-fluid bg-dark">
             <nav class="navbar navbar-expand-lg bg-dark">
                 <a class="navbar-brand" href="index.php">
-                    <img src="images/logo.png" width="100" height="100" alt="">
+                    <img src="images/logo.png" width="150" alt="gym logo">
                 </a>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
                             <a class="nav-link text-info" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="#">Services</a>
+                            <a class="nav-link text-info" href="workout.php">Personal Workouts</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="#">Packages</a>
+                            <a class="nav-link text-info" href="fitness.php">Fitness</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-info" href="#">About</a>
+                            <a class="nav-link text-info" href="classes.php">Classes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-info" href="packages.php">Packages</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-info" href="instructor.php">Our Instructors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-info" href="myProfile.php">My Profile</a>
                         </li>
                     </ul>
                 </div>
@@ -38,280 +53,282 @@
             <div class="card mx-auto" style="width: 60%">
                 <?php
                 include 'system/function.php';
+                //$db= dbConn();
                 extract($_POST);
 
                 if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "save") {
-                    $FirstName = dataClean($FirstName);
-                    $LastName = dataClean($LastName);
-                    $AddressLine1 = dataClean($AddressLine1);
-                    $AddressLine2 = dataClean($AddressLine2);
-                    $AddressLine3 = dataClean($AddressLine3);
-                    $AddressLine4 = dataClean($AddressLine4);
-                    $City = dataClean($City);
-                    $NicNumber = dataClean($NicNumber);
-                    $Email = dataClean($Email);
-                    $PhoneNumber1 = dataClean($PhoneNumber1);
-                    $PhoneNumber2 = dataClean($PhoneNumber2);
-                    $UserName = dataClean($UserName);
+                    $firstName = dataClean($firstName);
+                    $lastName = dataClean($lastName);
+                    $addressLine1 = dataClean($addressLine1);
+                    $addressLine2 = dataClean($addressLine2);
+                    $addressLine3 = dataClean($addressLine3);
+                    $addressLine4 = dataClean($addressLine4);
+                    $city = dataClean($city);
+                    $nic = dataClean($nic);
+                    $email = dataClean($email);
+                    $phoneNumber1 = dataClean($phoneNumber1);
+                    $phoneNumber2 = dataClean($phoneNumber2);
+                    $userName = dataClean($userName);
 
                     //========================Start Validation====================
                     $message = array();
-                    if (empty($FirstName)) {
-                        $message['FirstName'] = "First Name should not be empty..!";
+                    if (empty($firstName)) {
+                        $message['firstName'] = "First Name should not be empty..!";
                     }
-                    if (empty($LastName)) {
-                        $message['LastName'] = "Last Name should not be empty..!";
+                    if (empty($lastName)) {
+                        $message['lastName'] = "Last Name should not be empty..!";
                     }
-                    if (empty($AddressLine1)) {
-                        $message['AddressLine1'] = "AddressLine1 should not be empty..!";
+                    if (empty($addressLine1)) {
+                        $message['addressLine1'] = "AddressLine1 should not be empty..!";
                     }
-                    if (empty($AddressLine2)) {
-                        $message['AddressLine2'] = "AddressLine2 should not be empty..!";
+                    if (empty($addressLine2)) {
+                        $message['addressLine2'] = "AddressLine2 should not be empty..!";
                     }
-                    if (empty($AddressLine3)) {
-                        $message['AddressLine3'] = "AddressLine3 should not be empty..!";
+                    if (empty($addressLine3)) {
+                        $message['addressLine3'] = "AddressLine3 should not be empty..!";
                     }
-                    if (empty($City)) {
-                        $message['City'] = "City should not be empty..!";
+                    if (empty($city)) {
+                        $message['city'] = "City should not be empty..!";
                     }
-                    if (empty($DistrictId)) {
-                        $message['DistrictId'] = "Destrict should not be empty..!";
+                    if (empty($districtId)) {
+                        $message['districtId'] = "Destrict should not be empty..!";
                     }
-                    if (empty($NicNumber)) {
-                        $message['NicNumber'] = "NicNumber should not be empty..!";
+                    if (empty($nic)) {
+                        $message['nic'] = "NicNumber should not be empty..!";
                     }
-                    if (empty($Email)) {
-                        $message['Email'] = "Email should not be empty..!";
+                    if (empty($email)) {
+                        $message['email'] = "Email should not be empty..!";
                     }
-                    if (empty($PhoneNumber1)) {
-                        $message['PhoneNumber1'] = "PhoneNumber1 should not be empty..!";
+                    if (empty($phoneNumber1)) {
+                        $message['phoneNumber1'] = "PhoneNumber1 should not be empty..!";
                     }
-                    if (empty($PhoneNumber2)) {
-                        $message['PhoneNumber2'] = "PhoneNumber2 should not be empty..!";
+//                    if (empty($PhoneNumber2)) {
+//                        $message['PhoneNumber2'] = "PhoneNumber2 should not be empty..!";
+//                    }
+                    if (empty($userName)) {
+                        $message['userName'] = "UserName should not be empty..!";
                     }
-                    if (empty($UserName)) {
-                        $message['UserName'] = "UserName should not be empty..!";
+                    if (empty($password)) {
+                        $message['password'] = "Password should not be empty..!";
                     }
-                    if (empty($Password)) {
-                        $message['Password'] = "Password should not be empty..!";
-                    }
-                    if (empty($ConfirmPassword)) {
-                        $message['ConfirmPassword'] = "Confirm Password should not be empty..!";
+                    if (empty($confirmPassword)) {
+                        $message['confirmPassword'] = "Confirm Password should not be empty..!";
                     }
                     if (empty($message)) {
                         $target_dir = "uploads2/";
                         //return file name from a path(basename)
-                        $target_file = $target_dir . basename($_FILES["ProfileImage"]["name"]);
+                        $target_file = $target_dir . basename($_FILES["profileImage"]["name"]);
                         $uploadOk = 1;
                         //converts a strings to lowercase(strtolower)
                         //returns a file path information(pathinfo)
                         //return only extension(PATHINFO_EXTENSION)
                         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-                        $check = getimagesize($_FILES["ProfileImage"]["tmp_name"]);
+                        $check = getimagesize($_FILES["profileImage"]["tmp_name"]);
                         if ($check !== false) {
                             //Multi-purpose Internet Mail Extensions                       
                             $uploadOk = 1;
                         } else {
-                            $message['ProfileImage'] = "File is not an image.";
+                            $message['profileImage'] = "File is not an image.";
                             $uploadOk = 0;
                         }
                         // Check if file already exists
                         if (file_exists($target_file)) {
-                            $message['ProfileImage'] = "Sorry, file already exists.";
+                            $message['profileImage'] = "Sorry, file already exists.";
                             $uploadOk = 0;
                         }
                         // Check file size
                         //5mb
-                        if ($_FILES["ProfileImage"]["size"] > 5000000) {
-                            $message['ProfileImage'] = "Sorry, your file is too large.";
+                        if ($_FILES["profileImage"]["size"] > 5000000) {
+                            $message['profileImage'] = "Sorry, your file is too large.";
                             $uploadOk = 0;
                         }
 
                         // Allow certain file formats
                         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                            $message['ProfileImage'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                            $message['profileImage'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
                             $uploadOk = 0;
                         }
                         if ($uploadOk == 1) {
-                            if (move_uploaded_file($_FILES["ProfileImage"]["tmp_name"], $target_file)) {
-                                $Photo = htmlspecialchars(basename($_FILES["ProfileImage"]["name"]));
+                            if (move_uploaded_file($_FILES["profileImage"]["tmp_name"], $target_file)) {
+                                $Photo = htmlspecialchars(basename($_FILES["profileImage"]["name"]));
                             } else {
-                                $message['ProfileImage'] = "Sorry, there was an error uploading your file.";
+                                $message['profileImage'] = "Sorry, there was an error uploading your file.";
                             }
                         }
                     }
 
-                    if (!empty($FirstName)) {
-                        if (!preg_match("/^[A-Z ]*$/", substr($FirstName, 0, 1))) {
-                            $message['FirstName'] = 'First Letter should be in uppercase';
+                    if (!empty($firstName)) {
+                        if (!preg_match("/^[A-Z ]*$/", substr($firstName, 0, 1))) {
+                            $message['firstName'] = 'First Letter should be in uppercase';
                         }
                     }
-                    if (!empty($LastName)) {
-                        if (!preg_match("/^[A-Z ]*$/", substr($LastName, 0, 1))) {
-                            $message['LastName'] = 'First Letter should be in uppercase';
+                    if (!empty($lastName)) {
+                        if (!preg_match("/^[A-Z ]*$/", substr($lastName, 0, 1))) {
+                            $message['lastName'] = 'First Letter should be in uppercase';
                         }
                     }
-                    if (!empty($City)) {
-                        if (!preg_match("/^[A-Z ]*$/", substr($City, 0, 1))) {
-                            $message['City'] = 'First Letter should be in uppercase';
+                    if (!empty($city)) {
+                        if (!preg_match("/^[A-Z ]*$/", substr($city, 0, 1))) {
+                            $message['city'] = 'First Letter should be in uppercase';
                         }
                     }
 
-                    if (!empty($NicNumber)) {
-                        $test1 = strlen($NicNumber);
-                        $test2 = substr($NicNumber, -1, 1);
+                    if (!empty($nic)) {
+                        $test1 = strlen($nic);
+                        $test2 = substr($nic, -1, 1);
                         if (!(($test1 == 10 && $test2 == "V") || $test1 == 12)) {
-                            $message['NicNumber'] = 'Invalid Nic number';
+                            $message['nic'] = 'Invalid Nic number';
                         } else {
                             $db = dbConn();
-                            $sql = "SELECT * FROM tbl_customers WHERE NicNumber='$NicNumber'";
+                            $sql = "SELECT * FROM tbl_members WHERE nic='$nic'";
                             $result = $db->query($sql);
                             if ($result->num_rows > 0) {
-                                $message['NicNumber'] = ' Nic number already exist';
+                                $message['nic'] = ' Nic number already exist';
                             }
                         }
                     }
 
-                    if (!empty($Email)) {
-                        if (!filter_var($Email, FILTER_VALIDATE_EMAIL)) {
-                            $message['Email'] = 'invalid email';
+                    if (!empty($email)) {
+                        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                            $message['email'] = 'invalid email';
                         } else {
                             $db = dbConn();
-                            $sql = "SELECT * FROM tbl_customers WHERE Email='$Email'";
+                            $sql = "SELECT * FROM tbl_members WHERE email='$email'";
                             $result = $db->query($sql);
                             if ($result->num_rows > 0) {
-                                $message['Email'] = ' Email already exist';
+                                $message['email'] = ' Email already exist';
                             }
                         }
                     }
 
-                    if (!empty($UserName)) {
+                    if (!empty($userName)) {
                         $db = dbConn();
-                        $sql = "SELECT * FROM tbl_customers WHERE UserName='$UserName'";
+                        $sql = "SELECT * FROM tbl_members WHERE userName='$userName'";
                         $result = $db->query($sql);
                         if ($result->num_rows > 0) {
-                            $message['UserName'] = ' User Name already exist';
+                            $message['userName'] = ' User Name already exist';
                         }
                     }
 
-                    if (!empty($PhoneNumber1)) {
-                        $test1 = substr($PhoneNumber1, 0, 3);
-                        $test2 = strlen($PhoneNumber1);
+                    if (!empty($phoneNumber1)) {
+                        $test1 = substr($phoneNumber1, 0, 3);
+                        $test2 = strlen($phoneNumber1);
                         if (!(($test1 == "+94") && $test2 == 12)) {
-                            $message['PhoneNumber1'] = 'invalid phone number';
+                            $message['phoneNumber1'] = 'invalid phone number';
                         }
                     }
-                    if (!empty($PhoneNumber2)) {
-                        $test1 = substr($PhoneNumber2, 0, 3);
-                        $test2 = strlen($PhoneNumber2);
+                    if (!empty($phoneNumber2)) {
+                        $test1 = substr($phoneNumber2, 0, 3);
+                        $test2 = strlen($phoneNumber2);
                         if (!(($test1 == "+94") && $test2 == 12)) {
-                            $message['PhoneNumber2'] = 'invalid phone number';
+                            $message['phoneNumber2'] = 'invalid phone number';
                         }
                     }
 
-                    if (!empty($Password)) {
-                        if (strlen($Password) < 8) {
-                            $message['Password'] = "Password too short!";
+                    if (!empty($password)) {
+                        if (strlen($password) < 8) {
+                            $message['password'] = "Password too short!";
                         }
                     }
-                    if (!empty($Password)) {
-                        if (!preg_match("#[0-9]+#", $Password)) {
-                            $message['Password'] = "Password must include at least one number!";
+                    if (!empty($password)) {
+                        if (!preg_match("#[0-9]+#", $password)) {
+                            $message['password'] = "Password must include at least one number!";
                         }
                     }
-                    if (!empty($Password)) {
-                        if (!preg_match("#[a-zA-Z]+#", $Password)) {
-                            $message['Password'] = "Password must include at least one letter!";
+                    if (!empty($password)) {
+                        if (!preg_match("#[a-zA-Z]+#", $password)) {
+                            $message['password'] = "Password must include at least one letter!";
                         }
                     }
 
-                    if (!empty($Password)) {
-                        if ($Password != $ConfirmPassword) {
-                            $message['ConfirmPassword'] = "Password not match";
+                    if (!empty($password)) {
+                        if ($password != $confirmPassword) {
+                            $message['confirmPassword'] = "Password not match";
                         }
                     }
+                    
                     //======================Start Insert Records==========================
 
                     if (empty($message)) {
                         $db = dbConn();
-                        $sql = "INSERT INTO tbl_customers("
-                                . "FirstName,"
-                                . "LastName,"
-                                . "AddressLine1,"
-                                . "AddressLine2,"
-                                . "AddressLine3,"
-                                . "AddressLine4,"
-                                . "City,"
-                                . "DistrictId,"
-                                . "NicNumber,"
-                                . "Email,"
-                                . "PhoneNumber1,"
-                                . "PhoneNumber2,"
-                                . "ProfileImage,"
-                                . "UserName,"
-                                . "Password,StatusId)VALUES("
-                                . "'$FirstName',"
-                                . "'$LastName',"
-                                . "'$AddressLine1',"
-                                . "'$AddressLine2',"
-                                . "'$AddressLine3',"
-                                . "'$AddressLine4',"
-                                . "'$City',"
-                                . "'$DistrictId',"
-                                . "'$NicNumber',"
-                                . "'$Email',"
-                                . "'$PhoneNumber1',"
-                                . "'$PhoneNumber2',"
+                        echo $sql = "INSERT INTO tbl_members("
+                                . "firstName,"
+                                . "lastName,"
+                                . "addressLine1,"
+                                . "addressLine2,"
+                                . "addressLine3,"
+                                . "addressLine4,"
+                                . "city,"
+                                . "districtId,"
+                                . "nic,"
+                                . "email,"
+                                . "phoneNumber1,"
+                                . "phoneNumber2,"
+                                . "profileImage,"
+                                . "userName,"
+                                . "password,statusId)VALUES("
+                                . "'$firstName',"
+                                . "'$lastName',"
+                                . "'$addressLine1',"
+                                . "'$addressLine2',"
+                                . "'$addressLine3',"
+                                . "'$addressLine4',"
+                                . "'$city',"
+                                . "'$districtId',"
+                                . "'$nic',"
+                                . "'$email',"
+                                . "'$phoneNumber1',"
+                                . "'$phoneNumber2',"
                                 . "'$Photo',"
-                                . "'$UserName',"
-                                . "'" . sha1($Password) . "','1')";
+                                . "'$userName',"
+                                . "'" . sha1($password) . "','1')";
                         $db->query($sql);
 
                         //return the id(auto increment generated) from last query
                         $id = $db->insert_id;
-                        $custRegNo = 'R' . date('Y') . date('m') . date('d') . $id;
-                        //R202203129
-                        $sql = "UPDATE tbl_customers SET RegNo='$custRegNo' WHERE CustomerId='$id'";
+                        $memberRegistrationNo = 'R' . date('Y') . date('m') . date('d') . $id;
+                        //R202502202
+                        echo $sql = "UPDATE tbl_members SET memberRegistrationNo='$memberRegistrationNo' WHERE memberId='$id'";
                         $db->query($sql);
 
-                        $_SESSION['CustRegNo'] = $custRegNo;
+                        $_SESSION['memberRegistrationNo'] = $memberRegistrationNo;
 
                         //Get current page link
                         $current = $_GET['current'];
 
                         //Email sending to mail.php
-                        send_email($Email, $Email, "Registration completed", "Visit this page to login to the system:http://localhost/sms/login.php?current=$current <br> Your Registration No: $custRegNo",);
+                        //send_email($Email, $Email, "Registration completed", "Visit this page to login to the system:http://localhost/sms/login.php?current=$current <br> Your Registration No: $custRegNo",);
 
                         if (empty($current)) {
-                            header("Location:customer_registration_success.php");
+                            header("Location:registerSuccess.php");
                         } else {
-                            header("Location:customer_registration_success.php?current=" . $current);
+                            header("Location:registerSuccess.php?current=" . $current);
                         }
                     }
                 }
 
                 //============cancel form details====================
                 if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "cancel") {
-                    $FirstName = "";
-                    $LastName = "";
-                    $AddressLine1 = "";
-                    $AddressLine2 = "";
-                    $AddressLine3 = "";
-                    $AddressLine4 = "";
-                    $City = "";
-                    $DistrictId = "";
-                    $NicNumber = "";
-                    $Email = "";
-                    $PhoneNumber1 = "";
-                    $PhoneNumber2 = "";
-                    $Photo = "";
-                    $UserName = "";
-                    $Password = "";
-                    $ConfirmPassword = "";
+                    $firstName = "";
+                    $lastName = "";
+                    $addressLine1 = "";
+                    $addressLine2 = "";
+                    $addressLine3 = "";
+                    $addressLine4 = "";
+                    $city = "";
+                    $districtId = "";
+                    $nic = "";
+                    $email = "";
+                    $phoneNumber1 = "";
+                    $phoneNumber2 = "";
+                    $photo = "";
+                    $userName = "";
+                    $password = "";
+                    $confirmPassword = "";
                 }
                 ?>
                 <div class="card-header bg-info">
-                    Registration Form
+                    Member Registration Form
                 </div>
 
                 <?php
@@ -324,144 +341,129 @@
                 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>?current=<?php echo $_GET["current"] ?>" method="post" enctype="multipart/form-data">
                     <div class="card-body">
                         <fieldset class="border border-2 p-2">
-                            <legend  class="float-none w-auto p-2 mb-0"><h5>Membership Type</h5></legend>
-
-                            <div class="mb-3 ms-2 mt-0">
-                                <div class="row">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Dropdown button
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Action</a></li>
-                                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset class="border border-2 p-2">
                             <legend  class="float-none w-auto p-2 mb-0"><h5>Personal Information</h5></legend>
                             <div class="mb-3 ms-2 mt-0">
                                 <div class="row">
                                     <div class="col">
-                                        <label for="FirstName" class="form-label">First Name</label>
-                                        <input type="text" class="form-control" id="FirstName" name="FirstName" placeholder="Enter First Name" value="<?php echo @$FirstName; ?>">
-                                        <div class="text-danger"><?php echo @$message['FirstName']; ?></div>
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter First Name" value="<?php echo @$firstName; ?>">
+                                        <div class="text-danger"><?php echo @$message['firstName']; ?></div>
                                     </div>
                                     <div class="col">
-                                        <label for="LastName" class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" id="LastName" name="LastName" placeholder="Enter Last Name" value="<?php echo @$LastName; ?>">
-                                        <div class="text-danger"><?php echo @$message['LastName']; ?></div>
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter Last Name" value="<?php echo @$lastName; ?>">
+                                        <div class="text-danger"><?php echo @$message['lastName']; ?></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="mb-3 ms-2 mt-0">
                                 <div class="row">
                                     <div class="col">
-                                        <label for="AddressLine1">AddressLine1</label>
-                                        <textarea class="form-control" id="AddressLine1" name="AddressLine1" placeholder="Enter AddressLine1"><?php echo @$AddressLine1; ?></textarea>
-                                        <div class="text-danger"><?php echo @$message['AddressLine1']; ?></div>
+                                        <label for="addressLine1">AddressLine1</label>
+                                        <textarea class="form-control" id="addressLine1" name="addressLine1" placeholder="Enter AddressLine1"><?php echo @$addressLine1; ?></textarea>
+                                        <div class="text-danger"><?php echo @$message['addressLine1']; ?></div>
                                     </div>
                                     <div class="col">
-                                        <label for="AddressLine2">AddressLine2</label>
-                                        <textarea class="form-control" id="AddressLine2" name="AddressLine2" placeholder="Enter AddressLine2"><?php echo @$AddressLine2; ?></textarea>
-                                        <div class="text-danger"><?php echo @$message['AddressLine2']; ?></div>
+                                        <label for="addressLine2">AddressLine2</label>
+                                        <textarea class="form-control" id="addressLine2" name="addressLine2" placeholder="Enter AddressLine2"><?php echo @$addressLine2; ?></textarea>
+                                        <div class="text-danger"><?php echo @$message['addressLine2']; ?></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="mb-3 ms-2 mt-0">
                                 <div class="row">
                                     <div class="col">
-                                        <label for="AddressLine3">AddressLine3</label>
-                                        <textarea class="form-control" id="AddressLine3" name="AddressLine3" placeholder="Enter AddressLine3"><?php echo @$AddressLine3; ?></textarea>
-                                        <div class="text-danger"><?php echo @$message['AddressLine3']; ?></div>
+                                        <label for="addressLine3">AddressLine3</label>
+                                        <textarea class="form-control" id="addressLine3" name="addressLine3" placeholder="Enter AddressLine3"><?php echo @$addressLine3; ?></textarea>
+                                        <div class="text-danger"><?php echo @$message['addressLine3']; ?></div>
                                     </div>
                                     <div class="col">
-                                        <label for="AddressLine4">AddressLine4</label>
-                                        <textarea class="form-control" id="AddressLine4" name="AddressLine4" placeholder="Enter AddressLine4"><?php echo @$AddressLine4; ?></textarea>
+                                        <label for="addressLine4">AddressLine4</label>
+                                        <textarea class="form-control" id="addressLine4" name="addressLine4" placeholder="Enter AddressLine4"><?php echo @$addressLine4; ?></textarea>
                                     </div>
                                 </div>
-                            </div>
-                            <!--                            <div class="mb-3 ms-2 mt-0">
-                                                            <div class="row">
-                                                                <div class="col">
-                                                                    <label for="City" class="form-label">City</label>
-                                                                    <input type="text" class="form-control" id="City" name="City" placeholder="Enter City" value="<?php echo @$City; ?>">
-                                                                    <div class="text-danger"><?php echo @$message['City']; ?></div>
-                                                                </div>
-                                                                <div class="col">
-                            <?php
-                            $db = dbConn();
-                            $sql = "SELECT * FROM tbl_districts";
-                            $result = $db->query($sql);
-                            ?>
-                                                                    <label for="DistrictId" class="form-label">District</label>
-                                                                    <select class="form-control form-select" name="DistrictId" id="DistrictId">
-                                                                        <option value="">--</option>
-                            <?php
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    ?>
-                                                                                        <option value="<?php echo $row['DistrictId']; ?>" <?php if (@$DistrictId == $row['DistrictId']) { ?> selected <?php } ?>><?php echo $row['DistrictName']; ?></option>
-                                    <?php
-                                }
-                            }
-                            ?>
-                                                                    </select>
-                                                                    <div class="text-danger"><?php echo @$message['DistrictId']; ?></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>-->
-                            <div class="mb-3 ms-2">
-                                <label class="NicNumber">NicNumber</label>
-                                <input type="text" class="form-control" id="NicNumber" name="NicNumber" placeholder="Enter NIC Number" value="<?php echo @$NicNumber; ?>">
-                                <div class="text-danger"><?php echo @$message['NicNumber']; ?></div>
-                            </div>
-                            <div class="mb-3 ms-2">
-                                <label class="Email">Email</label>
-                                <input type="text" class="form-control" id="Email" name="Email" placeholder="Enter Email" value="<?php echo @$Email; ?>">
-                                <div class="text-danger"><?php echo @$message['Email']; ?></div>
                             </div>
                             <div class="mb-3 ms-2 mt-0">
                                 <div class="row">
                                     <div class="col">
-                                        <label for="PhoneNumber1" class="form-label">PhoneNumber1</label>
-                                        <input type="text" class="form-control" id="PhoneNumber1" name="PhoneNumber1" placeholder="Enter Phone Number1" value="<?php echo @$PhoneNumber1; ?>">
-                                        <div class="text-danger"><?php echo @$message['PhoneNumber1']; ?></div>
+                                        <label for="city" class="form-label">City</label>
+                                        <input type="text" class="form-control" id="city" name="city" placeholder="Enter City" value="<?php echo @$city; ?>">
+                                        <div class="text-danger"><?php echo @$message['city']; ?></div>
                                     </div>
                                     <div class="col">
-                                        <label for="PhoneNumber2" class="form-label">PhoneNumber2</label>
-                                        <input type="text" class="form-control" id="PhoneNumber2" name="PhoneNumber2" placeholder="Enter Phone Number2" value="<?php echo @$PhoneNumber2; ?>">
-                                        <div class="text-danger"><?php echo @$message['PhoneNumber2']; ?></div>
+                                        <?php
+                                        $db = dbConn();
+                                        $sql = "SELECT * FROM tbl_districts";
+                                        $result = $db->query($sql);
+                                        ?>
+                                        <label for="districtId" class="form-label">District</label>
+                                        <select class="form-control form-select" name="districtId" id="districtId">
+                                            <option value="">--</option>
+                                            <?php
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    ?>
+                                                    <option value="<?php echo $row['districtId']; ?>" <?php if (@$districtId == $row['districtId']) { ?> selected <?php } ?>><?php echo $row['districtName']; ?></option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                        <div class="text-danger"><?php echo @$message['districtId']; ?></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="mb-3 ms-2">
-                                <label for="ProfileImage" class="form-label">Profile Image</label>
-                                <input class="form-control" type="file" id="ProfileImage" name="ProfileImage">
-                                <div class="text-danger"><?php echo @$message['ProfileImage']; ?></div>
+                                <label class="nic">NicNumber</label>
+                                <input type="text" class="form-control" id="nic" name="nic" placeholder="Enter NIC Number" value="<?php echo @$nic; ?>">
+                                <div class="text-danger"><?php echo @$message['nic']; ?></div>
+                            </div>
+                            <div class="mb-3 ms-2">
+                                <label class="email">Email</label>
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email" value="<?php echo @$email; ?>">
+                                <div class="text-danger"><?php echo @$message['email']; ?></div>
+                            </div>
+                            <div class="mb-3 ms-2 mt-0">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="phoneNumber1" class="form-label">PhoneNumber1</label>
+                                        <input type="text" class="form-control" id="phoneNumber1" name="phoneNumber1" placeholder="Enter Phone Number1" value="<?php echo @$phoneNumber1; ?>">
+                                        <div class="text-danger"><?php echo @$message['phoneNumber1']; ?></div>
+                                        <div class="text-primary">eg: +94774563214</div>
+                                    </div>
+                                    <div class="col">
+                                        <label for="phoneNumber2" class="form-label">PhoneNumber2</label>
+                                        <input type="text" class="form-control" id="phoneNumber2" name="phoneNumber2" placeholder="Enter Phone Number2" value="<?php echo @$phoneNumber2; ?>">
+<!--                                        <div class="text-danger"><?php echo @$message['phoneNumber2']; ?></div>-->
+                                        <div class="text-primary">eg: +94774563214</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 ms-2">
+                                <label for="profileImage" class="form-label">Profile Image</label>
+                                <input class="form-control" type="file" id="profileImage" name="profileImage">
+                                <div class="text-danger"><?php echo @$message['profileImage']; ?></div>
                             </div>
                         </fieldset>
                         <fieldset class="border border-2 p-2">
                             <legend  class="float-none w-auto p-2 mb-0"><h5>Account Information</h5></legend>
                             <div class="mb-3 ms-2">
-                                <label class="UserName">UserName</label>
-                                <input type="text" class="form-control" id="UserName" name="UserName" placeholder="Enter User Name" value="<?php echo @$UserName; ?>">
-                                <div class="text-danger"><?php echo @$message['UserName']; ?></div>
+                                <label class="userName">UserName</label>
+                                <input type="text" class="form-control" id="userName" name="userName" placeholder="Enter User Name" value="<?php echo @$userName; ?>">
+                                <div class="text-danger"><?php echo @$message['userName']; ?></div>
                             </div>
                             <div class="mb-3 ms-2 mt-0">
                                 <div class="row">
                                     <div class="col">
-                                        <label for="Password" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="Password" name="Password" placeholder="Enter Password" value="<?php echo @$Password; ?>">
-                                        <div class="text-danger"><?php echo @$message['Password']; ?></div>
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" value="<?php echo @$password; ?>">
+                                        <div class="text-danger"><?php echo @$message['password']; ?></div>
+                                        <div class="text-primary">Password must include at least one letter, one number with 8 characters or more</div>
                                     </div>
                                     <div class="col">
-                                        <label for="ConfirmPassword" class="form-label">Confirm Password</label>
-                                        <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" placeholder="Confirm Password" >
-                                        <div class="text-danger"><?php echo @$message['ConfirmPassword']; ?></div>
+                                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" >
+                                        <div class="text-danger"><?php echo @$message['confirmPassword']; ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -476,10 +478,13 @@
         </div>
         <!--       =======================Footer Section========================-->
         <footer class="p-0 m-0"> 
-            <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">Copyright 1990-2020 by Data. All Rights Reserved.</p>
+            <p class="text-center bg-dark  p-2 mb-0 ms-0 text-primary">All Rights Reserved-Everest Fitness Center</p>
         </footer>
         <script src="js/bootstrap.bundle.min.js "></script>
     </body>
 </html>
+<?php
+ob_end_flush();
+?>
 
 
