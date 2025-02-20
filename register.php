@@ -3,6 +3,14 @@ ob_start();
 //A session is a way to store information (in variables) to be used across multiple pages.Not a computer
 session_start();
 //include 'system/plugins/mail.php';
+// Set default value for $current
+$current = isset($_GET['current']) ? $_GET['current'] : '';
+
+// Form action URL
+$formAction = htmlspecialchars($_SERVER['PHP_SELF']);
+if (!empty($current)) {
+    $formAction .= "?current=" . urlencode($current);
+}
 ?>
 <html>
     <head>
@@ -294,16 +302,30 @@ session_start();
                         $_SESSION['memberRegistrationNo'] = $memberRegistrationNo;
 
                         //Get current page link
-                        $current = $_GET['current'];
+                        //$current = $_GET['current'];
+                        //$current = isset($_GET['current']) ? $_GET['current'] : '';
+                        
+                        // Form action URL
+//                        $formAction = htmlspecialchars($_SERVER['PHP_SELF']);
+//                        if (!empty($current)) {
+//                            $formAction .= "?current=" . urlencode($current);
+//                        }
 
                         //Email sending to mail.php
                         //send_email($Email, $Email, "Registration completed", "Visit this page to login to the system:http://localhost/sms/login.php?current=$current <br> Your Registration No: $custRegNo",);
 
-                        if (empty($current)) {
-                            header("Location:registerSuccess.php");
-                        } else {
-                            header("Location:registerSuccess.php?current=" . $current);
-                        }
+//                        if (empty($current)) {
+//                            header("Location:registerSuccess.php");
+//                        } else {
+//                            header("Location:registerSuccess.php?current=" . $current);
+//                        }
+                        // Redirect after successful registration
+    if (empty($current)) {
+        header("Location: registerSuccess.php");
+    } else {
+        header("Location: registerSuccess.php?current=" . urlencode($current));
+    }
+    exit();
                     }
                 }
 
@@ -332,13 +354,13 @@ session_start();
                 </div>
 
                 <?php
-                if (!isset($_GET["current"])) {
-                    //current location
-                    $_GET["current"] = "./";
-                }
+//                if (!isset($_GET["current"])) {
+//                    //current location
+//                    $_GET["current"] = "./";
+//                }
                 ?>
 
-                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>?current=<?php echo $_GET["current"] ?>" method="post" enctype="multipart/form-data">
+                <form action="<?php echo $formAction; ?>" method="post" enctype="multipart/form-data">
                     <div class="card-body">
                         <fieldset class="border border-2 p-2">
                             <legend  class="float-none w-auto p-2 mb-0"><h5>Personal Information</h5></legend>

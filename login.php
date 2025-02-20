@@ -3,6 +3,12 @@
 //start session
 ob_start();
 session_start();
+//$memberRegistrationNo;
+//if (isset($_SESSION['memberRegistrationNo'])) {
+//    header("Location:login.php");
+//}
+$memberRegistrationNo = $_SESSION['memberRegistrationNo'];
+//echo $memberRegistrationNo;
 ?>
 
 <html>

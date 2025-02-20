@@ -3,6 +3,12 @@ session_start();
 if (!isset($_SESSION['MEMBERID'])) {
     header("Location:login.php");
 }
+//if (isset($_SESSION['MEMBERID'])) {
+//    header("Location:login.php");
+//}
+$memberRegistrationNo = $_SESSION['memberRegistrationNo'];
+//echo $memberRegistrationNo;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,7 +29,26 @@ if (!isset($_SESSION['MEMBERID'])) {
 <!--            <nav class="navbar navbar-light bg-dark">-->
             <div class="container-fluid p-3 m-0 pb-0">
                 <span class="navbar-text mt-3">
-                    <h6 class="text-primary text-center">Welcome <?php echo $_SESSION['FIRSTNAME']; ?> <?php echo $_SESSION['LASTNAME']; ?> !</h6>
+                    <?php
+                    if (isset($memberRegistrationNo)) {
+                        include 'system/function.php';
+                        $db = dbConn();
+                        $sql = "SELECT * FROM tbl_members WHERE memberRegistrationNo='$memberRegistrationNo'";
+                        $result = $db->query($sql);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                ?>
+                                <h6 class="text-primary text-center">Welcome <?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?> !</h6>
+                                <?php
+                            }
+                        }
+                    } else {
+                        ?>
+                        <h6 class="text-primary text-center">Welcome <?php echo $_SESSION['FIRSTNAME']; ?> <?php echo $_SESSION['LASTNAME']; ?> !</h6>
+                        <?php
+                    }
+                    ?>
+<!--                    <h6 class="text-primary text-center">Welcome <?php echo $_SESSION['FIRSTNAME']; ?> <?php echo $_SESSION['LASTNAME']; ?> !</h6>-->
                 </span>
             </div>
             <!--</nav>-->
@@ -108,8 +133,8 @@ if (!isset($_SESSION['MEMBERID'])) {
             <h1 class="text-center">| Our Services |</h1>
             <h4 class="text-center">Personal Workouts | Fitness | Classes</h4>
             <?php
-            include 'system/function.php';
-            $db = dbConn();
+            //include 'system/function.php';
+            //$db = dbConn();
             $sql = "SELECT * FROM tbl_service_type WHERE serviceTypeId !=4 LIMIT 10";
             $result = $db->query($sql);
             //extract($POST);
