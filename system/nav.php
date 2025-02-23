@@ -131,8 +131,21 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex justify-content-center ">
           <div class="image text-center" >
-              <img class="img-fluid" src="<?php echo SITE_URL; ?>dist/img/user2-160x160.jpg" width="150px">
-              <a href="#" class="d-block text-primary mt-2">User Role</a>
+              <?php
+//              include './function.php';
+              $role=$_SESSION['ROLE'];
+              $db= dbConn();
+              $sql="SELECT * FROM tbl_instructors INNER JOIN tbl_user_roles ON tbl_instructors.roleCode=tbl_user_roles.roleCode WHERE tbl_instructors.roleCode='$role'";
+              $result=$db->query($sql);
+              if($result->num_rows>0){
+                  while ($row=$result->fetch_assoc()){
+              ?>
+              <img class="img-fluid" src="<?php echo SITE_URL; ?>uploads/<?php echo $row['profilePhoto']; ?>">
+              <a href="#" class="d-block text-primary mt-2"><?php echo $row['roleName']; ?></a>
+              <?php
+              }
+              }
+              ?>
               <a href="#" class="d-block text-primary"><?php echo $_SESSION['FIRSTNAME']; ?> <?php echo $_SESSION['LASTNAME']; ?></a>
           </div>
         

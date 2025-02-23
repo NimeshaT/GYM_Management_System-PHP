@@ -7,22 +7,22 @@ include '../nav.php';
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">User</h1>
+                    <h1 class="m-0">Instructor</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">User</a></li>
+                        <li class="breadcrumb-item"><a href="#">Instructor</a></li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                </div>
+            </div>
+        </div>
     </div>
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-5">
-                    <div class="card card-primary">
+                    <div class="card card-info">
                         <!--                        <div class="card-header">
                                                     <h3 class="card-title">Create User Account</h3>
                                                 </div>-->
@@ -51,11 +51,29 @@ include '../nav.php';
                             $message = array();
 
                             //validation start
+                            if (empty($titleId)) {
+                                $message['titleId'] = "Title should not be empty..!";
+                            }
                             if (empty($firstName)) {
                                 $message['firstName'] = "FirstName should not be empty..!";
                             }
                             if (empty($lastName)) {
                                 $message['lastName'] = "LastName should not be empty..!";
+                            }
+                            if (empty($address)) {
+                                $message['address'] = "Address should not be empty..!";
+                            }
+                            if (empty($email)) {
+                                $message['email'] = "Email should not be empty..!";
+                            }
+                            if (empty($telNo)) {
+                                $message['telNo'] = "Telephone No. should not be empty..!";
+                            }
+                            if (empty($userName)) {
+                                $message['userName'] = "UserName should not be empty..!";
+                            }
+                            if (empty($password)) {
+                                $message['password'] = "Password should not be empty..!";
                             }
                             //validation end
                             
@@ -222,10 +240,11 @@ include '../nav.php';
                         //Start Delete
                         ?>
                         <div class="card-header">
-                            <h3 class="card-title"><?php echo @$form_title; ?> User Account</h3>
+                            <h3 class="card-title"><?php echo @$form_title; ?> Instructor Account</h3>
                         </div>
                         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" enctype="multipart/form-data">
                             <div class="card-body">
+                                
                                 <div class="form-group">
                                     <?php
                                     //$title='';
@@ -248,6 +267,8 @@ include '../nav.php';
                                         ?>
                                     </select>
                                 </div>
+                                <div class="text-danger"><?php echo @$message['titleId']; ?></div>
+                                
                                 <div class="form-group">
                                     <label for="firstName">First Name</label>
                                     <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter First Name" value="<?php echo @$firstName ?>">
@@ -264,30 +285,87 @@ include '../nav.php';
                                     <label for="address">Address</label>
                                     <textarea class="form-control" id="address" name="address" placeholder="Enter Address"><?php echo @$address ?></textarea>
                                 </div>
+                                <div class="text-danger"><?php echo @$message['address']; ?></div>
+                                
                                 <div class="form-group">
                                     <label for="email">Email address</label>
                                     <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" value="<?php echo @$email ?>">
                                 </div>
+                                <div class="text-danger"><?php echo @$message['email']; ?></div>
+                                
+                                <div class="form-group">
+                                    <label for="nicNo">Nic.</label>
+                                    <input type="text" class="form-control" id="nicNo" name="nicNo" placeholder="Enter NIC No." value="<?php echo @$nicNo ?>">
+                                </div>
+                                <div class="text-danger"><?php echo @$message['nicNo']; ?></div>
+                                
                                 <div class="form-group">
                                     <label for="telNo">Telephone No:</label>
                                     <input type="text" class="form-control" id="telNo" name="telNo" placeholder="Enter Telephone No." value="<?php echo @$telNo ?>">
                                 </div>
+                                <div class="text-danger"><?php echo @$message['telNo']; ?></div>
+                                
                                 <div class="form-group">
                                     <label for="userName">UserName</label>
                                     <input type="text" class="form-control" id="userName" name="userName" placeholder="Enter userName" value="<?php echo @$userName ?>">
                                 </div>
+                                <div class="text-danger"><?php echo @$message['userName']; ?></div>
+                                
                                 <div class="form-group">
                                     <label for="password">Password</label>
                                     <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="<?php echo @$password ?>">
                                 </div>
+                                <div class="text-danger"><?php echo @$message['password']; ?></div>
+                                
                                 <div class="mb-3">
                                     <label for="profilePhoto">Profile Image</label>
                                     <input type="file" class="form-control" id="profilePhoto" name="profilePhoto">
                                     <input type="hidden" name="PreviousProfilePhoto" value="<?php echo @$profilePhoto; ?>">
-                                    <div class="text-danger"><?php echo @$message['profilePhoto']; ?></div>
+                                    <!--<div class="text-danger"><?php echo @$message['profilePhoto']; ?></div>-->
+                                </div>
+                                <div class="form-group">
+                                    <?php
+                                    $db= dbConn();
+                                    $sql="SELECT * FROM tbl_user_roles";
+                                    $result=$db->query($sql);
+                                    ?>
+                                    <label for="roleCode">Select Role</label>
+                                    <select class="form-control" name="roleCode" id="roleCode">
+                                        <option value="">--</option>
+                                        <?php
+                                        //fetch assoc convert data associative array
+                                        if($result->num_rows>0){
+                                            while ($row=$result->fetch_assoc()){
+                                        ?>
+                                        <option value="<?php echo $row['roleCode']; ?>" <?php if (@$roleCode == $row['roleCode']) { ?> selected <?php } ?>><?php echo $row['roleName']; ?></option>
+                                        <?php
+                                        }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <?php
+                                    $db= dbConn();
+                                    $sql="SELECT * FROM tbl_instructor_service";
+                                    $result=$db->query($sql);
+                                    ?>
+                                    <label for="service">Select Instructor Service</label>
+                                    <select class="form-control" name="instructorServiceId" id="instructorServiceId">
+                                        <option value="">--</option>
+                                        <?php
+                                        //fetch assoc convert data associative array
+                                        if($result->num_rows>0){
+                                            while ($row=$result->fetch_assoc()){
+                                        ?>
+                                        <option value="<?php echo $row['instructorServiceId']; ?>" <?php if (@$instructorServiceId == $row['instructorServiceId']) { ?> selected <?php } ?>><?php echo $row['instructorServiceName']; ?></option>
+                                        <?php
+                                        }
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
                             </div>
-                            <!-- /.card-body -->
 
                             <div class="card-footer">
                                 <input type="hidden" name="instructorId" value="<?php echo @$instructorId ?>">
@@ -300,16 +378,16 @@ include '../nav.php';
                 <div class="col-7">
                     <!--                    -----------Confirmation message----------->
                     <?php
-                    if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'delete_account') {
-
-                        //echo 'Do you want to?';
-//                            $db= dbConn();
-//                            $sql="DELETE FROM tbl_instructors WHERE instructorId='$instructorId'";
-//                            $db->query($sql);
-//                            
-//                            $submit='Save';
-                        ?>
-                        <div class="card">
+//                    if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'delete_account') {
+//
+//                        //echo 'Do you want to?';
+////                            $db= dbConn();
+////                            $sql="DELETE FROM tbl_instructors WHERE instructorId='$instructorId'";
+////                            $db->query($sql);
+////                            
+////                            $submit='Save';
+//                        ?>
+<!--                        <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Delete Confirmation</h3>
                             </div>
@@ -317,25 +395,25 @@ include '../nav.php';
 
                                 Are you sure want to delete this record?
                                 <br><br> 
-                                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-                                    <input type="hidden" name="instructorId" value="<?php echo $instructorId; ?>">
+                                <form action="//<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                                    <input type="hidden" name="instructorId" value="//<?php echo $instructorId; ?>">
                                     <button type="submit" class="btn btn-warning" name="action" value="delete_account_confirm">Yes</button>
                                     <button type="submit" class="btn btn-danger" name="action" value="delete_account_cancel">No</button>
                                 </form>
                             </div>
-                        </div>
+                        </div>-->
                         <?php
-                    }
-                    if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'delete_account_confirm') {
-
-                        $db = dbConn();
-                        $sql = "DELETE FROM tbl_instructors WHERE instructorId='$instructorId'";
-                        $db->query($sql);
-                    }
+//                    }
+//                    if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'delete_account_confirm') {
+//
+//                        $db = dbConn();
+//                        $sql = "DELETE FROM tbl_instructors WHERE instructorId='$instructorId'";
+//                        $db->query($sql);
+//                    }
                     ?>
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Table of User Details</h3>
+                        <div class="card-header bg-info">
+                            <h3 class="card-title">Table of Instructor Details</h3>
                         </div>
                         <div class="card-body">
 <!--                            -----------------Search BAR----------------------->
@@ -353,8 +431,20 @@ include '../nav.php';
                                 }
                             }
                             
+                            //change status
+                        if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "change") {
                             $db = dbConn();
-                            $sql = "SELECT * FROM tbl_instructors $where";
+                            $Stid = $Stid == '1' ? '2' : '1';
+                            $sql = "UPDATE tbl_instructors SET statusId='$Stid' WHERE instructorId='$Sid'";
+                            $db->query($sql);
+                            //after submit
+                            $action = "create_account";
+                            $form_title = "Create";
+                            $submit = "Create";
+                        }
+                            
+                            $db = dbConn();
+                            $sql = "SELECT * FROM tbl_instructors INNER JOIN tbl_status ON tbl_instructors.statusId=tbl_status.statusId INNER JOIN tbl_instructor_title ON tbl_instructors.titleId=tbl_instructor_title.titleId $where";
                             $result = $db->query($sql);
                             ?>
                             <table id="user_list" class="table table-bordered table-hover">
@@ -364,7 +454,8 @@ include '../nav.php';
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Profile Image</th>
-                                        <th></th>
+                                        <th>Change Status</th>
+                                        <th>Status</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -375,21 +466,36 @@ include '../nav.php';
                                             ?>
                                             <tr>
 
-                                                <td><?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></td>
+                                                <td><?php echo $row['titleName']; ?> <?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></td>
                                                 <td><?php echo $row['email']; ?></td>
                                                 <td><img class="img-fluid" width="100" src="<?php echo SITE_URL; ?>uploads/<?php echo $row['profilePhoto']; ?>"></td>
+                                                <td>
+                                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+                                                        <button type="submit" class="btn btn-danger btn-sm" name="action" value="change">Change</button>
+                                                        <input type="hidden" name="Sid" value="<?php echo $row['instructorId'] ?>">
+                                                        <input type="hidden" name="Stid" value="<?php echo $row['statusId'] ?>">
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    if ($row['statusId'] == '1') {
+                                                    ?>
+                                                        <button type="button" class="btn btn-success btn-sm"><?php echo $row['statusName'] ?></button>
+                                                        <?php
+                                                    } else {
+                                                        ?>
+                                                        <button type="button" class="btn btn-danger btn-sm"><?php echo $row['statusName'] ?></button>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </td>
                                                 <td>
                                                     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                                                         <input type="hidden" name="instructorId" value="<?php echo $row['instructorId']; ?>">
                                                         <button type="submit" class="btn btn-warning" name="action" value="edit_account">Edit</button>
                                                     </form>
                                                 </td>
-                                                <td>
-                                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-                                                        <input type="hidden" name="instructorId" value="<?php echo $row['instructorId']; ?>">
-                                                        <button type="submit" class="btn btn-danger" name="action" value="delete_account">Delete</button>
-                                                    </form>
-                                                </td>
+                                                
                                             </tr>
                                             <?php
                                         }
@@ -398,7 +504,6 @@ include '../nav.php';
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.card-body -->
                     </div>
                 </div>
             </div>

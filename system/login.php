@@ -36,20 +36,20 @@ extract($_POST);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'login') {
     //Start Validation
-    $UserName = dataClean($UserName);
+    $userName = dataClean($userName);
 
     $message = array();
 
-    if (empty($UserName)) {
-        $message['UserName'] = "User Name should not be empty..!";
+    if (empty($userName)) {
+        $message['userName'] = "User Name should not be empty..!";
     }
-    if (empty($Password)) {
-        $message['Password'] = "Password should not be empty..!";
+    if (empty($password)) {
+        $message['password'] = "Password should not be empty..!";
     }
 
     if (empty($message)) {
         $db = dbConn();
-        $sql = "SELECT * FROM tbl_instructors WHERE userName='$UserName' and password='" . sha1($Password) . "' and status='1'";
+        $sql = "SELECT * FROM tbl_instructors WHERE userName='$userName' and password='" . sha1($password) . "' and statusId='1'";
         $result = $db->query($sql);
         if ($result->num_rows == 1) {
 
@@ -63,30 +63,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'login') {
 
             header("Location:index.php");
         } else {
-            $message['Password'] = "Username or Password invalid..";
+            $message['password'] = "Username or Password invalid..";
         }
     }
 }
 ?>
                     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                         <div class="input-group mt-3">
-                            <input type="text" class="form-control" placeholder="Username" id="UserName" name="UserName">
+                            <input type="text" class="form-control" placeholder="Username" id="userName" name="userName">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-user"></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-danger"><?php echo @$message['UserName']; ?></div>
+                        <div class="text-danger"><?php echo @$message['userName']; ?></div>
                         <div class="input-group mt-3 mb-2">
-                            <input type="password" class="form-control" placeholder="Password" id="Password" name="Password">
+                            <input type="password" class="form-control" placeholder="Password" id="password" name="password">
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-danger"><?php echo @$message['Password']; ?></div>
+                        <div class="text-danger"><?php echo @$message['password']; ?></div>
                         <div class="row">
                             <div class="col-8">
 
