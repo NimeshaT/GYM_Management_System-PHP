@@ -97,7 +97,13 @@ if (!isset($_SESSION['MEMBERID'])) {
                                  <li><?php echo date("g:i A", strtotime($startTime)); ?> - <?php echo date("g:i A", strtotime($endTime)); ?></li>
                                  <li><?php echo $row['classDuration']; ?></li>
                              </ul>
-                                     <a href="joiningClassForm.php" class="btn btn-success btn-sm d-block">Join Now</a>
+<!--                                     <a href="joiningClassForm.php" class="btn btn-success btn-sm">Join Now</a>-->
+                                     <div class="text-center mt-2 d-flex">
+                                <form action="joiningClassForm.php" method="post" >
+                                    <input type="hidden" name="classId" value="<?php echo $row['classId']; ?>">
+                                    <button type="submit" class="btn btn-success btn-block">Join Now</button>
+                                </form>
+                            </div>
                                  
                         </div>
                     </div>

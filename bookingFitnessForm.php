@@ -3,6 +3,11 @@ session_start();
 if (!isset($_SESSION['MEMBERID'])) {
     header("Location:login.php");
 }
+include 'system/function.php';
+$db = dbConn();
+extract($_POST);
+//$workoutId = $_GET["workoutId"];
+$fitnessId;
 ?>
 <!DOCTYPE html>
 <html>
@@ -65,7 +70,122 @@ if (!isset($_SESSION['MEMBERID'])) {
 
 
         <!--        ///////////////////////////////////////////////////workout section///////////////////////////////////////////////////////////////////////-->
-        <h1>BOOKING FITNESS FORM</h1>
+        <div class="container mt-3 mb-3">
+            <div class="card mx-auto" style="width: 60%">
+                <div class="card-header bg-info">
+                    Book Your Fitness
+                </div>
+                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                    <div class="card-body">
+                        <!--FieldSet 01-->
+                        <?php
+                        
+                        $sql = "SELECT * FROM tbl_members WHERE memberId = '{$_SESSION['MEMBERID']}'";
+                        $result = $db->query($sql);
+                        ?>
+                        <fieldset class="border border-2 p-2 bg-light">
+                            <legend  class="float-none w-auto p-2 mb-0"><h5>Member Information</h5></legend>
+                            <?php
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                    <div class="mb-3 ms-2">
+                                        <label class="memberId" style="display: none">Member ID</label>
+                                        <input type="hidden" class="form-control" id="memberId" name="memberId" value="<?php echo $row['memberId']; ?>" readonly>
+                                    </div>
+                                    <div class="mb-3 ms-2">
+                                        <label class="memberRegistrationNo">Member Registration No:</label>
+                                        <input type="text" class="form-control" id="memberRegistrationNo" name="memberRegistrationNo" value="<?php echo $row['memberRegistrationNo']; ?>" readonly>
+                                    </div>
+                                    <div class="mb-3 ms-2 mt-0">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="firstName" class="form-label">First Name</label>
+                                                <input type="text" class="form-control" id="firstName" name="firstName" value="<?php echo $row['firstName']; ?>" readonly>
+                                            </div>
+                                            <div class="col">
+                                                <label for="lastName" class="form-label">Last Name</label>
+                                                <input type="text" class="form-control" id="lastName" name="lastName" value="<?php echo $row['lastName']; ?>" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 ms-2">
+                                        <label class="nic">NIC</label>
+                                        <input type="text" class="form-control" id="nic" name="nic" value="<?php echo $row['nic']; ?>" readonly>
+                                    </div>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </fieldset>
+                        
+                        <!--FieldSet 02-->
+                        <?php
+                        $db = dbConn();
+                        $sql = "SELECT * FROM tbl_fitness WHERE fitnessId = '$fitnessId'";
+                        $result = $db->query($sql);
+                        ?>
+                        <fieldset class="border border-2 p-2 bg-light">
+                            <legend  class="float-none w-auto p-2 mb-0"><h5>Fitness Information</h5></legend>
+                            <?php
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                    <div class="mb-3 ms-2">
+                                        <label class="fitnessId" style="display: none">fitness ID</label>
+                                        <input type="hidden" class="form-control" id="fitnessId" name="fitnessId" value="<?php echo $row['fitnessId']; ?>" readonly>
+                                    </div>
+                                    <div class="mb-3 ms-2">
+                                        <label class="fitnessName">Fitness Name:</label>
+                                        <input type="text" class="form-control" id="fitnessName" name="fitnessName" value="<?php echo $row['fitnessName']; ?>" readonly>
+                                    </div>
+                                    <div class="mb-3 ms-2 mt-0">
+                                        
+                                    </div>
+                                    
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </fieldset>
+                        
+                        <!--Fieldset 03-->
+                        <fieldset class="border border-2 p-2 bg-light">
+                            <legend  class="float-none w-auto p-2 mb-0"><h5>Calculate BMI</h5></legend>
+                                    
+                                    <div class="mb-3 ms-2 mt-0">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="weight" class="form-label">Enter Weight (Kg.)</label>
+                                                <input type="text" class="form-control" id="weight" name="weight" value="">
+                                            </div>
+                                            <div class="col">
+                                                <label for="height" class="form-label">Enter Height (M.)</label>
+                                                <input type="text" class="form-control" id="height" name="height" value="">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col">
+<!--                                                <label for="BMI" class="form-label">BMI</label>-->
+                                                <input type="text" class="form-control" id="BMI" name="BMI" value="" readonly>
+                                                  <button type="button" class="btn btn-success">Calculate BMI</button>
+                                            </div>
+                                            <div class="col mt-4">
+<!--                                                <button type="button" class="btn btn-success">Success</button>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                        </fieldset>
+
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary" name="action" value="save">Book Now</button>
+                        <button type="submit" class="btn btn-danger" name="action" value="cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <!--        ///////////////////////////////////////////////////FOOTER///////////////////////////////////////////////////////////////////////-->
 

@@ -3,6 +3,7 @@ session_start();
 if (!isset($_SESSION['MEMBERID'])) {
     header("Location:login.php");
 }
+include 'system/function.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -65,7 +66,75 @@ if (!isset($_SESSION['MEMBERID'])) {
 
 
         <!--        ///////////////////////////////////////////////////workout section///////////////////////////////////////////////////////////////////////-->
-        <h1>SHOULD CREATE MY PROFILE PAGE</h1>
+         <div class="container mt-3 mb-3">
+            <div class="card">
+                <div class="card-header" style="background-color: #0071c5">
+                    <h5 class="text-center">--My Profile--</h5>
+                </div>
+                <?php
+                $db = dbConn();
+                $sql = "SELECT * FROM tbl_members INNER JOIN  tbl_districts ON tbl_members.districtId =tbl_districts.districtId WHERE "
+                        . "memberId = '{$_SESSION['MEMBERID']}'";
+                $result = $db->query($sql);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="card ms-3" style="width: 15rem;">
+                                        <img class="img-fluid " width="300" src="uploads2/<?php echo $row['profileImage']; ?>">
+                                        <ul class="list-group list-group-flush ">
+                                            <li class="list-group-item text-center bg-secondary"><?php echo $row['memberRegistrationNo']; ?></li>
+                                            <li class="list-group-item text-center bg-light"><?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card">
+                                        <div class="card-header bg-info">
+                                            Personal Information
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">Address: <?php echo $row['addressLine1']; ?> <?php echo $row['addressLine2']; ?> <?php echo $row['addressLine3']; ?> <?php echo $row['addressLine4']; ?></li>
+                                                <li class="list-group-item">City: <?php echo $row['city']; ?></li>
+                                                <li class="list-group-item">District: <?php echo $row['districtName']; ?></li>
+                                                <li class="list-group-item">Nic: <?php echo $row['nic']; ?></li>
+                                                <li class="list-group-item">City: <?php echo $row['email']; ?></li>
+                                                <li class="list-group-item">Contact No: <?php echo $row['phoneNumber1']; ?>/ <?php echo $row['phoneNumber2']; ?> </li>
+                                                <li class="list-group-item">User Name: <?php echo $row['userName']; ?></li>
+                                            </ul>
+                                        </div>
+<!--                                        <div class="card-footer">
+                                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                <a href="edit_profile_image.php" class="btn btn-warning" >Edit Profile Image</a>
+                                                <a href="edit_profile.php" class="btn btn-primary" >Edit Profile</a>
+                                                <a href="change_password.php" class="btn btn-success" >Change Password</a>
+                                            </div><br><br>
+                                            
+                                        </div>-->
+                                    </div>
+
+                                </div>
+                                <div class="col-3 bg-light">
+                                    <a href="viewAppointments.php" class="btn btn-outline-primary " >Edit Profile Image</a><br><br>
+                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >Edit Profile</a><br><br>
+                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >Change Password</a><br><br>
+                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >My Personal Workouts</a><br><br>
+                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >My Fitnesses</a><br><br>
+                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >My Classes</a><br><br>
+                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >My Packages</a>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
+            </div>
+        </div>
 
         <!--        ///////////////////////////////////////////////////FOOTER///////////////////////////////////////////////////////////////////////-->
 

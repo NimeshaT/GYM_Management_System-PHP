@@ -87,7 +87,13 @@ if (!isset($_SESSION['MEMBERID'])) {
                         <img src="system/uploads/<?php echo $row['fitnessImage']; ?>" class="card-img-top" alt="fitnessImage">
                         <div class="card-body text-center">
 <!--                            <h5 class="card-title">Bench Press</h5>-->
-                            <a href="bookingFitnessForm.php" class="btn btn-success btn-sm d-block">Book Now</a>
+<!--                            <a href="bookingFitnessForm.php" class="btn btn-success btn-sm d-block">Book Now</a>-->
+                            <div class="text-center mt-2 btn-sm">
+                                <form action="bookingFitnessForm.php" method="post" >
+                                    <input type="hidden" name="fitnessId" value="<?php echo $row['fitnessId']; ?>">
+                                    <button type="submit" class="btn btn-success">Book Now</button>
+                                </form>
+                            </div>
 <!--                            <br>
                             <a href="register.php" class="btn btn-primary btn-sm d-block">Register</a>-->
                         </div>

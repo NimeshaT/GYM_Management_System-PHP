@@ -7,8 +7,13 @@ session_start();
 //if (isset($_SESSION['memberRegistrationNo'])) {
 //    header("Location:login.php");
 //}
-$memberRegistrationNo = $_SESSION['memberRegistrationNo'];
+//$memberRegistrationNo = $_SESSION['memberRegistrationNo'];
 //echo $memberRegistrationNo;
+if (isset($_SESSION['memberRegistrationNo'])) {
+    $memberRegistrationNo = $_SESSION['memberRegistrationNo'];
+} else {
+    $memberRegistrationNo = null; // or assign a default value
+}
 ?>
 
 <html>

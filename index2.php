@@ -6,9 +6,15 @@ if (!isset($_SESSION['MEMBERID'])) {
 //if (isset($_SESSION['MEMBERID'])) {
 //    header("Location:login.php");
 //}
-$memberRegistrationNo = $_SESSION['memberRegistrationNo'];
+//$memberRegistrationNo = $_SESSION['memberRegistrationNo'];
 //echo $memberRegistrationNo;
-
+if (isset($_SESSION['memberRegistrationNo'])) {
+    $memberRegistrationNo = $_SESSION['memberRegistrationNo'];
+} else {
+    $memberRegistrationNo = null; // or assign a default value
+}
+include 'system/function.php';
+$db = dbConn();
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,9 +36,7 @@ $memberRegistrationNo = $_SESSION['memberRegistrationNo'];
             <div class="container-fluid p-3 m-0 pb-0">
                 <span class="navbar-text mt-3">
                     <?php
-                    if (isset($memberRegistrationNo)) {
-                        include 'system/function.php';
-                        $db = dbConn();
+                    if (!empty($memberRegistrationNo)) {
                         $sql = "SELECT * FROM tbl_members WHERE memberRegistrationNo='$memberRegistrationNo'";
                         $result = $db->query($sql);
                         if ($result->num_rows > 0) {

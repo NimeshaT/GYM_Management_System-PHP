@@ -101,7 +101,14 @@ if (!isset($_SESSION['MEMBERID'])) {
         }
         echo '</ul>';
 //        echo '<a href="workout2.php" class="btn btn-primary btn-sm">View workouts</a>';
-        echo '<a href="reserveWorkoutForm.php" class="btn btn-success btn-sm d-block">Reserve Workout</a>';
+//        echo '<a href="reserveWorkoutForm.php" class="btn btn-success btn-sm d-block">Reserve Workout</a>';
+        echo '<div class="text-center mt-3">';
+                                echo '<form action="reserveWorkoutForm.php" method="post" >';
+                                    echo '<input type="hidden" name="workoutId" value="'.$workoutId.'">';
+                                    echo '<button type="submit" class="btn btn-success btn-sm d-block">Reserve Workout</button>';
+//                                    echo '<a href="reserveWorkoutForm.php" class="btn btn-success btn-sm d-block">Reserve Workout</a>';
+                                echo '</form>';
+                            echo '</div>';
         //echo '<br>';
         //echo '<a href="register.php" class="btn btn-primary btn-sm d-block">Register</a>';
         echo '</div>';
