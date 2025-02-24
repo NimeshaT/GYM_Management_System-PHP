@@ -4,6 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/XAMPP/htdocs/gms/index2.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/header.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/workouts/create.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/classes.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/menu_instructor.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/menu_manager.php</file>
@@ -12,12 +14,15 @@
             <file>file:/D:/XAMPP/htdocs/gms/workout.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/fitness2.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/registerSuccess.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/workouts/view.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/users/view.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/fitnessLogin.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/userRoles/create.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/logout.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/fitness2Login.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/menu_admin.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/instructor.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/userRoles/assign.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/enrollingPackagesForm.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/myProfile2.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/instructor2.php</file>
@@ -27,7 +32,9 @@
             <file>file:/D:/XAMPP/htdocs/gms/system/nav.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/content.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/register.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/poyaDay/create.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/index.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/myProfile/create.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/packages.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/packages2.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/packages2Login.php</file>
@@ -41,6 +48,7 @@
             <file>file:/D:/XAMPP/htdocs/gms/packagesLogin.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/myProfile.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/classesLogin.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/userRoles/view.php</file>
         </group>
     </open-files>
 </project-private>

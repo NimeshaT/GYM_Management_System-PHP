@@ -79,7 +79,7 @@
                                  $endTime=$row['classEndTime'];
                                  ?>
                                  <li><?php echo date("g:i A", strtotime($startTime)); ?> - <?php echo date("g:i A", strtotime($endTime)); ?></li>
-                                 <li><?php echo $row['classDuration']; ?></li>
+                                 <li><?php echo $row['classDuration']; ?> hours</li>
                              </ul>
                              <div class="row">
                                  <div class="col-3 d-flex justify-content-start">

@@ -95,7 +95,7 @@ if (!isset($_SESSION['MEMBERID'])) {
                                  $endTime=$row['classEndTime'];
                                  ?>
                                  <li><?php echo date("g:i A", strtotime($startTime)); ?> - <?php echo date("g:i A", strtotime($endTime)); ?></li>
-                                 <li><?php echo $row['classDuration']; ?></li>
+                                 <li><?php echo $row['classDuration']; ?> hours</li>
                              </ul>
 <!--                                     <a href="joiningClassForm.php" class="btn btn-success btn-sm">Join Now</a>-->
                                      <div class="text-center mt-2 d-flex">

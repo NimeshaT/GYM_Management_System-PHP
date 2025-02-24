@@ -84,7 +84,7 @@
                         <li class="list-group-item active" aria-current="true"><h4><?php echo $row['fitnessName']; ?></h4></li>
                         <li class="list-group-item"><?php echo $row['workoutName']; ?></li>
                         <li class="list-group-item"><?php echo $row['fitnessDesc']; ?></li>
-                        <li class="list-group-item"><?php echo $row['fitnessMuscleGroup']; ?></li>
+<!--                        <li class="list-group-item"><?php echo $row['fitnessMuscleGroup']; ?></li>-->
                     </ul>
                 </div>
                 <?php

@@ -136,6 +136,32 @@
               </li>
             </ul>
           </li>
+          
+           <!--        ////////////////////////Class Management////////////////////////////-->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-solid fa-users"></i>
+              <p>
+                Class 
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo SITE_URL; ?>class/create.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create Class</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo SITE_URL; ?>class/view.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View Class</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          
 <!--        ////////////////////////Services Management////////////////////////////-->
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -208,28 +234,5 @@
           
           
           
-          <!--        ////////////////////////Class Management////////////////////////////-->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-solid fa-users"></i>
-              <p>
-                Class Management
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>class/create.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Create Class</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>class/view.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>View Class</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+         
 
