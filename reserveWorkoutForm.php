@@ -3,6 +3,8 @@ session_start();
 if (!isset($_SESSION['MEMBERID'])) {
     header("Location:login.php");
 }
+date_default_timezone_set('Asia/Colombo');
+
 include 'system/function.php';
 $db = dbConn();
 extract($_POST);
@@ -18,21 +20,20 @@ $workoutId;
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/app.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <script src="system/plugins/jquery/jquery.min.js" type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/npm/luxon@2.3.1/build/global/luxon.min.js"></script>
     </head>
 
     <body>
 
-        <!--        //////////////////////////////////////NAVIGATION BAR///////////////////////////////////////////////////////////////////////////////-->
+        <!--//////////////////////////////////////NAVIGATION BAR///////////////////////////////////////////////////////////////////////////////-->
         <div class="container-fluid bg-dark">
             
-<!--            <nav class="navbar navbar-light bg-dark">-->
             <div class="container-fluid p-3 m-0 pb-0">
                 <span class="navbar-text mt-3">
                     <h6 class="text-primary text-center">Welcome <?php echo $_SESSION['FIRSTNAME']; ?> <?php echo $_SESSION['LASTNAME']; ?> !</h6>
                 </span>
             </div>
-            <!--</nav>-->
-<!--            <div class="pt-1 mb-2 bg-dark text-white text-center">.bg-primary</div>-->
             <nav class="navbar navbar-expand-lg bg-dark p-0 m-0 mt-0">
                 <a class="navbar-brand" href="index.php">
                     <img src="images/logo.png" width="150" alt="gym logo">
@@ -69,10 +70,77 @@ $workoutId;
         </div>
 
 
-        <!--        ///////////////////////////////////////////////////workout section///////////////////////////////////////////////////////////////////////-->
+        <!--///////////////////////////////////////////////////workout section///////////////////////////////////////////////////////////////////////-->
        
         <div class="container mt-3 mb-3">
-            <div class="card mx-auto" style="width: 60%">
+             <?php
+                //Insert data
+                extract($_POST);
+                
+                if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "save") {
+
+                    $message = array();
+                    
+                    if (empty($appointmentDate)) {
+                                $message['appointmentDate'] = "Appointment Date should not be empty..!";
+                            }
+                            
+                            if (empty($slotId)) {
+                                $message['slotId'] = "Slot should not be empty..!";
+                            }
+
+                    //================check date and time===================
+//                    $isBooked = false;
+//                    if (empty($message)) {
+//                        $db = dbConn();
+//                        $sql = "SELECT * FROM tbl_appointments WHERE ServiceId='$ServiceId' AND AppointmentDate='$AppointmentDate' AND ((StartTime BETWEEN '$StartTime' AND '$EndTime') OR (EndTime BETWEEN '$StartTime' AND '$EndTime')); ";
+//                        $result = $db->query($sql);
+//                        if ($result->num_rows > 0) {
+//                            while ($row = $result->fetch_assoc()) {
+//                                $isBooked = true;
+//                                ?>
+<!--                                <h5 class="text-danger">Already Booked.Please select different date or time</h5>-->
+                                <?php
+//                            }
+//                        }
+//                    }
+
+                    if (empty($message)) {
+                        $db = dbConn();
+                        $sql = "INSERT INTO tbl_appointments("
+                                . "appointmentTypeId,"
+                                . "appointmentApplyDate,"
+                                . "memberId,"
+                                . "slotId,"
+                                . "workoutId,"
+                                . "workoutCharge,"
+                                . "appointmentDate,"
+                                . "statusId)VALUES("
+                                . "'1',"
+                                . "CURDATE(),"
+                                . "'$memberId',"
+                                . "'$slotId',"
+                                . "'$workoutId',"
+                                . "'$workoutCharge',"
+                                . "'$appointmentDate',"
+                                . "'4')";
+                        $db->query($sql);
+                        $AId = $db->insert_id;
+                        ?>
+                        <div class="card mb-3" style="background-color: #0066b2">
+                            <div class="card-header text-center">
+                                <h3 class="text-center text-dark">Appointment successfully..!<i class="far fa-thumbs-up"></i></h3>
+                                <h5 class="card-title text-center">Your Appointment No: <?php echo $AId ?></h5>
+                                <a class="btn btn-info btn-sm" href="myAppointments.php" role="button">View Appointments</a>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
+            <div class="row">
+                <div class="col-9">
+                <div class="card mx-auto" style="width: 80%">
                 <div class="card-header bg-info">
                     Reserve Your Workout
                 </div>
@@ -80,7 +148,6 @@ $workoutId;
                     <div class="card-body">
                         <!--FieldSet 01-->
                         <?php
-                        
                         $sql = "SELECT * FROM tbl_members WHERE memberId = '{$_SESSION['MEMBERID']}'";
                         $result = $db->query($sql);
                         ?>
@@ -122,7 +189,7 @@ $workoutId;
                         
                         <!--FieldSet 02-->
                         <?php
-                        $db = dbConn();
+                        //$db = dbConn();
                         $sql = "SELECT * FROM tbl_personal_workouts WHERE workoutId = '$workoutId'";
                         $result = $db->query($sql);
                         ?>
@@ -141,7 +208,8 @@ $workoutId;
                                         <input type="text" class="form-control" id="workoutName" name="workoutName" value="<?php echo $row['workoutName']; ?>" readonly>
                                     </div>
                                     <div class="mb-3 ms-2 mt-0">
-                                        
+                                        <label class="workoutCharge">Workout Charge:</label>
+                                        <input type="text" class="form-control" id="workoutCharge" name="workoutCharge" value="<?php echo $row['workoutCharge']; ?>" readonly>
                                     </div>
                                     
                                     <?php
@@ -152,33 +220,62 @@ $workoutId;
                         
                         <!--Fieldset 03-->
                         <fieldset class="border border-2 p-2 bg-light">
+                            <legend  class="float-none w-auto p-2 mb-0"><h5>Select Date and Time</h5></legend>
+                            <div class="mb-3 ms-2">
+                                <label for="appointmentDate" class="form-label">Select Appointment Date</label>
+                                <input type="date" class="form-control" id="appointmentDate" name="appointmentDate" value="<?php echo @$appointmentDate ?>" min="<?= date('Y-m-d'); ?>">
+                                <div class="text-danger"><?php echo @$message['appointmentDate']; ?></div>
+                            </div>
+                             <div class="form-group ms-2 mb-3">
+                                    <?php
+                                    $db= dbConn();
+                                    $sql="SELECT * FROM tbl_time_slots";
+                                    $result=$db->query($sql);
+                                    ?>
+                                    <label for="slot">Select Available Slot</label>
+                                    <select class="form-control" name="slotId" id="slotId">
+                                        <option value="">--</option>
+                                        <?php
+                                        //fetch assoc convert data associative array
+                                        if($result->num_rows>0){
+                                            while ($row=$result->fetch_assoc()){
+                                        ?>
+                                        <option value="<?php echo $row['slotId']; ?>" <?php if (@$slotId == $row['slotId']) { ?> selected <?php } ?>><?php echo $row['slotName']; ?></option>
+                                        <?php
+                                        }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            <div class="text-danger"><?php echo @$message['slotId']; ?></div>
+                        </fieldset>
+                        
+                        <!--Fieldset 04-->
+                        <fieldset class="border border-2 p-2 bg-light">
                             <legend  class="float-none w-auto p-2 mb-0"><h5>Calculate BMI</h5></legend>
-                                    
                                     <div class="mb-3 ms-2 mt-0">
                                         <div class="row">
                                             <div class="col">
                                                 <label for="weight" class="form-label">Enter Weight (Kg.)</label>
-                                                <input type="text" class="form-control" id="weight" name="weight" value="">
+                                                <input type="text" class="form-control" id="weight" name="weight" oninput="calculateBMI()">
                                             </div>
                                             <div class="col">
                                                 <label for="height" class="form-label">Enter Height (M.)</label>
-                                                <input type="text" class="form-control" id="height" name="height" value="">
+                                                <input type="text" class="form-control" id="height" name="height" oninput="calculateBMI()">
                                             </div>
                                         </div>
                                         <div class="row mt-2">
                                             <div class="col">
-<!--                                                <label for="BMI" class="form-label">BMI</label>-->
-                                                <input type="text" class="form-control" id="BMI" name="BMI" value="" readonly>
-                                                  <button type="button" class="btn btn-success">Calculate BMI</button>
+                                                <label for="BMI" class="form-label">Your BMI</label>
+                                                <input type="text" class="form-control" id="BMI" name="BMI" readonly>
+<!--                                                  <button type="button" class="btn btn-success">Calculate BMI</button>-->
                                             </div>
                                             <div class="col mt-4">
 <!--                                                <button type="button" class="btn btn-success">Success</button>-->
                                             </div>
                                         </div>
                                     </div>
-                                    
                         </fieldset>
-
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary" name="action" value="save">Reserve Now</button>
@@ -186,9 +283,31 @@ $workoutId;
                     </div>
                 </form>
             </div>
+                </div>
+                <div class="col-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            Time Slots
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <?php
+                        $sql="SELECT * FROM tbl_time_slots";
+                        $result=$db->query($sql);
+                        if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                        ?>
+                            <li class="list-group-item"><?php echo $row['slotName']; ?> | <?php echo $row['slotStartTime']; ?> - <?php echo $row['slotEndTime']; ?></li>
+                            <?php
+                                        }
+                        }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!--        ///////////////////////////////////////////////////FOOTER///////////////////////////////////////////////////////////////////////-->
+        <!--///////////////////////////////////////////////////FOOTER///////////////////////////////////////////////////////////////////////-->
 
         <footer class="p-0 m-0 "> 
             <p class="text-center bg-dark  p-2 mb-0 ms-0 text-info">All Rights Reserved-Everest Fitness Center</p>
@@ -196,6 +315,68 @@ $workoutId;
 
 
         <script src="js/bootstrap.bundle.min.js "></script>
+        
+        <script>
+            //============================Check Poya days=====================
+            <?php
+            //$db = dbConn();
+            $sql = "SELECT * FROM tbl_poya_days";
+            $result = $db->query($sql);
+
+            $days = array();
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    //separate year month and date
+                    $parts = explode("-", $row["poyaDay"]);
+                    $days[] = array((int) $parts[0], (int) $parts[1], (int) $parts[2]);
+                }
+            }
+            
+            //php to js view
+            echo "const poyaDays = " . json_encode($days) . ";";
+            ?>
+
+            $("#appointmentDate").on("change keyup", e => {
+                //check date in an array
+                const parts = e.target.value.split("-");
+                const year = parseInt(parts[0]);
+                const month = parseInt(parts[1]);
+                const day = parseInt(parts[2]);
+
+                let isPoya = false;
+
+                for (const i of poyaDays) {
+                    if (i[0] == year && i[1] == month && i[2] == day) {
+                        isPoya = true;
+                        break;
+                    }
+                }
+
+                if (isPoya) {
+                    window.alert("Selected day is a poya day. Please select a different date.");
+                    //event target value - enter date
+                    e.target.value = "";
+                } else {
+                    checkForFreeSlots(e.target.value)
+                }
+            });
+            
+            
+            //============================Calculate BMI=====================
+            function calculateBMI() {
+            let weight = parseFloat(document.getElementById("weight").value);
+            let height = parseFloat(document.getElementById("height").value);
+            
+            if (weight > 0 && height > 0) {
+                let bmi = weight / (height * height);
+                document.getElementById("BMI").value = bmi.toFixed(2);
+            } else {
+                document.getElementById("BMI").value = "Invalid input";
+            }
+        }
+        </script>
+            
 
     </body>
 </html>

@@ -63,7 +63,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>users/create.php" class="nav-link">
+                <a href="<?php echo SITE_URL; ?>reservations/workoutReservation.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>View Workouts Reservations</p>
                 </a>

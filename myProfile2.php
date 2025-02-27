@@ -124,8 +124,8 @@ include 'system/function.php';
                                         <a href="viewAppointments.php" class="btn btn-outline-primary " >My Personal Workouts</a><br><br>
                                         <a href="viewAppointments.php" class="btn btn-outline-primary " >My Fitnesses</a><br><br>
                                         <a href="viewAppointments.php" class="btn btn-outline-primary " >My Classes</a><br><br>
-                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >My Packages</a>
-                                   
+                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >My Packages</a><br><br>
+                                        <a href="myAppointments.php" class="btn btn-outline-primary " >My Appointments</a>
                                 </div>
                             </div>
                         </div>
