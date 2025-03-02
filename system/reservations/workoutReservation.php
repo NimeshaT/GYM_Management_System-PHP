@@ -64,7 +64,7 @@ include '../nav.php';
                                 $where = " AND $where";
                             }
                         }
-                        echo $sql="SELECT * FROM tbl_appointments INNER JOIN tbl_personal_workouts ON tbl_appointments.workoutId=tbl_personal_workouts.workoutId INNER JOIN tbl_appointment_type ON tbl_appointments.appointmentTypeId=tbl_appointment_type.appointmentTypeId INNER JOIN tbl_members ON tbl_appointments.memberId=tbl_members.memberId INNER JOIN tbl_time_slots ON tbl_appointments.slotId=tbl_time_slots.slotId WHERE tbl_appointments.appointmentTypeId='1' $where ORDER BY appointmentId DESC";
+                        $sql="SELECT * FROM tbl_appointments INNER JOIN tbl_personal_workouts ON tbl_appointments.workoutId=tbl_personal_workouts.workoutId INNER JOIN tbl_appointment_type ON tbl_appointments.appointmentTypeId=tbl_appointment_type.appointmentTypeId INNER JOIN tbl_members ON tbl_appointments.memberId=tbl_members.memberId INNER JOIN tbl_time_slots ON tbl_appointments.slotId=tbl_time_slots.slotId WHERE tbl_appointments.appointmentTypeId='1' $where ORDER BY appointmentId DESC";
                         $result = $db->query($sql);
                         ?>
                         <table id="appointment_list" class="table table-bordered table-hover">
@@ -97,9 +97,12 @@ include '../nav.php';
                                                 $sql1 = "SELECT * FROM tbl_job_card WHERE appointmentId='$AppNo'";
                                                 $res = $db->query($sql1);
                                                 if ($res->num_rows == 0) {
+//                                                    echo $jobCardId=$row['jobCardId'];
                                                     ?>
                                                     <form action="createJobCard.php" method="post">
                                                         <input type="hidden" name="appointmentId" value="<?php echo $row['appointmentId']; ?>">
+                                                        <input type="hidden" name="appointmentTypeId" value="<?php echo $row['appointmentTypeId']; ?>">
+                                                        <input type="hidden" name="workoutId" value="<?php echo $row['workoutId']; ?>">
                                                         <button type="submit" class="btn btn-danger btn-sm">Create Job Card</button>
                                                     </form>
                                                     <?php
@@ -107,6 +110,7 @@ include '../nav.php';
                                                     ?>
                                                     <form action="viewJobCard.php" method="post">
                                                         <input type="hidden" name="appointmentId" value="<?php echo $row['appointmentId']; ?>">
+<!--                                                        <input type="text" name="jobCardId" value="<?php echo $row['jobCardId']; ?>">-->
                                                         <button type="submit" class="btn btn-success btn-sm">View Job Card</button>
                                                     </form>
                                                     <?php
