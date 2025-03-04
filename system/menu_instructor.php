@@ -27,13 +27,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>services/create.php" class="nav-link">
+                <a href="<?php echo SITE_URL; ?>jobCard/acceptJobCard.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Accept Job Card</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>services/view.php" class="nav-link">
+                <a href="<?php echo SITE_URL; ?>jobCard/createWorkoutSchedule.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create Schedule</p>
                 </a>

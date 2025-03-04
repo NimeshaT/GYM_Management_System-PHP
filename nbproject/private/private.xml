@@ -8,7 +8,6 @@
             <file>file:/D:/XAMPP/htdocs/gms/classes.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/menu_instructor.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/menu_manager.php</file>
-            <file>file:/D:/XAMPP/htdocs/gms/system/class/create.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/reserveWorkoutForm.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/workout.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/fitness2.php</file>
@@ -46,6 +45,8 @@
             <file>file:/D:/XAMPP/htdocs/gms/system/menu_admin.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/reservations/createJobCard.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/instructor.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/jobCard/createWorkoutSchedule.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/jobCard/acceptJobCard.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/admin_dashboard.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/joiningClassForm.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/nav.php</file>
