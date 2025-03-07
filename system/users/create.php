@@ -143,6 +143,13 @@ include '../nav.php';
                                         . "'$telNo','$Photo')";
 
                                 $db->query($sql);
+                                ?>
+                                <div class="card " style="background-color: #00008B">
+                                    <div class="card-header text-center">
+                                        <h3 class="text-center text-light">Insert successfully..!<i class="far fa-thumbs-up"></i></h3>
+                                    </div>
+                                </div>
+                        <?php
                             }
 
                             $action = 'create_account';

@@ -229,6 +229,30 @@
               </li>
             </ul>
           </li>
+          <!--        ////////////////////////Reports Management////////////////////////////-->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-address-book"></i>
+              <p>
+                Reports
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo SITE_URL; ?>reports/reservations.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reservations1</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo SITE_URL; ?>reports/reservationOne.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reservations2</p>
+                </a>
+              </li>
+            </ul>
+          </li>
           
           
           

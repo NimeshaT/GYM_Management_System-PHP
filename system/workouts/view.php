@@ -53,7 +53,7 @@ include '../nav.php';
 //            echo $where;
             }
             $db = dbConn();
-            echo $sql = "SELECT * FROM tbl_personal_workouts INNER JOIN tbl_status ON tbl_personal_workouts.statusId=tbl_status.statusId $where ";
+            $sql = "SELECT * FROM tbl_personal_workouts INNER JOIN tbl_status ON tbl_personal_workouts.statusId=tbl_status.statusId $where ";
             $result = $db->query($sql);
             ?>
             <table class="table table-striped mt-2" id="tbl_workouts">

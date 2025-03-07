@@ -127,34 +127,26 @@ if (!empty($current)) {
                         //return file name from a path(basename)
                         $target_file = $target_dir . basename($_FILES["profileImage"]["name"]);
                         $uploadOk = 1;
-                        //converts a strings to lowercase(strtolower)
-                        //returns a file path information(pathinfo)
-                        //return only extension(PATHINFO_EXTENSION)
+                        //converts a strings to lowercase(strtolower),returns a file path information(pathinfo),return only extension(PATHINFO_EXTENSION)
                         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
                         $check = getimagesize($_FILES["profileImage"]["tmp_name"]);
-                        if ($check !== false) {
-                            //Multi-purpose Internet Mail Extensions                       
+                        if ($check !== false) {//Multi-purpose Internet Mail Extensions 
                             $uploadOk = 1;
                         } else {
                             $message['profileImage'] = "File is not an image.";
                             $uploadOk = 0;
                         }
-                        // Check if file already exists
-                        if (file_exists($target_file)) {
+                        if (file_exists($target_file)) {// Check if file already exists
                             $message['profileImage'] = "Sorry, file already exists.";
                             $uploadOk = 0;
                         }
-                        // Check file size
-                        //5mb
-                        if ($_FILES["profileImage"]["size"] > 5000000) {
+                        if ($_FILES["profileImage"]["size"] > 5000000) {// Check file size-5mb
                             $message['profileImage'] = "Sorry, your file is too large.";
                             $uploadOk = 0;
                         }
-
-                        // Allow certain file formats
                         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
                             $message['profileImage'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-                            $uploadOk = 0;
+                            $uploadOk = 0; // Allow certain file formats
                         }
                         if ($uploadOk == 1) {
                             if (move_uploaded_file($_FILES["profileImage"]["tmp_name"], $target_file)) {

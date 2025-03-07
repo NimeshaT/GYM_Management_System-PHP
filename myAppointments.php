@@ -106,8 +106,8 @@ include 'system/function.php';
 <!--                            <button type="button" class="btn btn-danger">Cancel</button>-->
                             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
                                                         <button type="submit" class="btn btn-danger" name="action" value="change">Cancel</button>
-                                                        <input type="text" name="Mid" value="<?php echo $row['memberId'] ?>">
-                                                        <input type="text" name="Stid" value="<?php echo $row['statusId'] ?>">
+                                                        <input type="hidden" name="Mid" value="<?php echo $row['memberId'] ?>">
+                                                        <input type="hidden" name="Stid" value="<?php echo $row['statusId'] ?>">
                                                     </form>
                         </div>
                     </div>

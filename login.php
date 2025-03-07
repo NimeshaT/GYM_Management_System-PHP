@@ -89,21 +89,15 @@ if (isset($_SESSION['memberRegistrationNo'])) {
                     <?php
                     include 'system/function.php';
                     extract($_POST);
-                    
-                    //login button
                     if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "login") {
-                        
-                        //echo 'hello';
                         $userName = dataClean($userName);
                         $message = array();
-                        
                         if (empty($userName)) {
                             $message['userName'] = "User Name should not be empty..!";
                         }
                         if (empty($password)) {
                             $message['password'] = "Password should not be empty..!";
                         }
-                        
                         if (empty($message)) {
                             $db = dbConn();
                             $sql = "SELECT * FROM tbl_members WHERE userName='$userName' AND password='" . sha1($password) . "'";
@@ -114,7 +108,6 @@ if (isset($_SESSION['memberRegistrationNo'])) {
                                     $_SESSION['FIRSTNAME'] = $row['firstName'];
                                     $_SESSION['LASTNAME'] = $row['lastName'];
                                 }
-                                //Get current page
                                 $current = $_GET['current'];
                                 if (isset($_GET['current']) && !empty($_GET['current'])) {
                                     header("Location:$current");
