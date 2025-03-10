@@ -251,6 +251,12 @@
                   <p>Reservations2</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="<?php echo SITE_URL; ?>reports/slots.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Slots</p>
+                </a>
+              </li>
             </ul>
           </li>
           
