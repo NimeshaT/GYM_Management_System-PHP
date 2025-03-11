@@ -38,6 +38,12 @@
                   <p>Create Schedule</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="<?php echo SITE_URL; ?>jobCard/workoutSchedules.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View Workout Schedule</p>
+                </a>
+              </li>
             </ul>
           </li>
       
