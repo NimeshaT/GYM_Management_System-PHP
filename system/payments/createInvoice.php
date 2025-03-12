@@ -8,12 +8,12 @@ include '../nav.php';
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Job Card</h1>
+                    <h1 class="m-0">Invoice</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Job Card</a></li>
-                        <li class="breadcrumb-item active">Acceptance</li>
+                        <li class="breadcrumb-item"><a href="#">Invoice</a></li>
+                        <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div>
             </div>
@@ -24,7 +24,7 @@ include '../nav.php';
             <div class="row">
                 <div class="card">
                     <div class="card-header bg-info">
-                        <h3 class="card-title">Instructor Pending Job Card</h3>
+                        <h3 class="card-title">Completed Workout Schedules</h3>
                     </div>
                     <div class="card-body">
                         <?php
@@ -91,15 +91,15 @@ include '../nav.php';
          LEFT JOIN tbl_time_slots AS ts ON ws.slotId = ts.slotId
          LEFT JOIN tbl_fitness AS f ON wss.fitnessId = f.fitnessId
          WHERE ws.instructorId = '2' 
-         AND wss.statusId IN ('8','9','10') $where";
+         AND wss.statusId='10' $where";
 
                         $result = $db->query($sql1);
                         ?>
                         <table id="jobCard_list" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Status</th>
-                                    <th>Change Status</th>
                                     <th>Schedule ID</th>
                                     <th>Job Card Id</th>
                                     <th>Appointment Id</th>
@@ -122,6 +122,15 @@ include '../nav.php';
                                         ?>
                                         <tr>
                                             <td>
+                                                <form action="createInvoice2.php" method="post">
+                                                        <input type="hidden" name="workoutScheduleId" value="<?php echo $row['workoutScheduleId']; ?>">
+                                                        <input type="hidden" name="memberId" value="<?php echo $row['memberId']; ?>">
+<!--                                                        <input type="hidden" name="appointmentTypeId" value="<?php echo $row['appointmentTypeId']; ?>">
+                                                        <input type="hidden" name="workoutId" value="<?php echo $row['workoutId']; ?>">-->
+                                                        <button type="submit" class="btn btn-danger btn-sm">Create Invoice</button>
+                                                    </form>
+                                            </td>
+                                            <td>
                                                 <?php
                                                 
                                                 if ($row['service_statusId'] == '8') {
@@ -141,14 +150,7 @@ include '../nav.php';
                                                 ?>
 
                                             </td>
-                                            <td>
-                                                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
-                                                    <button type="submit" class="btn btn-danger btn-sm" name="action" value="change">Change</button>
-        <!--                                                    <input type="text" name="Sjid" value="<?php echo $row['jobCardId'] ?>">-->
-                                                    <input type="hidden" name="Shid" value="<?php echo $row['workoutScheduleId'] ?>">
-                                                    <input type="hidden" name="s_Stid" value="<?php echo $row['service_statusId'] ?>">
-                                                </form>
-                                            </td>
+                                         
                                             <td><?php echo $row['workoutScheduleId']; ?></td>
                                             <td><?php echo $row['jobCardId']; ?></td>
                                             <td><?php echo $row['appointmentId']; ?></td>

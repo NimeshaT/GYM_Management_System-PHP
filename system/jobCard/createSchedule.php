@@ -72,7 +72,7 @@ include '../nav.php';
                                         // Ensure a date is provided
                                         $date = $_POST['dates'][$fitnessId] ?? null;
                                         if (!empty($date)) {
-                                            $sql = "INSERT INTO tbl_workout_schedule_services (workoutScheduleId, fitnessId, workoutScheduleDate, jobCardId)VALUES ('$workoutScheduleId', '$fitnessId', '$date','$jobCardId')";
+                                            $sql = "INSERT INTO tbl_workout_schedule_services (workoutScheduleId, fitnessId, workoutScheduleDate, jobCardId, statusId)VALUES ('$workoutScheduleId', '$fitnessId', '$date','$jobCardId','8')";
                                             $db->query($sql);
                                         }
                                     }
