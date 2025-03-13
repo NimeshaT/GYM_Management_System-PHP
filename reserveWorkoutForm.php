@@ -28,7 +28,7 @@ $workoutId;
 
         <!--//////////////////////////////////////NAVIGATION BAR///////////////////////////////////////////////////////////////////////////////-->
         <div class="container-fluid bg-dark">
-            
+
             <div class="container-fluid p-3 m-0 pb-0">
                 <span class="navbar-text mt-3">
                     <h6 class="text-primary text-center">Welcome <?php echo $_SESSION['FIRSTNAME']; ?> <?php echo $_SESSION['LASTNAME']; ?> !</h6>
@@ -63,33 +63,33 @@ $workoutId;
                         </li>
                     </ul>
                 </div>
-                <a href="register.php"><button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Register Now  </button></a>
-                <a href="login.php"> <button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Login  </button></a>
+                <!--                <a href="register.php"><button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Register Now  </button></a>
+                                <a href="login.php"> <button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Login  </button></a>-->
                 <a href="index.php"> <button class="btn btn-outline-danger btn-sm my-2 my-sm-0" type="submit">  Logout  </button></a>
             </nav>
         </div>
 
 
         <!--///////////////////////////////////////////////////workout section///////////////////////////////////////////////////////////////////////-->
-       
+
         <div class="container mt-3 mb-3">
-             <?php
-                //Insert data
-                extract($_POST);
-                
-                if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "save") {
+            <?php
+            //Insert data
+            extract($_POST);
 
-                    $message = array();
-                    
-                    if (empty($appointmentDate)) {
-                                $message['appointmentDate'] = "Appointment Date should not be empty..!";
-                            }
-                            
-                            if (empty($slotId)) {
-                                $message['slotId'] = "Slot should not be empty..!";
-                            }
+            if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "save") {
 
-                    //================check date and time===================
+                $message = array();
+
+                if (empty($appointmentDate)) {
+                    $message['appointmentDate'] = "Appointment Date should not be empty..!";
+                }
+
+                if (empty($slotId)) {
+                    $message['slotId'] = "Slot should not be empty..!";
+                }
+
+                //================check date and time===================
 //                    $isBooked = false;
 //                    if (empty($message)) {
 //                        $db = dbConn();
@@ -98,161 +98,163 @@ $workoutId;
 //                        if ($result->num_rows > 0) {
 //                            while ($row = $result->fetch_assoc()) {
 //                                $isBooked = true;
-//                                ?>
-<!--                                <h5 class="text-danger">Already Booked.Please select different date or time</h5>-->
-                                <?php
+//                                
+                ?>
+                <!--                                <h5 class="text-danger">Already Booked.Please select different date or time</h5>-->
+                <?php
 //                            }
 //                        }
 //                    }
 
-                    if (empty($message)) {
-                        $db = dbConn();
-                        $sql = "INSERT INTO tbl_appointments("
-                                . "appointmentTypeId,"
-                                . "appointmentApplyDate,"
-                                . "memberId,"
-                                . "slotId,"
-                                . "workoutId,"
-                                . "workoutCharge,"
-                                . "appointmentDate,"
-                                . "statusId)VALUES("
-                                . "'1',"
-                                . "CURDATE(),"
-                                . "'$memberId',"
-                                . "'$slotId',"
-                                . "'$workoutId',"
-                                . "'$workoutCharge',"
-                                . "'$appointmentDate',"
-                                . "'4')";
-                        $db->query($sql);
-                        $AId = $db->insert_id;
-                        ?>
-                        <div class="card mb-3" style="background-color: #0066b2">
-                            <div class="card-header text-center">
-                                <h3 class="text-center text-dark">Appointment successfully..!<i class="far fa-thumbs-up"></i></h3>
-                                <h5 class="card-title text-center">Your Appointment No: <?php echo $AId ?></h5>
-                                <a class="btn btn-info btn-sm" href="myAppointments.php" role="button">View Appointments</a>
-                            </div>
+                if (empty($message)) {
+                    $db = dbConn();
+                    $sql = "INSERT INTO tbl_appointments("
+                            . "appointmentTypeId,"
+                            . "appointmentApplyDate,"
+                            . "memberId,"
+                            . "slotId,"
+                            . "workoutId,"
+                            . "workoutCharge,"
+                            . "appointmentDate,"
+                            . "statusId)VALUES("
+                            . "'1',"
+                            . "CURDATE(),"
+                            . "'$memberId',"
+                            . "'$slotId',"
+                            . "'$workoutId',"
+                            . "'$workoutCharge',"
+                            . "'$appointmentDate',"
+                            . "'4')";
+                    $db->query($sql);
+                    $AId = $db->insert_id;
+                    
+                    $sql1="UPDATE tbl_members SET height='$height',weight='$weight', bmi='$BMI' WHERE memberId='$memberId'";
+                    $db->query($sql1);
+                    ?>
+                    <div class="card mb-3" style="background-color: #0066b2">
+                        <div class="card-header text-center">
+                            <h3 class="text-center text-dark">Appointment successfully..!<i class="far fa-thumbs-up"></i></h3>
+                            <h5 class="card-title text-center">Your Appointment No: <?php echo $AId ?></h5>
+                            <a class="btn btn-info btn-sm" href="myAppointments.php" role="button">View Appointments</a>
                         </div>
-                        <?php
-                    }
+                    </div>
+                    <?php
                 }
-                ?>
+            }
+            
+            if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "cancel") {
+                $appointmentDate="";
+                $slotId="";
+                $height="";
+                $weight="";
+                $BMI="";
+            }
+            ?>
             <div class="row">
                 <div class="col-9">
-                <div class="card mx-auto" style="width: 80%">
-                <div class="card-header bg-info">
-                    Reserve Your Workout
-                </div>
-                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-                    <div class="card-body">
-                        <!--FieldSet 01-->
-                        <?php
-                        $sql = "SELECT * FROM tbl_members WHERE memberId = '{$_SESSION['MEMBERID']}'";
-                        $result = $db->query($sql);
-                        ?>
-                        <fieldset class="border border-2 p-2 bg-light">
-                            <legend  class="float-none w-auto p-2 mb-0"><h5>Member Information</h5></legend>
-                            <?php
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
+                    <div class="card mx-auto" style="width: 80%">
+                        <div class="card-header bg-info">
+                            Reserve Your Workout
+                        </div>
+                        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                            <div class="card-body">
+                                <!--FieldSet 01-->
+                                <?php
+                                $sql = "SELECT * FROM tbl_members WHERE memberId = '{$_SESSION['MEMBERID']}'";
+                                $result = $db->query($sql);
+                                ?>
+                                <fieldset class="border border-2 p-2 bg-light">
+                                    <legend  class="float-none w-auto p-2 mb-0"><h5>Member Information</h5></legend>
+                                    <?php
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            ?>
+                                            <div class="mb-3 ms-2">
+                                                <label class="memberId" style="display: none">Member ID</label>
+                                                <input type="hidden" class="form-control" id="memberId" name="memberId" value="<?php echo $row['memberId']; ?>" readonly>
+                                            </div>
+                                            <div class="mb-3 ms-2">
+                                                <label class="memberRegistrationNo">Member Registration No:</label>
+                                                <input type="text" class="form-control" id="memberRegistrationNo" name="memberRegistrationNo" value="<?php echo $row['memberRegistrationNo']; ?>" readonly>
+                                            </div>
+                                            <div class="mb-3 ms-2 mt-0">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="firstName" class="form-label">First Name</label>
+                                                        <input type="text" class="form-control" id="firstName" name="firstName" value="<?php echo $row['firstName']; ?>" readonly>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="lastName" class="form-label">Last Name</label>
+                                                        <input type="text" class="form-control" id="lastName" name="lastName" value="<?php echo $row['lastName']; ?>" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 ms-2">
+                                                <label class="nic">NIC</label>
+                                                <input type="text" class="form-control" id="nic" name="nic" value="<?php echo $row['nic']; ?>" readonly>
+                                            </div>
+                                            <?php
+                                        }
+                                    }
                                     ?>
-                                    <div class="mb-3 ms-2">
-                                        <label class="memberId" style="display: none">Member ID</label>
-                                        <input type="hidden" class="form-control" id="memberId" name="memberId" value="<?php echo $row['memberId']; ?>" readonly>
-                                    </div>
-                                    <div class="mb-3 ms-2">
-                                        <label class="memberRegistrationNo">Member Registration No:</label>
-                                        <input type="text" class="form-control" id="memberRegistrationNo" name="memberRegistrationNo" value="<?php echo $row['memberRegistrationNo']; ?>" readonly>
-                                    </div>
-                                    <div class="mb-3 ms-2 mt-0">
-                                        <div class="row">
-                                            <div class="col">
-                                                <label for="firstName" class="form-label">First Name</label>
-                                                <input type="text" class="form-control" id="firstName" name="firstName" value="<?php echo $row['firstName']; ?>" readonly>
+                                </fieldset>
+
+                                <!--FieldSet 02-->
+                                <?php
+                                //$db = dbConn();
+                                $sql = "SELECT * FROM tbl_personal_workouts WHERE workoutId = '$workoutId'";
+                                $result = $db->query($sql);
+                                ?>
+                                <fieldset class="border border-2 p-2 bg-light">
+                                    <legend  class="float-none w-auto p-2 mb-0"><h5>Workout Information</h5></legend>
+                                    <?php
+                                    if ($result->num_rows > 0) {
+                                        while ($row = $result->fetch_assoc()) {
+                                            ?>
+                                            <div class="mb-3 ms-2">
+                                                <label class="workoutId" style="display: none">Member ID</label>
+                                                <input type="hidden" class="form-control" id="workoutId" name="workoutId" value="<?php echo $row['workoutId']; ?>" readonly>
                                             </div>
-                                            <div class="col">
-                                                <label for="lastName" class="form-label">Last Name</label>
-                                                <input type="text" class="form-control" id="lastName" name="lastName" value="<?php echo $row['lastName']; ?>" readonly>
+                                            <div class="mb-3 ms-2">
+                                                <label class="workoutName">Workout Name:</label>
+                                                <input type="text" class="form-control" id="workoutName" name="workoutName" value="<?php echo $row['workoutName']; ?>" readonly>
                                             </div>
+                                            <div class="mb-3 ms-2 mt-0">
+                                                <label class="workoutCharge">Workout Charge:</label>
+                                                <input type="text" class="form-control" id="workoutCharge" name="workoutCharge" value="<?php echo $row['workoutCharge']; ?>" readonly>
+                                            </div>
+
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </fieldset>
+
+                                <!--Fieldset 03-->
+                                <fieldset class="border border-2 p-2 bg-light">
+                                    <legend  class="float-none w-auto p-2 mb-0"><h5>Select Date and Time</h5></legend>
+                                    <div class="mb-3 ms-2">
+                                        <label for="appointmentDate" class="form-label">Select Appointment Date</label>
+                                        <input type="date" class="form-control" id="appointmentDate" name="appointmentDate" value="<?php echo @$appointmentDate ?>" min="<?= date('Y-m-d'); ?>" onchange="loadSlots(this.value)">
+                                        <div class="text-danger"><?php echo @$message['appointmentDate']; ?></div>
+                                    </div>
+
+                                    <div class="form-group ms-2 mb-3">
+                                        <label class="form-label">Slots</label>
+                                        <div id="slot_list">
+                                            <select class="form-control form-select"  name="slotId" id="slotId">
+                                                <option value=""></option>
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="mb-3 ms-2">
-                                        <label class="nic">NIC</label>
-                                        <input type="text" class="form-control" id="nic" name="nic" value="<?php echo $row['nic']; ?>" readonly>
-                                    </div>
-                                    <?php
-                                }
-                            }
-                            ?>
-                        </fieldset>
-                        
-                        <!--FieldSet 02-->
-                        <?php
-                        //$db = dbConn();
-                        $sql = "SELECT * FROM tbl_personal_workouts WHERE workoutId = '$workoutId'";
-                        $result = $db->query($sql);
-                        ?>
-                        <fieldset class="border border-2 p-2 bg-light">
-                            <legend  class="float-none w-auto p-2 mb-0"><h5>Workout Information</h5></legend>
-                            <?php
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    ?>
-                                    <div class="mb-3 ms-2">
-                                        <label class="workoutId" style="display: none">Member ID</label>
-                                        <input type="hidden" class="form-control" id="workoutId" name="workoutId" value="<?php echo $row['workoutId']; ?>" readonly>
-                                    </div>
-                                    <div class="mb-3 ms-2">
-                                        <label class="workoutName">Workout Name:</label>
-                                        <input type="text" class="form-control" id="workoutName" name="workoutName" value="<?php echo $row['workoutName']; ?>" readonly>
-                                    </div>
-                                    <div class="mb-3 ms-2 mt-0">
-                                        <label class="workoutCharge">Workout Charge:</label>
-                                        <input type="text" class="form-control" id="workoutCharge" name="workoutCharge" value="<?php echo $row['workoutCharge']; ?>" readonly>
-                                    </div>
-                                    
-                                    <?php
-                                }
-                            }
-                            ?>
-                        </fieldset>
-                        
-                        <!--Fieldset 03-->
-                        <fieldset class="border border-2 p-2 bg-light">
-                            <legend  class="float-none w-auto p-2 mb-0"><h5>Select Date and Time</h5></legend>
-                            <div class="mb-3 ms-2">
-                                <label for="appointmentDate" class="form-label">Select Appointment Date</label>
-                                <input type="date" class="form-control" id="appointmentDate" name="appointmentDate" value="<?php echo @$appointmentDate ?>" min="<?= date('Y-m-d'); ?>">
-                                <div class="text-danger"><?php echo @$message['appointmentDate']; ?></div>
-                            </div>
-                             <div class="form-group ms-2 mb-3">
-                                    <?php
-                                    $db= dbConn();
-                                    $sql="SELECT * FROM tbl_time_slots";
-                                    $result=$db->query($sql);
-                                    ?>
-                                    <label for="slot">Select Available Slot</label>
-                                    <select class="form-control" name="slotId" id="slotId">
-                                        <option value="">--</option>
-                                        <?php
-                                        //fetch assoc convert data associative array
-                                        if($result->num_rows>0){
-                                            while ($row=$result->fetch_assoc()){
-                                        ?>
-                                        <option value="<?php echo $row['slotId']; ?>" <?php if (@$slotId == $row['slotId']) { ?> selected <?php } ?>><?php echo $row['slotName']; ?></option>
-                                        <?php
-                                        }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            <div class="text-danger"><?php echo @$message['slotId']; ?></div>
-                        </fieldset>
-                        
-                        <!--Fieldset 04-->
-                        <fieldset class="border border-2 p-2 bg-light">
-                            <legend  class="float-none w-auto p-2 mb-0"><h5>Calculate BMI</h5></legend>
+                                    <div class="text-danger"><?php echo @$message['slotId']; ?></div>
+                                    <div class="text-danger"><?php echo "if do not show any slots, please select another date"  ?></div>
+                                </fieldset>
+
+
+                                <!--Fieldset 04-->
+                                <fieldset class="border border-2 p-2 bg-light">
+                                    <legend  class="float-none w-auto p-2 mb-0"><h5>Calculate BMI</h5></legend>
                                     <div class="mb-3 ms-2 mt-0">
                                         <div class="row">
                                             <div class="col">
@@ -268,21 +270,21 @@ $workoutId;
                                             <div class="col">
                                                 <label for="BMI" class="form-label">Your BMI</label>
                                                 <input type="text" class="form-control" id="BMI" name="BMI" readonly>
-<!--                                                  <button type="button" class="btn btn-success">Calculate BMI</button>-->
+                                                <!--                                                  <button type="button" class="btn btn-success">Calculate BMI</button>-->
                                             </div>
                                             <div class="col mt-4">
-<!--                                                <button type="button" class="btn btn-success">Success</button>-->
+                                                <!--                                                <button type="button" class="btn btn-success">Success</button>-->
                                             </div>
                                         </div>
                                     </div>
-                        </fieldset>
+                                </fieldset>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary" name="action" value="save">Reserve Now</button>
+                                <button type="submit" class="btn btn-danger" name="action" value="cancel">Cancel</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary" name="action" value="save">Reserve Now</button>
-                        <button type="submit" class="btn btn-danger" name="action" value="cancel">Cancel</button>
-                    </div>
-                </form>
-            </div>
                 </div>
                 <div class="col-3">
                     <div class="card" style="width: 18rem;">
@@ -291,15 +293,15 @@ $workoutId;
                         </div>
                         <ul class="list-group list-group-flush">
                             <?php
-                        $sql="SELECT * FROM tbl_time_slots";
-                        $result=$db->query($sql);
-                        if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                        ?>
-                            <li class="list-group-item"><?php echo $row['slotName']; ?> | <?php echo $row['slotStartTime']; ?> - <?php echo $row['slotEndTime']; ?></li>
-                            <?php
-                                        }
-                        }
+                            $sql = "SELECT * FROM tbl_time_slots";
+                            $result = $db->query($sql);
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                    <li class="list-group-item"><?php echo $row['slotName']; ?> | <?php echo $row['slotStartTime']; ?> - <?php echo $row['slotEndTime']; ?></li>
+                                    <?php
+                                }
+                            }
                             ?>
                         </ul>
                     </div>
@@ -315,68 +317,86 @@ $workoutId;
 
 
         <script src="js/bootstrap.bundle.min.js "></script>
-        
+
         <script>
-            //============================Check Poya days=====================
-            <?php
-            //$db = dbConn();
-            $sql = "SELECT * FROM tbl_poya_days";
-            $result = $db->query($sql);
+                                            //============================Check Poya days=====================
+<?php
+//$db = dbConn();
+$sql = "SELECT * FROM tbl_poya_days";
+$result = $db->query($sql);
 
-            $days = array();
+$days = array();
 
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    //separate year month and date
-                    $parts = explode("-", $row["poyaDay"]);
-                    $days[] = array((int) $parts[0], (int) $parts[1], (int) $parts[2]);
-                }
-            }
-            
-            //php to js view
-            echo "const poyaDays = " . json_encode($days) . ";";
-            ?>
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        //separate year month and date
+        $parts = explode("-", $row["poyaDay"]);
+        $days[] = array((int) $parts[0], (int) $parts[1], (int) $parts[2]);
+    }
+}
 
-            $("#appointmentDate").on("change keyup", e => {
-                //check date in an array
-                const parts = e.target.value.split("-");
-                const year = parseInt(parts[0]);
-                const month = parseInt(parts[1]);
-                const day = parseInt(parts[2]);
+//php to js view
+echo "const poyaDays = " . json_encode($days) . ";";
+?>
 
-                let isPoya = false;
+                                            $("#appointmentDate").on("change keyup", e => {
+                                                //check date in an array
+                                                const parts = e.target.value.split("-");
+                                                const year = parseInt(parts[0]);
+                                                const month = parseInt(parts[1]);
+                                                const day = parseInt(parts[2]);
 
-                for (const i of poyaDays) {
-                    if (i[0] == year && i[1] == month && i[2] == day) {
-                        isPoya = true;
-                        break;
-                    }
-                }
+                                                let isPoya = false;
 
-                if (isPoya) {
-                    window.alert("Selected day is a poya day. Please select a different date.");
-                    //event target value - enter date
-                    e.target.value = "";
-                } else {
-                    checkForFreeSlots(e.target.value)
-                }
-            });
-            
-            
-            //============================Calculate BMI=====================
-            function calculateBMI() {
-            let weight = parseFloat(document.getElementById("weight").value);
-            let height = parseFloat(document.getElementById("height").value);
-            
-            if (weight > 0 && height > 0) {
-                let bmi = weight / (height * height);
-                document.getElementById("BMI").value = bmi.toFixed(2);
-            } else {
-                document.getElementById("BMI").value = "Invalid input";
-            }
-        }
+                                                for (const i of poyaDays) {
+                                                    if (i[0] == year && i[1] == month && i[2] == day) {
+                                                        isPoya = true;
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (isPoya) {
+                                                    window.alert("Selected day is a poya day. Please select a different date.");
+                                                    //event target value - enter date
+                                                    e.target.value = "";
+                                                } else {
+                                                    checkForFreeSlots(e.target.value)
+                                                }
+                                            });
+
+
+                                            //============================Calculate BMI=====================
+                                            function calculateBMI() {
+                                                let weight = parseFloat(document.getElementById("weight").value);
+                                                let height = parseFloat(document.getElementById("height").value);
+
+                                                if (weight > 0 && height > 0) {
+                                                    let bmi = weight / (height * height);
+                                                    document.getElementById("BMI").value = bmi.toFixed(2);
+                                                } else {
+                                                    document.getElementById("BMI").value = "Invalid input";
+                                                }
+                                            }
         </script>
-            
+        <script src="system/plugins/jquery/jquery.min.js" type="text/javascript"></script>
+        <script>
+                                                    function loadSlots(appointmentDate) {
+                                                        var d = "appointmentDate=" + appointmentDate + "&";
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            data: d,
+                                                            url: 'load_slot.php',
+                                                            success: function (response) {
+        //                                                   alert(response);
+                                                                $("#slot_list").html(response)
+                                                            },
+                                                            error: function (request, status, error) {
+                                                                alert(error);
+                                                            }
+                                                        });
+
+                                                    }
+        </script>
 
     </body>
 </html>

@@ -64,35 +64,32 @@ include '../nav.php';
                             }
                         }
 
-                        //change status
-                        if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "change") {
-                            $db = dbConn();
-//                            echo $s_Stid;
-//                            echo $Shid;
-//                            $Stid = $Stid == '8' ? '9' : '8';
-                            $s_Stid = ($s_Stid == '8') ? '9' : (($s_Stid == '9') ? '10' : '8');
-                            $sql = "UPDATE tbl_workout_schedule_services SET statusId='$s_Stid' WHERE workoutScheduleId='$Shid'";
-                            $db->query($sql);
-                        }
-                        
-                       $sql1 = "SELECT 
-            ws.*, 
-            wss.statusId AS service_statusId,
-            s.statusName, 
-            pw.*, 
-            a.*, 
-            ts.*, 
-            f.* 
-         FROM tbl_workout_schedules AS ws
-         LEFT JOIN tbl_workout_schedule_services AS wss ON ws.workoutScheduleId = wss.workoutScheduleId
-         LEFT JOIN tbl_status AS s ON wss.statusId = s.statusId -- This still gets the status name
-         LEFT JOIN tbl_personal_workouts AS pw ON ws.workoutId = pw.workoutId
-         LEFT JOIN tbl_appointments AS a ON ws.appointmentId = a.appointmentId
-         LEFT JOIN tbl_time_slots AS ts ON ws.slotId = ts.slotId
-         LEFT JOIN tbl_fitness AS f ON wss.fitnessId = f.fitnessId
-         WHERE ws.instructorId = '2' 
-         AND wss.statusId='10' $where";
 
+                        
+//                        $sql1 = "SELECT
+//            ws.*, 
+//            jc.*,
+//            jc.statusId AS jobcard_statusId,
+//            s.statusName,
+//            pw.*, 
+//            a.*, 
+//            ts.*, 
+//            f.* 
+//         FROM tbl_workout_schedules AS ws
+//         LEFT JOIN tbl_workout_schedule_services AS wss ON ws.workoutScheduleId = wss.workoutScheduleId
+//         LEFT JOIN tbl_job_card AS jc ON ws.jobCardId = jc.jobCardId
+//         LEFT JOIN tbl_status AS s ON jc.statusId = s.statusId
+//         LEFT JOIN tbl_personal_workouts AS pw ON ws.workoutId = pw.workoutId
+//         LEFT JOIN tbl_appointments AS a ON ws.appointmentId = a.appointmentId
+//         LEFT JOIN tbl_time_slots AS ts ON ws.slotId = ts.slotId
+//         LEFT JOIN tbl_fitness AS f ON wss.fitnessId = f.fitnessId
+//         WHERE jc.statusId IN ('7','8','9','10')
+//         $where";
+                        
+                        $sql1="SELECT * FROM tbl_job_card INNER JOIN tbl_status ON tbl_job_card.statusId=tbl_status.statusId
+                            WHERE tbl_job_card.statusId IN ('8', '9', '10')";
+
+   
                         $result = $db->query($sql1);
                         ?>
                         <table id="jobCard_list" class="table table-bordered table-hover">
@@ -100,16 +97,17 @@ include '../nav.php';
                                 <tr>
                                     <th></th>
                                     <th>Status</th>
-                                    <th>Schedule ID</th>
                                     <th>Job Card Id</th>
+                                    <th>Instructor Id</th>
+                                    <th>Appointment Type Id</th>
                                     <th>Appointment Id</th>
                                     <th>Workout Id</th>
-                                    <th>Workout Name</th>
-                                    <th>Fitness ID</th>
-                                    <th>Fitness Name</th>
-                                    <th>Member Id</th>
-                                    <th>Appointment Date</th>
-                                    <th>Slot No.</th>
+<!--                                    <th>Workout Name</th>
+                                    <th>Schedule ID</th>
+                                    <th>Member ID</th>
+                                    <th>Slot ID</th>
+                                    <th>Slot Name</th>-->
+                                    <th>Workout Schedule Services</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -123,21 +121,20 @@ include '../nav.php';
                                         <tr>
                                             <td>
                                                 <form action="createInvoice2.php" method="post">
-                                                        <input type="hidden" name="workoutScheduleId" value="<?php echo $row['workoutScheduleId']; ?>">
-                                                        <input type="hidden" name="memberId" value="<?php echo $row['memberId']; ?>">
-<!--                                                        <input type="hidden" name="appointmentTypeId" value="<?php echo $row['appointmentTypeId']; ?>">
-                                                        <input type="hidden" name="workoutId" value="<?php echo $row['workoutId']; ?>">-->
-                                                        <button type="submit" class="btn btn-danger btn-sm">Create Invoice</button>
-                                                    </form>
+                                                    <input type="hidden" name="jobCardId" value="<?php echo $row['jobCardId']; ?>">
+                                                    <input type="hidden" name="memberId" value="<?php echo $row['memberId']; ?>">
+                                                    <input type="hidden" name="appointmentId" value="<?php echo $row['appointmentId']; ?>">
+                                                    <input type="hidden" name="workoutId" value="<?php echo $row['workoutId']; ?>">
+                                                    <button type="submit" class="btn btn-danger btn-sm">Create Invoice</button>
+                                                </form>
                                             </td>
                                             <td>
                                                 <?php
-                                                
-                                                if ($row['service_statusId'] == '8') {
+                                                if ($row['statusId'] == '8') {
                                                     ?>
-                                                    <button type="button" class="btn btn-danger btn-sm"><?php echo $row['statusName'] ?></button>
+                                                    <button type="button" class="btn btn-warning btn-sm"><?php echo $row['statusName'] ?></button>
                                                     <?php
-                                                } elseif ($row['service_statusId'] == '9') {
+                                                } elseif ($row['statusId'] == '9') {
                                                     ?>
                                                     <button type="button" class="btn btn-primary btn-sm"><?php echo $row['statusName'] ?></button>
                                                     <?php
@@ -146,28 +143,61 @@ include '../nav.php';
                                                     <button type="button" class="btn btn-success btn-sm"><?php echo $row['statusName'] ?></button>
                                                     <?php
                                                 }
-                                                
                                                 ?>
 
                                             </td>
-                                         
-                                            <td><?php echo $row['workoutScheduleId']; ?></td>
+
                                             <td><?php echo $row['jobCardId']; ?></td>
+                                            <td><?php echo $row['instructorId']; ?></td>
+                                            <td><?php echo $row['appointmentTypeId']; ?></td>
                                             <td><?php echo $row['appointmentId']; ?></td>
                                             <td><?php echo $row['workoutId']; ?></td>
-                                            <td><?php echo $row['workoutName']; ?></td>
-                                            <td><?php echo $row['fitnessId']; ?></td>
-                                            <td><?php echo $row['fitnessName']; ?></td>
+<!--                                            <td><?php echo $row['workoutName']; ?></td>
+                                            <td><?php echo $row['workoutScheduleId']; ?></td>
                                             <td><?php echo $row['memberId']; ?></td>
-
-                                            <td><?php echo $row['appointmentDate']; ?></td>
-                                            <td><?php echo $row['slotName']; ?></td>
-
+                                            <td><?php echo $row['slotId']; ?></td>
+                                            <td><?php echo $row['slotName']; ?></td>-->
+        <!--                                            <td><?php echo $row['fitnessId']; ?></td>
+                                            <td><?php echo $row['fitnessName']; ?></td>
+                                            <td><?php echo $row['appointmentDate']; ?></td>-->
+                                            <td>
+                                                <table class="table table-info">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Schedule Service ID</th>
+                                                            <th scope="col">Fitness ID</th>
+                                                            <th scope="col">Workout Schedule Date</th>
+                                                            <th scope="col">Service Status ID</th>
+                                                            <th scope="col">Service Status Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        $workoutScheduleId = $row['workoutScheduleId'];
+                                                        $sql2 = "SELECT * FROM tbl_workout_schedule_services LEFT JOIN tbl_status ON tbl_workout_schedule_services.statusId = tbl_status.statusId WHERE workoutScheduleId = '$workoutScheduleId'";
+                                                        $result2 = $db->query($sql2);
+                                                        if ($result2->num_rows > 0) {
+                                                            while ($row2 = $result2->fetch_assoc()) {
+                                                        ?>
+                                                        <tr>
+                                                            <td><?php echo $row2['workoutScheduleServiceId']; ?></td>
+                                                            <td><?php echo $row2['fitnessId']; ?></td>
+                                                            <td><?php echo $row2['workoutScheduleDate']; ?></td>
+                                                            <td><?php echo $row2['statusId']; ?></td>
+                                                            <td><?php echo $row2['statusName']; ?></td>
+                                                        </tr>
+                                                        <?php
+                                                        }
+                                                        }
+                                                        ?>
+                                                    </tbody>
+                                                </table>
+                                            </td>
                                         </tr>  
-                                        <?php
-                                    }
-                                }
-                                ?>
+        <?php
+    }
+}
+?>
                             </tbody>
                         </table>
                     </div>

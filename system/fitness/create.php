@@ -104,7 +104,7 @@ include '../nav.php';
                             //Insert Records
                             if (empty($message)) {
                                 $db = dbConn();
-                                echo $sql = "INSERT INTO tbl_fitness("
+                                $sql = "INSERT INTO tbl_fitness("
                                         . "workoutId,"
                                         . "fitnessName,"
                                         . "fitnessDesc,"

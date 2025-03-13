@@ -13,6 +13,7 @@
             <file>file:/D:/XAMPP/htdocs/gms/reserveWorkoutForm.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/workout.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/fitness2.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/payments/invoicePrint.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/registerSuccess.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/users/view.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/logout.php</file>
@@ -39,6 +40,7 @@
             <file>file:/D:/XAMPP/htdocs/gms/myProfile.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/index2.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/footer.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/payments/createInvoice.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/reports/slots.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/cashier_dashboard.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/reservations/workoutReservation.php</file>
@@ -54,6 +56,7 @@
             <file>file:/D:/XAMPP/htdocs/gms/instructor.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/jobCard/createWorkoutSchedule.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/jobCard/acceptJobCard.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/payments/createInvoice2.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/admin_dashboard.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/joiningClassForm.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/nav.php</file>

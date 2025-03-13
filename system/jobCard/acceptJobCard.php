@@ -68,7 +68,8 @@ include '../nav.php';
                             //change status
                         if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "change") {
                             $db = dbConn();
-                            $Stid = $Stid == '7' ? '8' : '7';
+//                            $Stid = $Stid == '7' ? '8' : '7';
+                            $Stid = ($Stid == '7') ? '8' : (($Stid == '8') ? '9' : (($Stid == '9') ? '10' : '7'));
                             $sql = "UPDATE tbl_job_card SET statusId='$Stid' WHERE jobCardId='$Sjid'";
                             $db->query($sql);
                         }
