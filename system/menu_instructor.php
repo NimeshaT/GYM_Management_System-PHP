@@ -1,7 +1,7 @@
  <!--        ////////////////////////My Profile Management////////////////////////////-->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user-friends"></i>
+              <i class="nav-icon fas fa-user"></i>
               <p>
                 My Profile
                 <i class="right fas fa-angle-left"></i>
@@ -29,13 +29,13 @@
               <li class="nav-item">
                 <a href="<?php echo SITE_URL; ?>jobCard/acceptJobCard.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Accept Job Card</p>
+                  <p>Accept Workout Job Card</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="<?php echo SITE_URL; ?>jobCard/createWorkoutSchedule.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Create Schedule</p>
+                  <p>Create Workout Schedule</p>
                 </a>
               </li>
               <li class="nav-item">

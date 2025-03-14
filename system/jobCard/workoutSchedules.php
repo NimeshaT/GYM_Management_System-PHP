@@ -24,7 +24,7 @@ include '../nav.php';
             <div class="row">
                 <div class="card">
                     <div class="card-header bg-info">
-                        <h3 class="card-title">Instructor Pending Job Card</h3>
+                        <h3 class="card-title">Instructor Pending Workout Schedule Services</h3>
                     </div>
                     <div class="card-body">
                         <?php
@@ -34,9 +34,7 @@ include '../nav.php';
                         <!--                            ================search==================-->
                         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                             <input type="text" name="A_Id" placeholder="Enter Appointment Id" value="<?php echo @$A_Id ?>">
-                            <input type="text" name="M_Reg" placeholder="Enter Member RegNo" value="<?php echo @$M_Reg ?>">
-                            <input type="date" name="from" placeholder="Enter from date" value="<?php echo @$from ?>">
-                            <input type="date" name="to" placeholder="Enter to date" value="<?php echo @$to ?>">
+                           
                             <button type="submit" class="bg-success btn">Search</button>
                         </form>
 
@@ -47,16 +45,9 @@ include '../nav.php';
                         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             //check Appointment id
                             if (!empty($A_Id)) {
-                                $where .= "tbl_appointments.appointmentId='$A_Id' AND";
+                                $where .= "a.appointmentId='$A_Id' AND";
                             }
-                            //check member reg no
-                            if (!empty($M_Reg)) {
-                                $where .= " tbl_members.memberRegistrationNo='$M_Reg' AND";
-                            }
-                            //check from to dates
-                            if (!empty($from) && !empty($to)) {
-                                $where .= " appointmentDate BETWEEN  '$from' AND '$to' AND";
-                            }
+                            
                             //generate dynamic query remove AND last characters from the string
                             if (!empty($where)) {
                                 $where = substr($where, 0, -3);
@@ -70,8 +61,9 @@ include '../nav.php';
 //                            echo $s_Stid;
 //                            echo $Shid;
 //                            $Stid = $Stid == '8' ? '9' : '8';
+                            //echo $Fid;
                             $s_Stid = ($s_Stid == '8') ? '9' : (($s_Stid == '9') ? '10' : '8');
-                            $sql = "UPDATE tbl_workout_schedule_services SET statusId='$s_Stid' WHERE workoutScheduleId='$Shid'";
+                            $sql = "UPDATE tbl_workout_schedule_services SET statusId='$s_Stid' WHERE fitnessId='$Fid' AND workoutScheduleId='$Shid'";
                             $db->query($sql);
                         }
                         
@@ -90,7 +82,7 @@ include '../nav.php';
          LEFT JOIN tbl_appointments AS a ON ws.appointmentId = a.appointmentId
          LEFT JOIN tbl_time_slots AS ts ON ws.slotId = ts.slotId
          LEFT JOIN tbl_fitness AS f ON wss.fitnessId = f.fitnessId
-         WHERE ws.instructorId = '2' 
+         WHERE ws.instructorId = '{$_SESSION['INSTRUCTORID']}' 
          AND wss.statusId IN ('8','9','10') $where";
 
                         $result = $db->query($sql1);
@@ -146,6 +138,7 @@ include '../nav.php';
                                                     <button type="submit" class="btn btn-danger btn-sm" name="action" value="change">Change</button>
         <!--                                                    <input type="text" name="Sjid" value="<?php echo $row['jobCardId'] ?>">-->
                                                     <input type="hidden" name="Shid" value="<?php echo $row['workoutScheduleId'] ?>">
+                                                    <input type="hidden" name="Fid" value="<?php echo $row['fitnessId'] ?>">
                                                     <input type="hidden" name="s_Stid" value="<?php echo $row['service_statusId'] ?>">
                                                 </form>
                                             </td>

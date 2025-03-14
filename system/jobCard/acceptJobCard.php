@@ -24,7 +24,7 @@ include '../nav.php';
             <div class="row">
                 <div class="card">
                     <div class="card-header bg-info">
-                        <h3 class="card-title">Instructor Accepted Job Card</h3>
+                        <h3 class="card-title">Instructor Workout Job Card</h3>
                     </div>
                     <div class="card-body">
                         <?php

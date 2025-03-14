@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/XAMPP/htdocs/gms/system/jobCard/load_schedule_slot.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/header.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/workouts/create.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/classes.php</file>
@@ -10,14 +11,17 @@
             <file>file:/D:/XAMPP/htdocs/gms/system/menu_manager.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/config.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/class/create.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/myProfile/create2.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/reserveWorkoutForm.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/workout.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/fitness2.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/payments/invoicePrint.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/registerSuccess.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/users/viewMembers.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/users/view.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/logout.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/fitness2Login.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/load_slot.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/jobCard/createSchedule.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/userRoles/assign.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/enrollingPackagesForm.php</file>
@@ -71,6 +75,7 @@
             <file>file:/D:/XAMPP/htdocs/gms/system/menu_cashier.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/fitness/create.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/system/login.php</file>
+            <file>file:/D:/XAMPP/htdocs/gms/system/services/create.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/bookingFitnessForm.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/packagesLogin.php</file>
             <file>file:/D:/XAMPP/htdocs/gms/classesLogin.php</file>

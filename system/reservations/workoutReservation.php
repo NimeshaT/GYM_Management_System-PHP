@@ -103,6 +103,9 @@ include '../nav.php';
                                                         <input type="hidden" name="appointmentId" value="<?php echo $row['appointmentId']; ?>">
                                                         <input type="hidden" name="appointmentTypeId" value="<?php echo $row['appointmentTypeId']; ?>">
                                                         <input type="hidden" name="workoutId" value="<?php echo $row['workoutId']; ?>">
+                                                        <input type="hidden" name="appointmentDate" value="<?php echo $row['appointmentDate']; ?>">
+                                                        <input type="hidden" name="slotId" value="<?php echo $row['slotId']; ?>">
+                                                        <input type="hidden" name="memberId" value="<?php echo $row['memberId']; ?>">
                                                         <button type="submit" class="btn btn-danger btn-sm">Create Job Card</button>
                                                     </form>
                                                     <?php
@@ -110,7 +113,7 @@ include '../nav.php';
                                                     ?>
                                                     <form action="viewJobCard.php" method="post">
                                                         <input type="hidden" name="appointmentId" value="<?php echo $row['appointmentId']; ?>">
-<!--                                                        <input type="text" name="jobCardId" value="<?php echo $row['jobCardId']; ?>">-->
+                                                        
                                                         <button type="submit" class="btn btn-success btn-sm">View Job Card</button>
                                                     </form>
                                                     <?php

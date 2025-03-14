@@ -45,33 +45,22 @@ include '../nav.php';
                                     <h3 class="profile-username text-center"><?php echo $_SESSION['FIRSTNAME'] ?> <?php echo $_SESSION['LASTNAME'] ?></h3>
                                     <ul class="list-group list-group-unbordered mb-3">
                                         <?php
-                                        $db = dbConn();
-                                        $currentD = date('y-m-d');
-//                                        $sql2 = "SELECT COUNT(ServicesJobCardId) AS todayappointments FROM tbl_services_job_card WHERE EmployeeId='{$_SESSION['EMPLOYEEID']}' AND AppointmentDate='$currentD'";
-                                        $sql2 = "SELECT COUNT(appointmentId) AS todayappointments FROM tbl_appointments WHERE appointmentDate='$currentD'";
-                                        $result2 = $db->query($sql2);
-                                        if ($result2->num_rows > 0) {
-                                            while ($row2 = $result2->fetch_assoc()) {
+                                        
                                                 ?>
                                                 <li class="list-group-item">
-                                                    <b>Today's Appointments</b> <a class="float-right"><?php echo $row2['todayappointments']; ?></a>
+                                                    <b>Today's Appointments</b> <a class="float-right"><?php echo '111'; ?></a>
                                                 </li>
                                                 <?php
-                                            }
-                                        }
+                                         
                                         ?>
                                         <?php
-                                        $sql3 = "SELECT COUNT(appointmentId) AS allappointments FROM tbl_appointments";
-                                        $result3 = $db->query($sql3);
-                                        if ($result3->num_rows > 0) {
-                                            while ($row3 = $result3->fetch_assoc()) {
+                                        
                                                 ?>
                                                 <li class="list-group-item">
-                                                    <b>Total Appointments</b> <a class="float-right"><?php echo $row3['allappointments']; ?></a>
+                                                    <b>Total Appointments</b> <a class="float-right"><?php echo '21'; ?></a>
                                                 </li>
                                                 <?php
-                                            }
-                                        }
+                                          
                                         ?>
                                     </ul>
                                 </div>

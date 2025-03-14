@@ -43,7 +43,7 @@ include '../nav.php';
                             <li class="list-group-item">Appointment ID: <?php echo $row['appointmentId']; ?></li>
                             <li class="list-group-item">Workout ID: <?php echo $row['workoutId']; ?></li>
                             <li class="list-group-item">Workout Name: <?php echo $row['workoutName']; ?></li>
-                            <li class="list-group-item">Workout Name: <p class="text-primary"><?php echo $row['statusName']; ?></p></li>
+                            <li class="list-group-item">Status: <p class="text-primary"><?php echo $row['statusName']; ?></p></li>
                             <?php
                                 }
                             }

@@ -2,7 +2,7 @@
 <!--        ////////////////////////Payments Management////////////////////////////-->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-dumbbell"></i>
+              <i class="nav-icon fas fa-cash-register"></i>
               <p>
                 Payments
                 <i class="right fas fa-angle-left"></i>

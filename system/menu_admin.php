@@ -162,36 +162,12 @@
             </ul>
           </li>
           
-<!--        ////////////////////////Services Management////////////////////////////-->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-dumbbell"></i>
-              <p>
-                Services Management
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>services/create.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Create Services Type</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>services/view.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>View Services Type</p>
-                </a>
-              </li>
-            </ul>
-          </li>
           <!--        ////////////////////////Packages Management////////////////////////////-->
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-folder-open"></i>
               <p>
-                Packages Management
+                Packages
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -216,7 +192,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-address-book"></i>
               <p>
-                Reviews Management
+                Reviews
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>

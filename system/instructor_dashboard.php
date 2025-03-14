@@ -9,7 +9,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item active">Dashboard</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -26,14 +26,17 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                            <?php
+//                            $db = dbConn();
+//                            $currentD = date('y-m-d');
+//                            $sql = "SELECT COUNT(appointmentId) AS todayappointments FROM tbl_appointments INNER JOIN tbl_workout_schedules ON tbl_appointments.appointmentId=tbl_workout_schedules.appointmentId WHERE tbl_workout_schedules.instructorId='{$_SESSION['INSTRUCTORID']}' AND tbl_appointments.appointmentDate='$currentD' AND tbl_appointments.appointmentTypeId='1'";
+//                            $result = $db->query($sql);
+//                            $row = $result->fetch_assoc();
+//                            ?>
+                            <h3>//<?php echo $row["todayappointments"]; ?></h3>
 
-                <p>New Orders</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <p>Today's workouts Appointments</p>
+                        </div>
             </div>
           </div>
           <!-- ./col -->

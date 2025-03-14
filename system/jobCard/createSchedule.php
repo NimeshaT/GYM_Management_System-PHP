@@ -22,7 +22,7 @@ include '../nav.php';
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col">
+                <div class="col-6">
                     <div class="card card-info">
                         <?php
                         extract($_POST);
@@ -51,18 +51,17 @@ include '../nav.php';
                                 $sql = "INSERT INTO tbl_workout_schedules("
                                         . "jobCardId,"
                                         . "memberId,"
-                                        . "appointmentId,workoutId,slotId,instructorId,statusId)VALUES("
+                                        . "appointmentId,workoutId,instructorId,statusId)VALUES("
                                         . "'$jobCardId',"
                                         . "'$memberId',"
                                         . "'$appointmentId',"
                                         . "'$workoutId',"
-                                        . "'$slotId',"
                                         . "'$instructor_Id','8')";
                                 $db->query($sql);
 
                                 $workoutScheduleId = $db->insert_id;
                                 foreach ($Services as $Value) {
-                                    $sql = "INSERT INTO tbl_workout_schedule_services(workoutScheduleId,fitnessId) VALUES('$workoutScheduleId','$Value')";
+                                    $sql = "INSERT INTO tbl_workout_schedule_services(workoutScheduleId,fitnessId,jobCardId,statusId) VALUES('$workoutScheduleId','$Value','$jobCardId','8')";
                                     $db->query($sql);
                                 }
 
@@ -72,13 +71,32 @@ include '../nav.php';
                                         // Ensure a date is provided
                                         $date = $_POST['dates'][$fitnessId] ?? null;
                                         if (!empty($date)) {
-                                            $sql = "INSERT INTO tbl_workout_schedule_services (workoutScheduleId, fitnessId, workoutScheduleDate, jobCardId, statusId)VALUES ('$workoutScheduleId', '$fitnessId', '$date','$jobCardId','8')";
+                                            //$sql = "INSERT INTO tbl_workout_schedule_services (workoutScheduleId, fitnessId, workoutScheduleDate, jobCardId, statusId)VALUES ('$workoutScheduleId', '$fitnessId', '$date','$jobCardId','8')";
+                                            $sql = "UPDATE tbl_workout_schedule_services 
+                    SET workoutScheduleDate = '$date' 
+                    WHERE workoutScheduleId = '$workoutScheduleId' 
+                    AND fitnessId = '$fitnessId'";
                                             $db->query($sql);
                                         }
                                     }
                                 }
 
-                                //                                ===========successful meesage=============
+                                // Insert fitness services with their corresponding slots
+                                if (!empty($_POST['Services']) && !empty($_POST['slots'])) {
+                                    foreach ($_POST['Services'] as $fitnessId) {
+                                        // Ensure a date is provided
+                                        $slot = $_POST['slots'][$fitnessId] ?? null;
+                                        if (!empty($slot)) {
+                                            //$sql = "INSERT INTO tbl_workout_schedule_services (workoutScheduleId, fitnessId, workoutScheduleDate, jobCardId, statusId)VALUES ('$workoutScheduleId', '$fitnessId', '$date','$jobCardId','8')";
+                                            $sql1 = "UPDATE tbl_workout_schedule_services 
+                    SET slotId = '$slot' 
+                    WHERE workoutScheduleId = '$workoutScheduleId' 
+                    AND fitnessId = '$fitnessId'";
+                                            $db->query($sql1);
+                                        }
+                                    }
+                                }
+                                // ===========successful meesage=============
                                 ?>
                                 <div class="card bg-primary">
                                     <div class="card-header text-center">
@@ -91,71 +109,6 @@ include '../nav.php';
                             $action = "create_account";
                             $form_title = "Create";
                             $submit = "Create";
-                        }
-
-                        //Start Update Records
-                        if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "update_account") {
-
-                            $db = dbConn();
-                            $sql = "UPDATE tbl_workout_schedules SET "
-                                    . "jobCardId='$jobCardId',"
-                                    . "memberId='$memberId',"
-                                    . "appointmentId='$appointmentId',"
-                                    . "workoutId='$workoutId',"
-                                    . "slotId='$slotId',"
-                                    . "instructorId='$instructorId' "
-                                    . "WHERE workoutScheduleId='$workoutScheduleId'";
-                            $db->query($sql);
-                            $sql = "DELETE FROM tbl_workout_schedule_services WHERE workoutScheduleId='$workoutScheduleId'";
-                            $db->query($sql);
-                            foreach ($Services as $Value) {
-                                $sql = "INSERT INTO tbl_workout_schedule_services(workoutScheduleId,fitnessId) VALUES('$workoutScheduleId','$Value')";
-                                $db->query($sql);
-                            }
-//                                ===========successful meesage=============
-                            ?>
-                            <div class="card bg-primary" >
-                                <div class="card-header text-center">
-                                    <h3 class="text-center text-dark">Update successfully..!<i class="far fa-thumbs-up"></i></h3>
-                                </div>
-                            </div>
-                            <?php
-                            $submit = "update";
-                        }
-
-                        //start edit records
-                        if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "edit_account") {
-                            $db = dbConn();
-                            $sql = "SELECT * FROM tbl_workout_schedules WHERE workoutScheduleId='$workoutScheduleId'";
-                            $result = $db->query($sql);
-
-                            //show one record
-                            $row = $result->fetch_assoc();
-
-                            $jobCardId = $row['jobCardId'];
-                            $memberId = $row['memberId'];
-                            $appointmentId = $row['appointmentId'];
-                            $FreeItem = $row['FreeItem'];
-                            $workoutId = $row['workoutId'];
-                            $slotId = $row['slotId'];
-                            $instructorId = $row['instructorId'];
-                            $workoutScheduleServiceId = $row['workoutScheduleServiceId'];
-                            $workoutScheduleId = $row['workoutScheduleId'];
-
-                            //checkboxes
-                            $sql = "SELECT * FROM tbl_workout_schedule_services WHERE workoutScheduleId='$workoutScheduleId'";
-//                            $sql = "SELECT fitnessId FROM tbl_workout_schedule_services WHERE workoutScheduleId='$workoutScheduleId'";
-                            $result = $db->query($sql);
-                            $Services = array();
-                            while ($row = $result->fetch_assoc()) {
-                                $Services[] = $row['workoutScheduleServiceId'];
-//                                $Services[] = $row['fitnessId'];
-                            }
-
-                            //change action after edit
-                            $action = "update_account";
-                            $form_title = "Update";
-                            $submit = "Update";
                         }
                         ?>
                         <div class="card-header">
@@ -198,36 +151,11 @@ include '../nav.php';
                                     }
                                     ?>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="workoutId">Slot ID</label>
-                                    <input type="text" class="form-control" id="slotId" name="slotId" value="<?php echo @$slotId; ?>" readonly>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="slotName">Slot Name</label>
-                                    <?php
-                                    //$db= dbConn();
-                                    $sql = "SELECT * FROM tbl_time_slots WHERE slotId='$slotId'";
-                                    $result = $db->query($sql);
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            ?>
-                                            <input type="text" class="form-control" id="slotName" name="slotName" value="<?php echo $row['slotName']; ?>" readonly>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
-                                </div>
-
-
                                 <div class="form-group">
                                     <label for="fitnessName" class="fw-bold">Select Fitness</label>
                                     <?php
                                     $sql = "SELECT * FROM tbl_fitness WHERE workoutId='$workoutId'";
                                     $result = $db->query($sql);
-//                                    $sql = "SELECT * FROM tbl_fitness WHERE workoutId='$workoutId'";
-//                                    $result = $db->query($sql);
                                     ?>
 
                                     <div class="row">
@@ -237,28 +165,37 @@ include '../nav.php';
                                                 ?>
                                                 <div class="col-md-4 mb-3">
                                                     <div class="form-check d-flex align-items-center">
-                                                        <input class="form-check-input me-2" type="checkbox" value="<?php echo $row['fitnessId']; ?>" id="fitness_<?php echo $row['fitnessId']; ?>" name="Services[]" 
+                                                        <input class="form-check-input me-2" type="checkbox" value="<?php echo $row['fitnessId']; ?>" 
+                                                               id="fitness_<?php echo $row['fitnessId']; ?>" name="Services[]" 
                                                                <?php echo (!empty($Services) && in_array($row['fitnessId'], @$Services)) ? 'checked' : ''; ?> >
+
                                                         <label class="form-check-label" for="fitness_<?php echo $row['fitnessId']; ?>">
                                                             <?php echo $row['fitnessName']; ?>
                                                         </label>
                                                     </div>
 
-<!--                                                    <input type="date" class="form-control mt-1" id="date" name="Dates[]" >-->
-                                                    <input type="date" class="form-control mt-1" id="date" name="dates[<?php echo $row['fitnessId']; ?>]" >
+                                                    <!-- Date Selection -->
+                                                    <input type="date" class="form-control mt-1" 
+                                                           id="date" 
+                                                           name="dates[<?php echo $row['fitnessId']; ?>]" 
+                                                           min="<?= date('Y-m-d'); ?>" 
+                                                           onchange="loadSchedulesSlots(this.value, '<?php echo $instructor_Id; ?>', '<?php echo $row['fitnessId']; ?>')">
+
+                                                    <!-- Unique Slot Dropdown -->
+                                                    <div id="slot_schedules_list_<?php echo $row['fitnessId']; ?>">
+                                                        <select class="form-control form-select" name="slots[<?php echo $row['fitnessId']; ?>]" id="slot">
+                                                            <option value="">Select a slot</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                                 <?php
                                             }
                                         }
                                         ?>
                                     </div>
-
-
-
-
                                 </div>
                                 <div class="card-footer">
-                                    <input type="hidden" name="workoutScheduleId" value="<?php echo @$workoutScheduleId; ?>">
+                                    <input type="text" name="workoutScheduleId" value="<?php echo @$workoutScheduleId; ?>">
                                     <button type="submit" class="btn btn-info" name="action" value="<?php echo @$action ?>"><?php echo @$submit; ?></button>
                                     <button type="submit" class="btn btn-danger" name="action" value="cancel">Cancel</button>
                                 </div>
@@ -266,55 +203,12 @@ include '../nav.php';
                         </form>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card">
-                        <div class="card-header bg-info">
-                            <h3 class="card-title">Table of Schedule Dates</h3>
-                        </div>
-                        <?php
-//                        if (!empty($workoutScheduleId)) {
-                            ?>
-                            <div class="card-body">
-
-                                <?php
-                                $db = dbConn();
-                                //$sql = "SELECT * FROM tbl_workout_schedule_services INNER JOIN tbl_fitness ON tbl_workout_schedule_services.fitnessId=tbl_fitness.fitnessId WHERE workoutScheduleId='$workoutScheduleId'";
-                                $sql="SELECT * FROM tbl_workout_schedules INNER JOIN tbl_workout_schedule_services ON tbl_workout_schedules.workoutScheduleId=tbl_workout_schedule_services.workoutScheduleId INNER JOIN tbl_fitness ON tbl_workout_schedule_services.fitnessId=tbl_fitness.fitnessId WHERE jobCardId='$jobCardId'";
-                                $result = $db->query($sql);
-                                ?>
-                                <table id="fitness_list" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Schedule Id</th>
-                                            <th>Fitness ID</th>
-                                            <th>Fitness Name</th>
-                                            <th>Schedules Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        if ($result->num_rows > 0) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                ?>
-                                                <tr>
-
-                                                    <td><?php echo $row['workoutScheduleId']; ?></td>
-                                                    <td><?php echo $row['fitnessId']; ?></td>
-                                                    <td><?php echo $row['fitnessName']; ?></td>
-                                                    <td><?php echo $row['workoutScheduleDate']; ?></td>
-                                                </tr>
-                                                <?php
-                                            }
-                                        }
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <?php
-//                        }
-                        ?>
-                    </div>
+                <?php
+                ?>
+                <div class="col-6">
                 </div>
+                <?php
+                ?>
             </div>
         </div>
     </section>
@@ -323,6 +217,69 @@ include '../nav.php';
 <?php
 include '../footer.php';
 ?>
+
+<script>
+    //============================Check Poya days=====================
+<?php
+//$db = dbConn();
+$sql = "SELECT * FROM tbl_poya_days";
+$result = $db->query($sql);
+
+$days = array();
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+//separate year month and date
+        $parts = explode("-", $row["poyaDay"]);
+        $days[] = array((int) $parts[0], (int) $parts[1], (int) $parts[2]);
+    }
+}
+
+//php to js view
+echo "const poyaDays = " . json_encode($days) . ";";
+?>
+
+    $("#date").on("change keyup", e => {
+        //check date in an array
+        const parts = e.target.value.split("-");
+        const year = parseInt(parts[0]);
+        const month = parseInt(parts[1]);
+        const day = parseInt(parts[2]);
+
+        let isPoya = false;
+
+        for (const i of poyaDays) {
+            if (i[0] == year && i[1] == month && i[2] == day) {
+                isPoya = true;
+                break;
+            }
+        }
+
+        if (isPoya) {
+            window.alert("Selected day is a poya day. Please select a different date.");
+            //event target value - enter date
+            e.target.value = "";
+        } else {
+            checkForFreeSlots(e.target.value)
+        }
+    });
+</script>
+<script>
+    function loadSchedulesSlots(date, instructorId, fitnessId) {
+        $.ajax({
+            type: 'POST',
+            url: 'load_schedule_slot.php',
+            data: {date: date, instructorId: instructorId, fitnessId: fitnessId},
+            success: function (response) {
+                $("#slot_schedules_list_" + fitnessId).html(response); // Update the correct dropdown
+            },
+            error: function (request, status, error) {
+                alert("Error: " + error);
+            }
+        });
+    }
+
+</script>
 
 
 

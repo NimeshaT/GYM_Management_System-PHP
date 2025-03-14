@@ -8,7 +8,7 @@ include '../nav.php';
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">Job Card</h1>
-                </div><!-- /.col -->
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Job Card</a></li>
@@ -27,9 +27,12 @@ include '../nav.php';
                         <?php
                         extract($_POST);
                         
-                        echo $appointmentId;
-                        echo $appointmentTypeId;
-                        echo $workoutId;
+                        $memberId;
+                        $appointmentId;
+                        $appointmentTypeId;
+                        $workoutId;
+                        $slotId;
+                        $appointmentDate;
                         
                         if (empty($action)) {
                             $action = 'create_account';
@@ -56,21 +59,26 @@ include '../nav.php';
                             if (empty($message)) {
                                 $db = dbConn();
                                 $sql = "INSERT INTO tbl_job_card("
-                                        . "jobCardId,"
                                         . "instructorId,"
+                                        . "memberId,"
                                         . "appointmentTypeId,"
                                         . "appointmentId,"
                                         . "workoutId,statusId)VALUES("
-                                        . "'$jobCardId',"
                                         . "'$instructorId',"
+                                        . "'$memberId',"
                                         . "'$appointmentTypeId',"
                                         . "'$appointmentId',"
                                         . "'$workoutId','7')";
-
+                                
                                 $db->query($sql);
                                 
+                            $sql1="UPDATE tbl_appointments SET statusId='5' WHERE appointmentId='$appointmentId'";
+                         $db->query($sql1);
+                                $db->query($sql);
+                                
+                                
                                 ?>
-                        <div class="card " style="background-color: #00008B">
+                        <div class="card bg-primary">
                                     <div class="card-header text-center">
                                         <h3 class="text-center text-light">Insert successfully..!<i class="far fa-thumbs-up"></i></h3>
                                     </div>
@@ -93,7 +101,7 @@ include '../nav.php';
                                     . "WHERE jobCardId='$jobCardId'";
                             $db->query($sql);
                             ?>
-                        <div class="card " style="background-color: #00008B">
+                        <div class="card bg-primary">
                                     <div class="card-header text-center">
                                         <h3 class="text-center text-light">Update successfully..!<i class="far fa-thumbs-up"></i></h3>
                                     </div>
@@ -107,14 +115,19 @@ include '../nav.php';
                         if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'edit_account') {
 
                             $db = dbConn();
-                            $sql = "SELECT * FROM tbl_job_card WHERE jobCardId='$jobCardId'";
+                            $sql = "SELECT * FROM tbl_job_card INNER JOIN tbl_instructors ON tbl_job_card.instructorId=tbl_instructors.instructorId INNER JOIN tbl_appointment_type ON tbl_job_card.appointmentTypeId=tbl_appointment_type.appointmentTypeId INNER JOIN tbl_personal_workouts ON tbl_job_card.workoutId=tbl_personal_workouts.workoutId WHERE jobCardId='$jobCardId'";
                             $result = $db->query($sql);
 
                             $row = $result->fetch_assoc();
 
-                            $instructorId = $row['instructorId'];
+                            //$instructorId = $row['instructorId'];
                             $jobCardId = $row['jobCardId'];
-
+                            //$firstName = $row['firstName'];
+                            //$lastName=$row['lastName'];
+                            $appointmentId=$row['appointmentId'];
+                            $appointmentTypeId=$row['appointmentTypeId'];
+                            $workoutId=$row['workoutId'];
+                            
                             $action = 'update_account';
                             $form_title = 'Update';
                             $submit = 'Update';
@@ -142,11 +155,19 @@ include '../nav.php';
                                     <label for="workoutId">Workout ID</label>
                                     <input type="text" class="form-control" id="workoutId" name="workoutId" value="<?php echo @$workoutId ?>" readonly>
                                 </div>
-                                
+                              
                                 <div class="form-group">
                                     <?php
                                     $db= dbConn();
-                                    $sql="SELECT * FROM tbl_instructors";
+                                    //$sql="SELECT * FROM tbl_instructors";
+                                    //$sql="SELECT * FROM tbl_instructors WHERE NOT IN (SELECT * FROM tbl_job_card INNER JOIN tbl_appointments ON tbl_job_card.appointmentId=tbl_appointments.appointmentId WHERE tbl_appointments.appointmentDate='$appointmentDate' AND tbl_job_card.instructorId='$instructorId' AND tbl_appointments.slotId='$slotId')";
+                                    
+                                    // SQL query to select instructors who are NOT assigned in job card for the given date and slot
+                                    
+                                    if (!empty($appointmentDate) && !empty($slotId)) {
+                                    $sql = "SELECT * FROM tbl_instructors WHERE instructorId NOT IN (SELECT tbl_job_card.instructorId FROM tbl_job_card INNER JOIN tbl_appointments ON tbl_job_card.appointmentId = tbl_appointments.appointmentId WHERE tbl_appointments.appointmentDate = '$appointmentDate' AND tbl_appointments.slotId = '$slotId')";
+                                    }
+                                    
                                     $result=$db->query($sql);
                                     ?>
                                     <label for="instructors">Select Instructor</label>
@@ -163,13 +184,17 @@ include '../nav.php';
                                         }
                                         ?>
                                     </select>
+                                    
                                 </div>
+                               
+                              
                                 <div class="text-danger"><?php echo @$message['instructorId']; ?></div>
                                 
                             </div>
 
                             <div class="card-footer">
                                 <input type="hidden" name="jobCardId" value="<?php echo @$jobCardId ?>">
+                                <input type="text" name="memberId" value="<?php echo @$memberId ?>">
                                 <button type="submit" class="btn btn-<?php echo @$btn; ?>" name="action" value="<?php echo @$action; ?>"><?php echo @$submit; ?></button>
                                 <button type="submit" class="btn btn-danger" name="action" value="cancel">Cancel</button>
                             </div>
@@ -184,7 +209,7 @@ include '../nav.php';
                         <div class="card-body">
 <!--                            -----------------Search BAR----------------------->
                             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-                                <input type="text" name="fitnessName" id="fitnessName" class="form-control" placeholder="Enter fitness Name">
+                                <input type="text" name="appointmentId" id="appointmentId" class="form-control" placeholder="Enter Appointment ID">
                                 <button type="submit" class="btn btn-success mt-2 mb-2" name="action" value="search_account">Search</button>
                             </form>
 
@@ -192,8 +217,8 @@ include '../nav.php';
 //                            ----------------Search Account-search bar------------------
                             $where=null;
                             if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'search_account') {
-                                if(!empty($fitnessName)){
-                                    $where.="WHERE fitnessName='fitnessName'";
+                                if(!empty($appointmentId)){
+                                    $where.="WHERE appointmentId='$appointmentId'";
                                 }
                             }
                         

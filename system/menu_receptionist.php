@@ -1,7 +1,7 @@
      <!--        ////////////////////////My Profile Management////////////////////////////-->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user-friends"></i>
+              <i class="nav-icon fas fa-user"></i>
               <p>
                 My Profile
                 <i class="right fas fa-angle-left"></i>
@@ -27,7 +27,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>userRoles/view.php" class="nav-link">
+                <a href="<?php echo SITE_URL; ?>users/viewMembers.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>View Members</p>
                 </a>
@@ -37,7 +37,7 @@
           <!--        ////////////////////////Attendance Management////////////////////////////-->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user-friends"></i>
+              <i class="nav-icon fas fa-list"></i>
               <p>
                 Attendance
                 <i class="right fas fa-angle-left"></i>
@@ -55,7 +55,7 @@
           <!--        ////////////////////////Reservation Management////////////////////////////-->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user-friends"></i>
+              <i class="nav-icon fas fa-address-book"></i>
               <p>
                 Reservations
                 <i class="right fas fa-angle-left"></i>

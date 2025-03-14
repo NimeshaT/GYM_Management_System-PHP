@@ -9,7 +9,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item active">Dashboard</li>
             </ol>
           </div>
         </div>
@@ -25,29 +25,32 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
-
-                <p>New Orders</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <?php
+                            $db = dbConn();
+                            $sql = "SELECT COUNT(invoiceId) AS countInvoice FROM tbl_workouts_invoice ";
+                            $result = $db->query($sql);
+                            $row = $result->fetch_assoc();
+                            ?>
+                            <h3><?php echo $row["countInvoice"]; ?></h3>
+                            <p>No of All Invoice</p>
+                        </div>
             </div>
           </div>
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                <p>Bounce Rate</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+             <div class="inner">
+                            <?php
+                            $db = dbConn();
+                            $currentD = date('y-m-d');
+                            $sql = "SELECT COUNT(appointmentId) AS countApp FROM tbl_appointments WHERE appointmentDate='$currentD' AND appointmentTypeId='1'";
+                            $result = $db->query($sql);
+                            $row = $result->fetch_assoc();
+                            ?>
+                            <h3><?php echo $row["countApp"]; ?></h3>
+                            <p>Daily workouts appointments</p>
+                        </div>
             </div>
           </div>
           <!-- ./col -->
@@ -55,19 +58,21 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
-
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <?php
+                            $db = dbConn();
+                            $currentD = date('y-m-d');
+                            $sql = "SELECT COUNT(workoutScheduleServiceId) AS countS FROM tbl_workout_schedule_services WHERE workoutScheduleDate='$currentD'";
+                            $result = $db->query($sql);
+                            $row = $result->fetch_assoc();
+                            ?>
+                            <h3><?php echo $row["countS"]; ?></h3>
+                            <p>Daily workout schedules</p>
+                        </div>
             </div>
           </div>
           <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
+<!--          <div class="col-lg-3 col-6">
+             small box 
             <div class="small-box bg-danger">
               <div class="inner">
                 <h3>65</h3>
@@ -79,14 +84,9 @@
               </div>
               <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          </div>
-          <!-- ./col -->
+          </div>-->
         </div>
-        <!-- /.row -->
-        <!-- Main row -->
         
-        <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
+      </div>
     </section>
-    <!-- /.content -->
   </div>

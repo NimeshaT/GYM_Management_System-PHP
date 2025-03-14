@@ -96,7 +96,7 @@ include '../nav.php';
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>Status</th>
+                                    <th>Job Card Status</th>
                                     <th>Job Card Id</th>
                                     <th>Instructor Id</th>
                                     <th>Appointment Type Id</th>
@@ -107,7 +107,7 @@ include '../nav.php';
                                     <th>Member ID</th>
                                     <th>Slot ID</th>
                                     <th>Slot Name</th>-->
-                                    <th>Workout Schedule Services</th>
+<!--                                    <th>Workout Schedule Services</th>-->
                                 </tr>
                             </thead>
                             <tbody>
@@ -160,7 +160,7 @@ include '../nav.php';
         <!--                                            <td><?php echo $row['fitnessId']; ?></td>
                                             <td><?php echo $row['fitnessName']; ?></td>
                                             <td><?php echo $row['appointmentDate']; ?></td>-->
-                                            <td>
+<!--                                            <td>
                                                 <table class="table table-info">
                                                     <thead>
                                                         <tr>
@@ -192,7 +192,7 @@ include '../nav.php';
                                                         ?>
                                                     </tbody>
                                                 </table>
-                                            </td>
+                                            </td>-->
                                         </tr>  
         <?php
     }

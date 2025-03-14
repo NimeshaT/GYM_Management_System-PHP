@@ -24,7 +24,7 @@ include '../nav.php';
             <div class="row">
                 <div class="card">
                     <div class="card-header bg-info">
-                        <h3 class="card-title">Instructor Pending Job Card</h3>
+                        <h3 class="card-title">Instructor Pending Workout Job Card</h3>
                     </div>
                     <div class="card-body">
                         <?php
@@ -34,14 +34,13 @@ include '../nav.php';
                         <!--                            ================search==================-->
                         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                             <input type="text" name="A_Id" placeholder="Enter Appointment Id" value="<?php echo @$A_Id ?>">
-                            <input type="text" name="M_Reg" placeholder="Enter Member RegNo" value="<?php echo @$M_Reg?>">
+                            <input type="text" name="M_Reg" placeholder="Enter Member RegNo" value="<?php echo @$M_Reg ?>">
                             <input type="date" name="from" placeholder="Enter from date" value="<?php echo @$from ?>">
                             <input type="date" name="to" placeholder="Enter to date" value="<?php echo @$to ?>">
                             <button type="submit" class="bg-success btn">Search</button>
                         </form>
 
                         <?php
-                        
                         $db = dbConn();
                         $where = null;
                         //dynamically generate the query
@@ -64,18 +63,18 @@ include '../nav.php';
                                 $where = " AND $where";
                             }
                         }
-                        
-                            //change status
+
+                        //change status
                         if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "change") {
                             $db = dbConn();
                             $Stid = $Stid == '7' ? '8' : '7';
                             $sql = "UPDATE tbl_job_card SET statusId='$Stid' WHERE jobCardId='$Sjid'";
                             $db->query($sql);
                         }
-                        
+
 //                        $sql1="SELECT * FROM tbl_job_card INNER JOIN tbl_status ON tbl_job_card.statusId=tbl_status.statusId INNER JOIN tbl_personal_workouts ON tbl_job_card.workoutId=tbl_personal_workouts.workoutId INNER JOIN tbl_appointments ON tbl_job_card.appointmentId = tbl_appointments.appointmentId 
 //        INNER JOIN tbl_members ON tbl_appointments.memberId = tbl_members.memberId INNER JOIN tbl_time_slots ON tbl_appointments.slotId=tbl_time_slots.slotId WHERE instructorId='" . $_SESSION['INSTRUCTORID'] . "' $where ORDER BY jobCardId DESC";
-                        $sql1="SELECT tbl_job_card.statusId AS jobCardStatusId, tbl_status.statusName, tbl_job_card.jobCardId, 
+                        $sql1 = "SELECT tbl_job_card.statusId AS jobCardStatusId, tbl_status.statusName, tbl_job_card.jobCardId, 
                 tbl_appointments.appointmentId, tbl_appointments.appointmentDate, tbl_appointments.appointmentTypeId, 
                 tbl_personal_workouts.workoutId, tbl_personal_workouts.workoutName, 
                 tbl_members.memberId, tbl_members.memberRegistrationNo AS memberRegNo, tbl_members.firstName,tbl_members.lastName,
@@ -88,7 +87,6 @@ include '../nav.php';
          INNER JOIN tbl_time_slots ON tbl_appointments.slotId = tbl_time_slots.slotId 
          WHERE tbl_job_card.instructorId = '" . $_SESSION['INSTRUCTORID'] . "' AND tbl_job_card.statusId='8'$where ORDER BY tbl_job_card.jobCardId DESC";
                         $result = $db->query($sql1);
-                        
                         ?>
                         <table id="jobCard_list" class="table table-bordered table-hover">
                             <thead>
@@ -110,38 +108,54 @@ include '../nav.php';
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                        //echo $appNo=$row['appointmentId'];
-                                        //echo $sid=$row['statusId'];
-        
-                                        ?>
+<?php
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        //echo $appNo=$row['appointmentId'];
+        //echo $sid=$row['statusId'];
+        ?>
                                         <tr>
                                             <td>
+                                        <?php
+                                        // Connect to database
+                                        $db = dbConn();
+
+                                        // Get the appointmentId
+                                        $appointmentId = $row['appointmentId'];
+
+                                        // Check if appointmentId exists in tbl_workout_schedules
+                                        $sql_check = "SELECT * FROM tbl_workout_schedules WHERE appointmentId = '$appointmentId'";
+                                        $result_check = $db->query($sql_check);
+
+                                        // Change button color based on whether the appointment exists
+                                        $btnClass = ($result_check->num_rows > 0) ? "btn-success" : "btn-danger";
+                                        ?>
+
                                                 <form action="createSchedule.php" method="post">
-                                                        <input type="hidden" name="appointmentId" value="<?php echo $row['appointmentId']; ?>">
-                                                        <input type="hidden" name="appointmentTypeId" value="<?php echo $row['appointmentTypeId']; ?>">
-                                                        <input type="hidden" name="workoutId" value="<?php echo $row['workoutId']; ?>">
-                                                        <input type="hidden" name="jobCardId" value="<?php echo $row['jobCardId']; ?>">
-                                                        <input type="hidden" name="slotId" value="<?php echo $row['slotId']; ?>">
-                                                        <input type="hidden" name="memberId" value="<?php echo $row['memberId']; ?>">
-                                                        <input type="hidden" name="instructorId" value="<?php echo $_SESSION['INSTRUCTORID']; ?>">
-                                                        <button type="submit" class="btn btn-danger btn-sm">Create Schedule</button>
-                                                    </form>
+                                                    <input type="hidden" name="appointmentId" value="<?php echo $row['appointmentId']; ?>">
+                                                    <input type="hidden" name="appointmentTypeId" value="<?php echo $row['appointmentTypeId']; ?>">
+                                                    <input type="hidden" name="workoutId" value="<?php echo $row['workoutId']; ?>">
+                                                    <input type="hidden" name="jobCardId" value="<?php echo $row['jobCardId']; ?>">
+                                                    <input type="hidden" name="slotId" value="<?php echo $row['slotId']; ?>">
+                                                    <input type="hidden" name="memberId" value="<?php echo $row['memberId']; ?>">
+                                                    <input type="hidden" name="instructorId" value="<?php echo $_SESSION['INSTRUCTORID']; ?>">
+
+                                                    <button type="submit" class="btn <?php echo $btnClass; ?> btn-sm">Create Schedule</button>
+                                                </form>
                                             </td>
+
                                             <td>
+        <?php
+        if ($row['jobCardStatusId'] == '7') {
+            ?>
+                                                    <button type="button" class="btn btn-danger btn-sm"><?php echo $row['statusName'] ?></button>
                                                     <?php
-                                                    if ($row['jobCardStatusId'] == '7') {
+                                                } else {
                                                     ?>
-                                                        <button type="button" class="btn btn-danger btn-sm"><?php echo $row['statusName'] ?></button>
-                                                        <?php
-                                                    } else {
-                                                        ?>
-                                                        <button type="button" class="btn btn-success btn-sm"><?php echo $row['statusName'] ?></button>
-                                                        <?php
-                                                    }
-                                                    ?>
+                                                    <button type="button" class="btn btn-success btn-sm"><?php echo $row['statusName'] ?></button>
+                                                    <?php
+                                                }
+                                                ?>
                                             </td>
 
                                             <td><?php echo $row['jobCardId']; ?></td>
@@ -149,20 +163,20 @@ include '../nav.php';
                                             <td><?php echo $row['appointmentTypeId']; ?></td>
                                             <td><?php echo $row['workoutId']; ?></td>
                                             <td><?php echo $row['workoutName']; ?></td>
-                                            
+
                                             <td><?php echo $row['memberId']; ?></td>
                                             <td><?php echo $row['memberRegNo']; ?></td>
                                             <td><?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></td>
-                                     
+
                                             <td><?php echo $row['appointmentDate']; ?></td>
                                             <td><?php echo $row['slotName']; ?></td>
                                             <td><?php echo $row['slotStartTime']; ?></td>
                                             <td><?php echo $row['slotEndTime']; ?></td>
                                         </tr>  
-                                        <?php
-                                    }
-                                }
-                                ?>
+        <?php
+    }
+}
+?>
                             </tbody>
                         </table>
                     </div>
