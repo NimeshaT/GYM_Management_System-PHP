@@ -80,30 +80,62 @@
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
+                <!--//receptionist appointment count-->
                 <?php
                 $db = dbConn();
                 $sql = "SELECT COUNT(*) as pending_count FROM `tbl_appointments` AS apt WHERE apt.appointmentId NOT IN (SELECT appointmentId FROM tbl_job_card)";
                 $result = $db->query($sql);
                 $row = $result->fetch_assoc();
+                $pending_appointments = $row["pending_count"];
                 ?>
                 <?php if ($_SESSION["ROLE"] == "receptionist") { ?>
-                    <span class="badge badge-danger navbar-badge"><?php echo $row["pending_count"]; ?></span>
+<!--                    <span class="badge badge-danger navbar-badge"><?php echo $row["pending_count"]; ?></span>-->
                 <?php } ?>
                     
-                    <?php
-                $db = dbConn();
-                $sql = "SELECT COUNT(*) as pending_count FROM `tbl_job_card` WHERE statusId='7' AND instructorId='{$_SESSION['INSTRUCTORID']}'";
+                <!--//receptionist fitness booking count-->
+                <?php
+                //$db = dbConn();
+                $sql = "SELECT COUNT(*) as pending_count1 FROM `tbl_bookings` AS b WHERE b.bookingId NOT IN (SELECT bookingId FROM tbl_fitness_job_card)";
                 $result = $db->query($sql);
                 $row = $result->fetch_assoc();
+                $pending_bookings = $row["pending_count1"];
+                $total_notifications = $pending_appointments + $pending_bookings;
+                ?>
+                <?php if ($_SESSION["ROLE"] == "receptionist") { ?>
+                    <span class="badge badge-danger navbar-badge"><?php echo $total_notifications; ?></span>
+                <?php } ?>
+                    
+                <!--//instructor workout job card count-->
+                    <?php
+                $db = dbConn();
+                $sql = "SELECT COUNT(*) as pending_count3 FROM `tbl_job_card` WHERE statusId='7' AND instructorId='{$_SESSION['INSTRUCTORID']}'";
+                $result = $db->query($sql);
+                $row = $result->fetch_assoc();
+                $pending_f_appointments = $row["pending_count3"];
                 ?>
                 <?php if ($_SESSION["ROLE"] == "instructor") { ?>
-                    <span class="badge badge-danger navbar-badge"><?php echo $row["pending_count"]; ?></span>
+<!--                    <span class="badge badge-danger navbar-badge"><?php echo $row["pending_count"]; ?></span>-->
                 <?php } ?>
+                    
+                    <!--//instructor fitness job card count-->
+                    <?php
+                $db = dbConn();
+                $sql = "SELECT COUNT(*) as pending_count4 FROM `tbl_fitness_job_card` WHERE statusId='7' AND instructorId='{$_SESSION['INSTRUCTORID']}'";
+                $result = $db->query($sql);
+                $row = $result->fetch_assoc();
+                $pending_f_bookings = $row["pending_count4"];
+                $tot_notifications = $pending_f_appointments + $pending_f_bookings;
+                ?>
+                <?php if ($_SESSION["ROLE"] == "instructor") { ?>
+                    <span class="badge badge-danger navbar-badge"><?php echo $tot_notifications; ?></span>
+                <?php } ?>
+                    
+                
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                
                 <span class="dropdown-item dropdown-header">Notifications</span>
-
+                <!--//receptionist appointment count-->
                 <?php
                 $db = dbConn();
                 $sql = "SELECT COUNT(*) as pending_count FROM `tbl_appointments` AS apt WHERE apt.appointmentId NOT IN (SELECT appointmentId FROM tbl_job_card) AND apt.appointmentTypeId='1'";
@@ -116,6 +148,8 @@
                     </a>
                 <?php } ?>
                 <div class="dropdown-divider"></div>
+                
+                <!--//instructor job card count-->
                 <?php
                 //$db = dbConn();
                 $sql = "SELECT COUNT(*) as pending_count FROM `tbl_job_card` WHERE statusId='7' AND instructorId='{$_SESSION['INSTRUCTORID']}'";
@@ -124,7 +158,35 @@
                 ?>
                 <?php if ($_SESSION["ROLE"] == "instructor") { ?>
                     <a href="http://localhost/gms/system/jobCard/acceptJobCard.php" class="dropdown-item">
-                        <i class="fas fa-envelope mr-2"></i> <?php echo $row["pending_count"]; ?> New Job Cards
+                        <i class="fas fa-envelope mr-2"></i> <?php echo $row["pending_count"]; ?> New Workout Job Cards
+                    </a>
+                <?php } ?>
+                <div class="dropdown-divider"></div>
+                
+                <!--//receptionist bookings count-->
+                <?php
+                $db = dbConn();
+                $sql = "SELECT COUNT(*) as pending_count FROM `tbl_bookings` AS b WHERE b.bookingId NOT IN (SELECT bookingId FROM tbl_fitness_job_card) AND b.appointmentTypeId='2'";
+                $result = $db->query($sql);
+                $row = $result->fetch_assoc();
+                ?>
+                <?php if ($_SESSION["ROLE"] == "receptionist") { ?>
+                    <a href="http://localhost/gms/system/reservations/fitnessBooking.php" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> <?php echo $row["pending_count"]; ?> New fitness Bookings
+                    </a>
+                <?php } ?>
+                <div class="dropdown-divider"></div>
+                
+                <!--//instructor Fitness job card count-->
+                <?php
+                //$db = dbConn();
+                $sql = "SELECT COUNT(*) as pending_count FROM `tbl_fitness_job_card` WHERE statusId='7' AND instructorId='{$_SESSION['INSTRUCTORID']}'";
+                $result = $db->query($sql);
+                $row = $result->fetch_assoc();
+                ?>
+                <?php if ($_SESSION["ROLE"] == "instructor") { ?>
+                    <a href="http://localhost/gms/system/jobCard/acceptFitnessJobCard.php" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> <?php echo $row["pending_count"]; ?> New Fitness Job Cards
                     </a>
                 <?php } ?>
                 <div class="dropdown-divider"></div>

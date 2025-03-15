@@ -46,6 +46,36 @@
               </li>
             </ul>
           </li>
+          <!--        ////////////////////////Fitness Job Card Management////////////////////////////-->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-futbol"></i>
+              <p>
+                Fitness Job Card
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?php echo SITE_URL; ?>jobCard/acceptFitnessJobCard.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Accept Fitness Job Card</p>
+                </a>
+              </li>
+<!--              <li class="nav-item">
+                <a href="<?php echo SITE_URL; ?>jobCard/createWorkoutSchedule.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create F Schedule</p>
+                </a>
+              </li>-->
+<!--              <li class="nav-item">
+                <a href="<?php echo SITE_URL; ?>jobCard/workoutSchedules.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>View Workout Schedule</p>
+                </a>
+              </li>-->
+            </ul>
+          </li>
       
           
          

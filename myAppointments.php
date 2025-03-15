@@ -66,7 +66,7 @@ include 'system/function.php';
 
         <!--        ///////////////////////////////////////////////////workout section///////////////////////////////////////////////////////////////////////-->
         <?php
-        //change status-cancel
+        //change status-appointment
         if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['action']) && $_POST['action'] == "change") {
             $Stid = $_POST['Stid']; 
             $appointmentId = $_POST['appointmentId'];
@@ -74,6 +74,17 @@ include 'system/function.php';
             $db = dbConn();
             $Stid = $Stid == '4' ? '6' : '4';
             $sql = "UPDATE tbl_appointments SET statusId='$Stid' WHERE appointmentId='$appointmentId'";
+            $db->query($sql);
+        }
+        
+        //change status-booking
+        if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['action']) && $_POST['action'] == "changeB") {
+            $Stid = $_POST['Stid']; 
+            echo $bookingId = $_POST['bookingId'];
+
+            $db = dbConn();
+            $Stid = $Stid == '4' ? '6' : '4';
+            $sql = "UPDATE tbl_bookings SET statusId='$Stid' WHERE bookingId='$bookingId'";
             $db->query($sql);
         }
         
@@ -120,6 +131,62 @@ include 'system/function.php';
                                         <input type="hidden" name="appointmentId" value="<?php echo $row['appointmentId'] ?>">
                                         <input type="hidden" name="Stid" value="<?php echo $row['statusId'] ?>">
                                         <button type="submit" class="btn btn-danger" name="action" value="change">Cancel</button>
+                                    </form>
+                                </div>
+                            </div>
+        <?php
+    }
+}
+?>
+                </div>
+            </div>
+        </div>
+        
+        <hr>
+<!--        //My bookings-->
+        <div class="container mt-3 mb-3">
+            <div class="card">
+                <div class="card-header" style="background-color: #0071c5">
+                    <h5 class="text-center">--My Bookings--</h5>
+                </div>
+                <div class="card-body">
+                    <?php
+        $sql = "SELECT 
+            a.bookingId, 
+            a.statusId, 
+            s.statusName, 
+            atype.appointmentName, 
+            f.fitnessName, 
+            t.slotName, 
+            t.slotStartTime, 
+            t.slotEndTime 
+        FROM tbl_bookings a
+        LEFT JOIN tbl_status s ON a.statusId = s.statusId 
+        LEFT JOIN tbl_appointment_type atype ON a.appointmentTypeId = atype.appointmentTypeId 
+        LEFT JOIN tbl_fitness f ON a.fitnessId = f.fitnessId 
+        LEFT JOIN tbl_time_slots t ON a.slotId = t.slotId 
+        WHERE a.memberId = '" . $_SESSION['MEMBERID'] . "'";
+
+//                    $sql = "SELECT * FROM tbl_appointments INNER JOIN tbl_status ON tbl_appointments.statusId=tbl_status.statusId INNER JOIN tbl_appointment_type ON tbl_appointments.appointmentTypeId=tbl_appointment_type.appointmentTypeId INNER JOIN tbl_personal_workouts ON tbl_appointments.workoutId=tbl_personal_workouts.workoutId INNER JOIN tbl_time_slots ON tbl_appointments.slotId=tbl_time_slots.slotId WHERE memberId='" . $_SESSION['MEMBERID'] . "'";
+                    //$db = dbConn();
+                    $result = $db->query($sql);
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            //echo $stid=$row['statusId'];
+                            //echo $row['appointment_status']; // From tbl_appointments
+                            //echo $row['status_table_status']; // From tbl_status
+                            ?>
+                            <div class="jumbotron jumbotron-fluid bg-light mb-3">
+                                <div class="container">
+                                    <h5><?php echo $row['bookingId']; ?> | <?php echo $row['appointmentName']; ?> | <?php echo $row['fitnessName']; ?> | <?php echo $row['slotName']; ?> | <?php echo $row['slotStartTime']; ?> -  | <?php echo $row['slotEndTime']; ?></h5>
+                                    <button type="button" class="btn btn-primary"><?php echo $row['statusName']; ?></button>
+                                    
+                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+<!--                                        <input type="hidden" name="Mid" value="<?php echo $row['memberId'] ?>">-->
+<!--                                        <input type="hidden" name="appointmentId" value="<?php echo $row['appointmentId'] ?>">-->
+                                        <input type="hidden" name="bookingId" value="<?php echo $row['bookingId'] ?>">
+                                        <input type="hidden" name="Stid" value="<?php echo $row['statusId'] ?>">
+                                        <button type="submit" class="btn btn-danger" name="action" value="changeB">Cancel</button>
                                     </form>
                                 </div>
                             </div>

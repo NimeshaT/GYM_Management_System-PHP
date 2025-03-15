@@ -69,7 +69,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>users/view.php" class="nav-link">
+                <a href="<?php echo SITE_URL; ?>reservations/fitnessBooking.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>View Fitness Reservations</p>
                 </a>

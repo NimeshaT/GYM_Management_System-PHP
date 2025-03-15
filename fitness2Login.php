@@ -57,8 +57,8 @@ if (!isset($_SESSION['MEMBERID'])) {
                         </li>
                     </ul>
                 </div>
-                <a href="register.php"><button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Register Now  </button></a>
-                <a href="login.php"> <button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Login  </button></a>
+<!--                <a href="register.php"><button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Register Now  </button></a>
+                <a href="login.php"> <button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Login  </button></a>-->
                 <a href="index.php"> <button class="btn btn-outline-danger btn-sm my-2 my-sm-0" type="submit">  Logout  </button></a>
             </nav>
         </div>
@@ -74,7 +74,7 @@ if (!isset($_SESSION['MEMBERID'])) {
         <div class="container mb-5 mt-3">
             <h1 class="">Fitness</h1>
             <h4 class="">Unlock your potential with guided workouts tailored for all fitness levels!</h4>
-            <p class="text-danger">Don't Worry! If you intend to apply multiple fitnesses, We provide facilities through the Booking Form.</p>
+<!--            <p class="text-danger">Don't Worry! If you intend to apply multiple fitnesses, We provide facilities through the Booking Form.</p>-->
             <div class="row mt-5">
                 <?php
                 $sql="SELECT * FROM tbl_fitness INNER JOIN tbl_personal_workouts ON tbl_fitness.workoutId=tbl_personal_workouts.workoutId WHERE tbl_fitness.fitnessId='$fitnessId'";

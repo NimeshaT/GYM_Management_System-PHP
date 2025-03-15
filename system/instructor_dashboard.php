@@ -32,10 +32,10 @@
 //                            $sql = "SELECT COUNT(appointmentId) AS todayappointments FROM tbl_appointments INNER JOIN tbl_workout_schedules ON tbl_appointments.appointmentId=tbl_workout_schedules.appointmentId WHERE tbl_workout_schedules.instructorId='{$_SESSION['INSTRUCTORID']}' AND tbl_appointments.appointmentDate='$currentD' AND tbl_appointments.appointmentTypeId='1'";
 //                            $result = $db->query($sql);
 //                            $row = $result->fetch_assoc();
-//                            ?>
-                            <h3>//<?php echo $row["todayappointments"]; ?></h3>
+                            ?>
+<!--                            <h3><?php echo $row["todayappointments"]; ?></h3>-->
 
-                            <p>Today's workouts Appointments</p>
+<!--                            <p>Today's workouts Appointments</p>-->
                         </div>
             </div>
           </div>
