@@ -24,7 +24,6 @@ include '../nav.php';
         <div class="container-fluid">
             <?php
             extract($_POST);
-
             ?>
             <div class="row">
                 <?php
@@ -88,15 +87,15 @@ include '../nav.php';
                                         <?php echo $row['nicNo'] ?>
                                     </p>
                                     <hr>
-                                    
+
                                     <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
                                     <p class="text-muted"><?php echo $row['address'] ?></p>
                                     <hr>
-                                    
+
                                     <strong><i class="far fa-file-alt mr-1"></i> Contact No:</strong>
                                     <p class="text-muted"><?php echo $row['telNo'] ?></p>
                                     <hr>
-                                    
+
                                     <strong><i class="far fa-file-alt mr-1"></i> Email</strong>
                                     <p class="text-muted"><?php echo $row['email'] ?></p>
                                 </div>
@@ -110,61 +109,178 @@ include '../nav.php';
                     <div class="card">
                         <div class="card-header p-2">
                             <ul class="nav nav-pills">
-                                <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Today's ----</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#a" data-toggle="tab">All ---</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#b" data-toggle="tab">Today--</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#c" data-toggle="tab">All --</a></li>
+                                <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Completed Fitness</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#a" data-toggle="tab">Completed Workout Services</a></li>
+                                <!--                                <li class="nav-item"><a class="nav-link" href="#b" data-toggle="tab">Today--</a></li>
+                                                                <li class="nav-item"><a class="nav-link" href="#c" data-toggle="tab">All --</a></li>-->
                                 <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Edit Profile</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#attendance" data-toggle="tab">Attendance</a></li>
+<!--                                <li class="nav-item"><a class="nav-link" href="#attendance" data-toggle="tab">Attendance</a></li>-->
                             </ul>
                         </div>
                         <div class="card-body">
                             <div class="tab-content">
-                                <!--                                ==============Today's ----=================-->
+                                <!--                                ==============Completed Fitness ----=================-->
                                 <div class="active tab-pane" id="activity">
-                                    
-                                </div>
-
-                                <!--                                ===========================All ---===================-->
-                                <div class="tab-pane" id="a">
-                                 
-                                </div>
-                                
-                                <!--===================Edit profile====================-->
-<!--                                <div class="tab-pane" id="settings">
                                     <?php
-                                    extract($_POST);
-                                    if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "upload_image") {
+                                    $db = dbConn();
+                                    $curdate = date('y/m/d');
+                                    $sql5 = "SELECT * FROM tbl_fitness_job_card INNER JOIN tbl_bookings ON tbl_fitness_job_card.bookingId=tbl_bookings.bookingId INNER JOIN tbl_fitness ON tbl_fitness_job_card.fitnessId=tbl_fitness.fitnessId INNER JOIN tbl_members ON tbl_fitness_job_card.memberId=tbl_members.memberId LEFT JOIN tbl_instructors ON tbl_fitness_job_card.instructorId=tbl_instructors.instructorId INNER JOIN tbl_status ON tbl_fitness_job_card.statusId=tbl_status.statusId WHERE tbl_fitness_job_card.instructorId='{$_SESSION['INSTRUCTORID']}' AND tbl_fitness_job_card.statusId='10'";
+                                    $result5 = $db->query($sql5);
+                                    if ($result5->num_rows > 0) {
+                                        while ($row = $result5->fetch_assoc()) {
+                                            ?>
+                                            <div class="post">
+                                                <div class="user-block">
+                                                    <b>Job Card Id: <?php echo $row['fitnessJobCardId']; ?></b>
+                                                </div>
 
-                                        if (empty($message) AND!empty($_FILES["profilePhoto"]["name"])) {
+                                                <div class="user-block">
+                                                    Booking Date: <?php echo $row['bookingDate']; ?>
+                                                </div>
+                                                <div class="user-block">
+                                                    Fitness Id: <?php echo $row['fitnessId']; ?>
+                                                    <span class="float-right">Fitness Name: <?php echo $row['fitnessName']; ?></span>
+                                                </div>
+                                                <div class="user-block">
+                                                    Member Reg No: <?php echo $row['memberRegistrationNo']; ?>
+                                                    <span class="float-right">Member Name: <?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></span>
+                                                </div>
+
+                                                <?php
+                                                $statusId = $row['statusId'];
+                                                ?>
+                                                <div class="btn-group mt-2">
+                                                    <?php
+                                                    if ($statusId == 10) {
+                                                        ?>
+                                                        <button type="button" class="btn btn-success btn-sm"><?php echo $row['statusName']; ?></button>
+                                                        <?php
+                                                    } else {
+                                                        ?>
+                                                        <button type="button" class="btn btn-success btn-sm"><?php echo $row['StatusName']; ?></button>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
+
+                                <!--                                ===========================Completed Workout Services ---===================-->
+                                <div class="tab-pane" id="a">
+                                    <?php
+                                    $db = dbConn();
+                                    $curdate = date('y/m/d');
+
+                                    $sql5 = "SELECT 
+    wss.workoutScheduleServiceId, 
+    wss.workoutScheduleId, 
+    wss.fitnessId, 
+    wss.workoutScheduleDate, 
+    wss.slotId, 
+    wss.jobCardId, 
+    wss.statusId, 
+    s.statusName,
+    w.workoutId,
+    w.workoutName,
+    m.memberId,
+    m.memberRegistrationNo,
+    m.firstName,
+    m.lastName
+FROM tbl_workout_schedule_services wss
+INNER JOIN tbl_status s ON wss.statusId = s.statusId
+INNER JOIN tbl_workout_schedules ws ON wss.workoutScheduleId = ws.workoutScheduleId
+INNER JOIN tbl_personal_workouts w ON ws.workoutId = w.workoutId
+INNER JOIN tbl_members m ON ws.memberId = m.memberId
+WHERE wss.statusId = '10'
+ORDER BY wss.workoutScheduleDate DESC";
+
+                                    $result5 = $db->query($sql5);
+                                    if ($result5->num_rows > 0) {
+                                        while ($row = $result5->fetch_assoc()) {
+                                            ?>
+                                            <div class="post">
+                                                <div class="user-block">
+                                                    <b>Job Card Id: <?php echo $row['jobCardId']; ?></b>
+                                                </div>
+
+                                                <div class="user-block">
+                                                    Booking Date: <?php echo $row['workoutScheduleDate']; ?>
+                                                </div>
+                                                <div class="user-block">
+                                                    Workout Id: <?php echo $row['workoutId']; ?>
+                                                    <span class="float-right">Workout Name: <?php echo $row['workoutName']; ?></span>
+                                                </div>
+                                                <div class="user-block">
+                                                    Member Reg No: <?php echo $row['memberRegistrationNo']; ?>
+                                                    <span class="float-right">Member Name: <?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></span>
+                                                </div>
+
+                                                <?php
+                                                $statusId = $row['statusId'];
+                                                ?>
+                                                <div class="btn-group mt-2">
+                                                    <?php
+                                                    if ($statusId == 10) {
+                                                        ?>
+                                                        <button type="button" class="btn btn-success btn-sm"><?php echo $row['statusName']; ?></button>
+                                                        <?php
+                                                    } else {
+                                                        ?>
+                                                        <button type="button" class="btn btn-success btn-sm"><?php echo $row['StatusName']; ?></button>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
+
+                                <!--===================Edit profile====================-->
+                                <div class="tab-pane" id="settings">
+                                    <?php
+                                    $message = []; // Initialize message array
+                                    extract($_POST);
+
+                                    if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "upload_image") {
+                                        $PreviousProfileImage = isset($_POST['PreviousProfileImage']) ? $_POST['PreviousProfileImage'] : "";
+                                        $Photo = $PreviousProfileImage; // Ensure it's always defined
+
+                                        if (!empty($_FILES["profilePhoto"]["name"])) {
                                             $target_dir = "../uploads/";
                                             $target_file = $target_dir . basename($_FILES["profilePhoto"]["name"]);
                                             $uploadOk = 1;
                                             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
                                             $check = getimagesize($_FILES["profilePhoto"]["tmp_name"]);
+
                                             if ($check !== false) {
-                                            //Multi-purpose Internet Mail Extensions                       
                                                 $uploadOk = 1;
                                             } else {
                                                 $message['profilePhoto'] = "File is not an image.";
                                                 $uploadOk = 0;
                                             }
-                                            // Check if file already exists
+
                                             if (file_exists($target_file)) {
                                                 $message['profilePhoto'] = "Sorry, file already exists.";
                                                 $uploadOk = 0;
                                             }
-                                            // Check file size
+
                                             if ($_FILES["profilePhoto"]["size"] > 5000000) {
                                                 $message['profilePhoto'] = "Sorry, your file is too large.";
                                                 $uploadOk = 0;
                                             }
 
-                                            // Allow certain file formats
-                                            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                                            if (!in_array($imageFileType, ["jpg", "jpeg", "png", "gif"])) {
                                                 $message['profilePhoto'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
                                                 $uploadOk = 0;
                                             }
+
                                             if ($uploadOk == 1) {
                                                 if (move_uploaded_file($_FILES["profilePhoto"]["tmp_name"], $target_file)) {
                                                     $Photo = htmlspecialchars(basename($_FILES["profilePhoto"]["name"]));
@@ -172,23 +288,22 @@ include '../nav.php';
                                                     $message['profilePhoto'] = "Sorry, there was an error uploading your file.";
                                                 }
                                             }
-                                        } else {
+                                        }
+
+                                        // Ensure $Photo is never empty
+                                        if (empty($Photo)) {
                                             $Photo = $PreviousProfileImage;
                                         }
 
-
-                                        //================Start Update Records==================
+                                        // Update Records
                                         $db = dbConn();
-                                        $sql = "UPDATE tbl_instructors SET "
-                                        . "profilePhoto='$Photo'"
-                                        . "WHERE instructorId='{$_SESSION['INSTRUCTORID']}'";
+                                        $sql = "UPDATE tbl_instructors SET profilePhoto='$Photo' WHERE instructorId='{$_SESSION['INSTRUCTORID']}'";
                                         $db->query($sql);
                                         ?>
-
                                         <div class="card " style="background-color: #00008B">
                                             <div class="card-header text-center">
                                                 <h3 class="text-center text-light">Update successfully <i class="far fa-thumbs-up"></i></h3>
-                                                <a class="btn btn-warning btn-sm" href="#" role="button">View Profile</a>
+                                                <!--                                                <a class="btn btn-warning btn-sm" href="#" role="button">View Profile</a>-->
                                             </div>
                                         </div>
 
@@ -206,22 +321,9 @@ include '../nav.php';
                                             <button type="submit" class="btn btn-primary" id="action" name="action" value="upload_image">Submit</button>
                                         </div>
                                     </form>
-                                </div>-->
-
-                                <!--                                =====================================Today--========================-->
-                                <div class="tab-pane" id="b">
-                                   
                                 </div>
 
-                                <!--                                ===============================All --=========================-->
-                                <div class="tab-pane" id="c">
-                                    
-                                </div>
                                 
-                                <!--=========================Attendance==================================-->
-                                <div class="tab-pane" id="attendance">
-                                    
-                                </div>
                             </div>
                         </div>
                     </div>

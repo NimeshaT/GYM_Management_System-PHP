@@ -23,7 +23,6 @@ include '../nav.php';
         <div class="container-fluid">
             <!--            ========================Search=========================-->
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
-                <input type="text" name="nicNo" placeholder="Enter Nic Number">
                 <input type="text" name="email" placeholder="Enter Email">
                <input type="text" name="firstName" placeholder="Enter FName">
                <input type="text" name="lastName" placeholder="Enter LName">
@@ -35,10 +34,7 @@ include '../nav.php';
             
             //dynamically generate the query
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                //check service id
-            if(!empty($nicNo)){
-                $where.="nicNo='$nicNo' AND";
-            }
+            
             //check email
             if(!empty($email)){
                 $where.=" email='$email' AND";

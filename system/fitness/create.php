@@ -51,10 +51,10 @@ include '../nav.php';
                             if (empty($fitnessDesc)) {
                                 $message['fitnessDesc'] = "Fitness Description should not be empty..!";
                             }
-                            
-//                            if (empty($fitnessImage)) {
-//                                $message['fitnessImage'] = "Fitness Image should not be empty..!";
-//                            }
+                             if (empty($fitnessCharge)) {
+                                $message['fitnessCharge'] = "Fitness Charge should not be empty..!";
+                            }
+
                             //validation end
                             
                             //profile image uploading
@@ -108,11 +108,11 @@ include '../nav.php';
                                         . "workoutId,"
                                         . "fitnessName,"
                                         . "fitnessDesc,"
-                                        . "fitnessImage,statusId)VALUES("
+                                        . "fitnessCharge,fitnessImage,statusId)VALUES("
                                         . "'$workoutId',"
                                         . "'$fitnessName',"
                                         . "'$fitnessDesc',"
-                                        . "'$Photo','1')";
+                                        . "'$fitnessCharge',$Photo','1')";
 
                                 $db->query($sql);
                                 
@@ -179,6 +179,7 @@ include '../nav.php';
                                     . "workoutId='$workoutId',"
                                     . "fitnessName='$fitnessName',"
                                     . "fitnessDesc='$fitnessDesc',"
+                                    . "fitnessCharge='$fitnessCharge',"
                                     . "fitnessImage='$Photo',"
                                     . "statusId='1' "
                                     . "WHERE fitnessId='$fitnessId'";
@@ -206,6 +207,7 @@ include '../nav.php';
                             $workoutId = $row['workoutId'];
                             $fitnessName = $row['fitnessName'];
                             $fitnessDesc = $row['fitnessDesc'];
+                            $fitnessCharge = $row['fitnessCharge'];
                             $fitnessImage = $row['fitnessImage'];
                             $statusId = $row['statusId'];
                             $fitnessIdId = $row['fitnessId'];
@@ -257,6 +259,12 @@ include '../nav.php';
                                     <textarea class="form-control" id="fitnessDesc" name="fitnessDesc" placeholder="Enter Fitness Description"><?php echo @$fitnessDesc ?></textarea>
                                 </div>
                                 <div class="text-danger"><?php echo @$message['fitnessDesc']; ?></div>
+                                
+                                <div class="form-group">
+                                    <label for="fitnessCharge">Fitness Charge</label>
+                                    <input type="text" class="form-control" id="fitnessCharge" name="fitnessCharge" placeholder="Enter fitness Charge" value="<?php echo @$fitnessCharge ?>">
+                                </div>
+                                <div class="text-danger"><?php echo @$message['fitnessCharge']; ?></div>
 
                                 <div class="mb-3">
                                     <label for="fitnessImage">Fitness Image</label>
@@ -289,16 +297,17 @@ include '../nav.php';
 
                             <?php
 //                            ----------------Search Account-search bar------------------
+                            $db = dbConn();
                             $where=null;
                             if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'search_account') {
                                 if(!empty($fitnessName)){
-                                    $where.="WHERE fitnessName='fitnessName'";
+                                    $where.="WHERE fitnessName='$fitnessName'";
                                 }
                             }
                             
                             //change status
                         if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "change") {
-                            $db = dbConn();
+                            //$db = dbConn();
                             $Stid = $Stid == '1' ? '2' : '1';
                             $sql = "UPDATE tbl_fitness SET statusId='$Stid' WHERE fitnessId='$Sfid'";
                             $db->query($sql);

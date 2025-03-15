@@ -23,7 +23,7 @@ include '../nav.php';
         <div class="container-fluid">
             <!--            ========================Search=========================-->
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
-                <input type="text" name="type" placeholder="Enter Workout Type Name">
+               
                 <input type="text" name="fitnessname" placeholder="Enter Fitness Name">
                 <button type="submit" class="bg-success btn btn-sm">Search</button>
             </form>
@@ -34,10 +34,7 @@ include '../nav.php';
             //dynamically generate the query
             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                
-            //check type
-            if(!empty($type)){
-                $where.="workoutName='$type' AND";
-            }
+            
             //check fitness Name
             if(!empty($fitnessname)){
                 $where.=" fitnessName='$fitnessname' AND";

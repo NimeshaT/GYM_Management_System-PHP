@@ -33,8 +33,7 @@ include '../nav.php';
 
             <!--====================search===========================-->
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-                <input type="text" name="firstName" placeholder="Enter Instructor FName">
-                <input type="text" name="lastName" placeholder="Enter Instructor LName">
+                
                 <input type="text" name="roleName" placeholder="Enter Role">
                 <button type="submit" class="bg-success btn btn-sm">Search</button>
             </form>
@@ -45,17 +44,10 @@ include '../nav.php';
             $where = null;
             //dynamically generate the query
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                //check employee FName
-                if (!empty($firstName)) {
-                    $where .= "firstName LIKE '%$firstName%' AND";
-                }
-                //check employee LName
-                if (!empty($lastName)) {
-                    $where .= " lastName='$lastName' AND";
-                }
+                
                 //check instructor role
-                if (!empty($roleCode)) {
-                    $where .= " tbl_instructors.roleCode='$roleCode' AND";
+                if (!empty($roleName)) {
+                    $where .= " tbl_user_roles.roleName='$roleName' AND";
                 }
                 //generate dynamic query remove AND last characters from the string
                 if (!empty($where)) {

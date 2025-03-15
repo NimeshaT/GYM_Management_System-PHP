@@ -91,7 +91,7 @@ include '../nav.php';
                         if ($_SERVER['REQUEST_METHOD'] == "POST" && @$action == "edit_account") {
 
                             $db = dbConn();
-                            echo $sql = "SELECT * FROM tbl_poya_days WHERE poyaDayId='$poyaDayId'";
+                            $sql = "SELECT * FROM tbl_poya_days WHERE poyaDayId='$poyaDayId'";
                             $result = $db->query($sql);
 
                             //show one record

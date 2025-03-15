@@ -64,9 +64,7 @@ include '../nav.php';
                                 $message['classEndTime'] = "Class End Time should not be empty..!";
                             }
                             
-//                            if (empty($classImage)) {
-//                                $message['classImage'] = "Class Image should not be empty..!";
-//                            }
+
                             //validation end
                             
                             //profile image uploading
@@ -246,6 +244,22 @@ include '../nav.php';
                             $form_title = 'Update';
                             $submit = 'Update';
                             $btn = 'success';
+                        }
+                        
+                        //Cancel Records
+                        if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'cancel') {
+
+                            $instructorId = "";
+                            $className = "";
+                            $classFees = "";
+                            $classDesc = "";
+                            $classDay = "";
+                            $classStartTime = "";
+                            $classEndTime = "";
+                            $classDuration = "";
+                            $classImage = "";
+                            $statusId = "";
+
                         }
 
                         ?>

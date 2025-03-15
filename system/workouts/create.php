@@ -8,7 +8,7 @@ include '../nav.php';
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1 class="m-0">Workout</h1>
-                </div><!-- /.col -->
+                </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Workout</a></li>
@@ -48,10 +48,9 @@ include '../nav.php';
                             if (empty($workoutDescription)) {
                                 $message['workoutDescription'] = "Workout Description should not be empty..!";
                             }
-                            
-//                            if (empty($workoutImage)) {
-//                                $message['workoutImage'] = "Workout Image should not be empty..!";
-//                            }
+                            if (empty($workoutCharge)) {
+                                $message['workoutCharge'] = "Workout Charge should not be empty..!";
+                            }
                             //validation end
                             
                             //profile image uploading
@@ -104,9 +103,10 @@ include '../nav.php';
                                 $sql = "INSERT INTO tbl_personal_workouts("
                                         . "workoutName,"
                                         . "workoutDescription,"
-                                        . "workoutImage,statusId)VALUES("
+                                        . "workoutCharge,workoutImage,statusId)VALUES("
                                         . "'$workoutName',"
                                         . "'$workoutDescription',"
+                                        . "'$workoutCharge',"
                                         . "'$Photo','1')";
 
                                 $db->query($sql);
@@ -173,6 +173,7 @@ include '../nav.php';
                             $sql = "UPDATE tbl_personal_workouts SET "
                                     . "workoutName='$workoutName',"
                                     . "workoutDescription='$workoutDescription',"
+                                    . "workoutCharge='$workoutCharge',"
                                     . "workoutImage='$Photo',"
                                     . "statusId='1' "
                                     . "WHERE workoutId='$workoutId'";
@@ -199,6 +200,7 @@ include '../nav.php';
 
                             $workoutName = $row['workoutName'];
                             $workoutDescription = $row['workoutDescription'];
+                            $workoutCharge = $row['workoutCharge'];
                             $workoutImage = $row['workoutImage'];
                             $statusId = $row['statusId'];
                             $workoutId = $row['workoutId'];
@@ -207,6 +209,16 @@ include '../nav.php';
                             $form_title = 'Update';
                             $submit = 'Update';
                             $btn = 'success';
+                        }
+                        
+                        //Cancel Records
+                        if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'cancel') {
+
+                            $workoutName = "";
+                            $workoutDescription = "";
+                            $workoutCharge = "";
+                            $workoutImage = "";
+                            
                         }
 
                         ?>
@@ -227,6 +239,12 @@ include '../nav.php';
                                     <textarea class="form-control" id="workoutDescription" name="workoutDescription" placeholder="Enter Workout Description"><?php echo @$workoutDescription ?></textarea>
                                 </div>
                                 <div class="text-danger"><?php echo @$message['workoutDescription']; ?></div>
+                                
+                                <div class="form-group">
+                                    <label for="workoutCharge">Workout Charge</label>
+                                    <input type="text" class="form-control" id="workoutCharge" name="workoutCharge" placeholder="Enter Workout Charge" value="<?php echo @$workoutCharge ?>">
+                                </div>
+                                <div class="text-danger"><?php echo @$message['workoutCharge']; ?></div>
 
                                 <div class="mb-3">
                                     <label for="workoutImage">Workout Image</label>
@@ -263,6 +281,7 @@ include '../nav.php';
                             if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$action == 'search_account') {
                                 if(!empty($workoutName)){
                                     $where.="WHERE workoutName='$workoutName'";
+//                                    WHERE workoutName LIKE '%Cardio%' 
                                 }
                             }
                             

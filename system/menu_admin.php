@@ -1,7 +1,7 @@
      <!--        ////////////////////////My Profile Management////////////////////////////-->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user-friends"></i>
+              <i class="nav-icon fas fa-user"></i>
               <p>
                 My Profile
                 <i class="right fas fa-angle-left"></i>
@@ -49,7 +49,7 @@
           <!--        ////////////////////////Poya Days Management////////////////////////////-->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user-friends"></i>
+              <i class="nav-icon fas fa-calendar"></i>
               <p>
                 Poya Day
                 <i class="right fas fa-angle-left"></i>
@@ -67,7 +67,7 @@
           <!--        ////////////////////////Instructor Management////////////////////////////-->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-user-friends"></i>
+              <i class="nav-icon fas fa-user-plus"></i>
               <p>
                 Instructor
                 <i class="right fas fa-angle-left"></i>
