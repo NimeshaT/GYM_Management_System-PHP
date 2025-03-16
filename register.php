@@ -251,7 +251,7 @@ if (!empty($current)) {
 
                     if (empty($message)) {
                         $db = dbConn();
-                        echo $sql = "INSERT INTO tbl_members("
+                        $sql = "INSERT INTO tbl_members("
                                 . "firstName,"
                                 . "lastName,"
                                 . "addressLine1,"
@@ -288,7 +288,7 @@ if (!empty($current)) {
                         $id = $db->insert_id;
                         $memberRegistrationNo = 'R' . date('Y') . date('m') . date('d') . $id;
                         //R202502202
-                        echo $sql = "UPDATE tbl_members SET memberRegistrationNo='$memberRegistrationNo' WHERE memberId='$id'";
+                        $sql = "UPDATE tbl_members SET memberRegistrationNo='$memberRegistrationNo' WHERE memberId='$id'";
                         $db->query($sql);
 
                         $_SESSION['memberRegistrationNo'] = $memberRegistrationNo;

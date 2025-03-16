@@ -58,8 +58,7 @@ include 'system/function.php';
                         </li>
                     </ul>
                 </div>
-                <a href="register.php"><button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Register Now  </button></a>
-                <a href="login.php"> <button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Login  </button></a>
+                
                 <a href="index.php"> <button class="btn btn-outline-danger btn-sm my-2 my-sm-0" type="submit">  Logout  </button></a>
             </nav>
         </div>
@@ -123,7 +122,7 @@ include 'system/function.php';
                                         <a href="viewAppointments.php" class="btn btn-outline-primary " >Change Password</a><br><br>
                                         <a href="viewAppointments.php" class="btn btn-outline-primary " >My Personal Workouts</a><br><br>
                                         <a href="viewAppointments.php" class="btn btn-outline-primary " >My Fitnesses</a><br><br>
-                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >My Classes</a><br><br>
+                                        <a href="myClasses.php" class="btn btn-outline-primary " >My Classes</a><br><br>
                                         <a href="viewAppointments.php" class="btn btn-outline-primary " >My Packages</a><br><br>
                                         <a href="myAppointments.php" class="btn btn-outline-primary " >My Appointments</a>
                                 </div>

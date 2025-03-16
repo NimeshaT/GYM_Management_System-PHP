@@ -92,6 +92,18 @@
 <!--                    <span class="badge badge-danger navbar-badge"><?php echo $row["pending_count"]; ?></span>-->
                 <?php } ?>
                     
+                <!--//receptionist class count-->
+                <?php
+                $db = dbConn();
+                $sql = "SELECT COUNT(*) as pending_count3 FROM `tbl_class_enrollment` WHERE statusId='4'";
+                $result = $db->query($sql);
+                $row = $result->fetch_assoc();
+                $pending_class = $row["pending_count3"];
+                ?>
+                <?php if ($_SESSION["ROLE"] == "receptionist") { ?>
+<!--                    <span class="badge badge-danger navbar-badge"><?php echo $row["pending_count"]; ?></span>-->
+                <?php } ?>
+                    
                 <!--//receptionist fitness booking count-->
                 <?php
                 //$db = dbConn();
@@ -99,7 +111,7 @@
                 $result = $db->query($sql);
                 $row = $result->fetch_assoc();
                 $pending_bookings = $row["pending_count1"];
-                $total_notifications = $pending_appointments + $pending_bookings;
+                $total_notifications = $pending_appointments + $pending_bookings + $pending_class;
                 ?>
                 <?php if ($_SESSION["ROLE"] == "receptionist") { ?>
                     <span class="badge badge-danger navbar-badge"><?php echo $total_notifications; ?></span>
@@ -190,6 +202,21 @@
                     </a>
                 <?php } ?>
                 <div class="dropdown-divider"></div>
+                
+                <!--//receptionist class count-->
+                <?php
+//                $db = dbConn();
+//                $sql = "SELECT COUNT(*) as pending_count FROM `tbl_appointments` AS apt WHERE apt.appointmentId NOT IN (SELECT appointmentId FROM tbl_job_card) AND apt.appointmentTypeId='1'";
+//                $result = $db->query($sql);
+//                $row = $result->fetch_assoc();
+                ?>
+                <?php if ($_SESSION["ROLE"] == "receptionist") { ?>
+                    <a href="http://localhost/gms/system/reservations/viewClassEnrollment.php" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> <?php echo @$pending_class; ?> New Class Enrollment
+                    </a>
+                <?php } ?>
+                <div class="dropdown-divider"></div>
+                
             </div>
         </li>
 
