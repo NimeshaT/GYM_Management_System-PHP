@@ -9,7 +9,7 @@ include '../nav.php';
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Report</h1>
+                    <h1 class="m-0">Report on reservations by Personal Workouts</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -42,7 +42,7 @@ include '../nav.php';
                     }
                     ?>
                 </select>
-               <input type="text" name="cus_Reg" placeholder="Enter Customer RegNo">
+               <input type="text" name="cus_Reg" placeholder="Enter Member RegNo">
                 <input type="date" name="from" placeholder="Enter from date">
                 <input type="date" name="to" placeholder="Enter to date">
 
@@ -54,17 +54,17 @@ include '../nav.php';
             $where = null;
             //dynamically generate the query
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                //check service id
+                //check workout id
                 if (!empty($s_Id)) {
-                    $where .= "ServiceId='$s_Id' AND";
+                    $where .= "tbl_personal_workouts.workoutId='$s_Id' AND";
                 }
                 //check customer reg no
                 if (!empty($cus_Reg)) {
-                    $where .= " CRegNo='$cus_Reg' AND";
+                    $where .= " tbl_members.memberRegistrationNo='$cus_Reg' AND";
                 }
                 //check from to dates
                 if (!empty($from) && !empty($to)) {
-                    $where .= " AppointmentDate BETWEEN  '$from' AND '$to' AND";
+                    $where .= " tbl_appointments.appointmentDate BETWEEN  '$from' AND '$to' AND";
                 }
                 //generate dynamic query remove AND last characters from the string
                 if (!empty($where)) {
@@ -73,7 +73,7 @@ include '../nav.php';
                 }
             }
 
-            $sql = "SELECT * FROM tbl_appointments INNER JOIN tbl_members ON tbl_appointments.memberId=tbl_members.memberId $where";
+            $sql = "SELECT * FROM tbl_appointments INNER JOIN tbl_members ON tbl_appointments.memberId=tbl_members.memberId INNER JOIN tbl_personal_workouts ON tbl_appointments.workoutId=tbl_personal_workouts.workoutId $where";
             $result = $db->query($sql);
             ?>
             <div id="divData">
@@ -83,7 +83,7 @@ include '../nav.php';
                 <table border='1' width='100%' class="mt-3 table table-bordered" id="tbl_Data">
                     <thead>
                         <tr>
-                            <th>AppointmentId</th>
+                            <th>Appointment Id</th>
                             <th>Workout Id</th>
                             <th>Customer Reg No</th>
                             <th>AppointmentDate</th>

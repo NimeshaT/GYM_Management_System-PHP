@@ -21,14 +21,11 @@ include 'system/function.php';
         <!--        //////////////////////////////////////NAVIGATION BAR///////////////////////////////////////////////////////////////////////////////-->
         <div class="container-fluid bg-dark">
             
-<!--            <nav class="navbar navbar-light bg-dark">-->
             <div class="container-fluid p-3 m-0 pb-0">
                 <span class="navbar-text mt-3">
                     <h6 class="text-primary text-center">Welcome <?php echo $_SESSION['FIRSTNAME']; ?> <?php echo $_SESSION['LASTNAME']; ?> !</h6>
                 </span>
             </div>
-            <!--</nav>-->
-<!--            <div class="pt-1 mb-2 bg-dark text-white text-center">.bg-primary</div>-->
             <nav class="navbar navbar-expand-lg bg-dark p-0 m-0 mt-0">
                 <a class="navbar-brand" href="index.php">
                     <img src="images/logo.png" width="150" alt="gym logo">
@@ -47,9 +44,9 @@ include 'system/function.php';
                         <li class="nav-item">
                             <a class="nav-link text-info" href="classesLogin.php">Classes</a>
                         </li>
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link text-info" href="packagesLogin.php">Packages</a>
-                        </li>
+                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link text-info" href="instructor2.php">Our Instructors</a>
                         </li>
@@ -105,25 +102,15 @@ include 'system/function.php';
                                                 <li class="list-group-item">User Name: <?php echo $row['userName']; ?></li>
                                             </ul>
                                         </div>
-<!--                                        <div class="card-footer">
-                                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                <a href="edit_profile_image.php" class="btn btn-warning" >Edit Profile Image</a>
-                                                <a href="edit_profile.php" class="btn btn-primary" >Edit Profile</a>
-                                                <a href="change_password.php" class="btn btn-success" >Change Password</a>
-                                            </div><br><br>
-                                            
-                                        </div>-->
+
                                     </div>
 
                                 </div>
                                 <div class="col-3 bg-light">
-                                    <a href="viewAppointments.php" class="btn btn-outline-primary " >Edit Profile Image</a><br><br>
+                                    <a href="editProfileImage.php" class="btn btn-outline-primary " >Edit Profile Image</a><br><br>
                                         <a href="viewAppointments.php" class="btn btn-outline-primary " >Edit Profile</a><br><br>
-                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >Change Password</a><br><br>
-                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >My Personal Workouts</a><br><br>
-                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >My Fitnesses</a><br><br>
-                                        <a href="myClasses.php" class="btn btn-outline-primary " >My Classes</a><br><br>
-                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >My Packages</a><br><br>
+                                        <a href="changePassword.php" class="btn btn-outline-primary " >Change Password</a><br><br>
+                                        <a href="myClasses.php" class="btn btn-outline-primary " >My Enrollments</a><br><br>
                                         <a href="myAppointments.php" class="btn btn-outline-primary " >My Appointments</a>
                                 </div>
                             </div>

@@ -33,9 +33,9 @@
                         <li class="nav-item ">
                             <a class="nav-link text-info" href="classes.php">Classes</a>
                         </li>
-                        <li class="nav-item ">
+<!--                        <li class="nav-item ">
                             <a class="nav-link text-info" href="packages.php">Packages</a>
-                        </li>
+                        </li>-->
                         <li class="nav-item active">
                             <a class="nav-link text-info" href="instructor.php">Our Instructors</a>
                         </li>
@@ -69,10 +69,9 @@
 
                 <div class="col-3">
                     <div class="card " style="width: 18rem;">
-                        <img src="system/uploads/<?php echo $row['profilePhoto']; ?>" class="card-img-top" alt="instructorImage">
+                        <img src="system/uploads/<?php echo $row['profilePhoto']; ?>" class="card-img-top" alt="instructorImage" style="height: 300px;object-fit: cover;width: 100%;">
                         <div class="card-body">
                             <h5 class="card-title text-center"><?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></h5>
-                            <p class="card-text">Expertise in areas</p>
                         </div>
                     </div>
                 </div>

@@ -67,7 +67,7 @@
 <script src="<?php echo SITE_URL; ?>dist/js/jspdf.min.js" type="text/javascript"></script>-->
 <script>
     function exportTableToExcel(tableID, filename = '') {
-        alert('hello');
+        alert('Do you like to download?');
         var downloadLink;
         //file type excel or jpg or pdf something like this
         var dataType = 'application/vnd.ms-excel';

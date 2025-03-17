@@ -28,3 +28,11 @@ function dbConn() {
     }
 }
 
+//get month by number
+function getMonthByNumber($monthName = null){
+    $monthNum  = $monthName;
+    $dateObj   = DateTime::createFromFormat('!m', $monthNum);
+    $monthName = $dateObj->format('F');
+    return $monthName;
+}
+

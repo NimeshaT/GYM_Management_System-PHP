@@ -32,9 +32,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-info" href="classes.php">Classes</a>
                         </li>
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link text-info" href="packages.php">Packages</a>
-                        </li>
+                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link text-info" href="instructor.php">Our Instructors</a>
                         </li>
@@ -141,21 +141,21 @@
                                 </div>
                             </div>
                         </div>
-        <?php
-    }
-}
-?>
+                        <?php
+                    }
+                }
+                ?>
             </div>
         </div>
 
-        <!--        ///////////////////////////////////////////////////OUR PACKAGES///////////////////////////////////////////////////////////////////////-->
+        <!--        ///////////////////////////////////////////////////OUR Workouts///////////////////////////////////////////////////////////////////////-->
         <div class="container mb-5">
-            <h1 class="text-center">| Our Packages |</h1>
-            <h4 class="text-center">We have basic three packages</h4>
+            <h1 class="text-center">| Our Workouts |</h1>
+            <h4 class="text-center">Transform Your Fitness with Our Exclusive Workout</h4>
             <?php
             //include 'system/function.php';
             //$db = dbConn();
-            $sql = "SELECT * FROM tbl_gym_packages";
+            $sql = "SELECT * FROM tbl_personal_workouts";
             $result = $db->query($sql);
             //extract($POST);
             ?>
@@ -166,10 +166,10 @@
                         ?>
                         <div class="col-4">
                             <div class="card" style="width: 18rem;">
-                                <img class="img-fluid" src="system/uploads/<?php echo $row['gymPackageImage']; ?>">                            
+                                <img class="img-fluid" src="system/uploads/<?php echo $row['workoutImage']; ?>">                            
                                 <div class="card-body text-center">
-                                    <h5 class="card-title"><?php echo $row['gymPackageName']; ?></h5>
-                                    <a href="packages.php" class="btn btn-primary btn-sm">View more</a>
+                                    <h5 class="card-title"><?php echo $row['workoutName']; ?></h5>
+                                    <a href="workout.php" class="btn btn-primary btn-sm">View more</a>
                                 </div>
                             </div>
                         </div>
@@ -180,11 +180,76 @@
             </div>
         </div>
 
+        <!--        ///////////////////////////////////////////////////OUR Fitness///////////////////////////////////////////////////////////////////////-->
+        <div class="container mb-5">
+            <h1 class="text-center">| Our Fitness |</h1>
+            <h4 class="text-center">Elevate Your Fitness Journey with Us</h4>
+            <?php
+            //include 'system/function.php';
+            //$db = dbConn();
+            $sql = "SELECT * FROM tbl_fitness LIMIT 6";
+            $result = $db->query($sql);
+            //extract($POST);
+            ?>
+            <div class="row mt-5">
+                <?php
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <div class="col-3">
+                            <div class="card bg-dark text-white mt-3">
+                                <img class="img-fluid" src="system/uploads/<?php echo $row['fitnessImage']; ?>" style="height: 200px;object-fit: cover;width: 100%;"> 
+                                <div class="card-img-overlay">
+                                    <h5 class="card-title text-primary"><?php echo $row['fitnessName']; ?></h5>
+                                    <a href="fitness.php" class="btn btn-primary btn-sm">View more</a>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
+            </div>
+        </div>
+        
+        <!--        ///////////////////////////////////////////////////OUR Classes///////////////////////////////////////////////////////////////////////-->
+        <div class="container mb-5">
+            <h1 class="text-center">| Our Class |</h1>
+            <h4 class="text-center">Transform Your Fitness with Our Exclusive Workout</h4>
+            <?php
+            //include 'system/function.php';
+            //$db = dbConn();
+            $sql = "SELECT * FROM tbl_classes";
+            $result = $db->query($sql);
+            //extract($POST);
+            ?>
+            <div class="row mt-5">
+                <?php
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
+                        <div class="col-4">
+                            <div class="card mt-3" style="width: 18rem;">
+                                <img class="img-fluid" src="system/uploads/<?php echo $row['classImage']; ?>">                            
+                                <div class="card-body text-center">
+                                    <h5 class="card-title"><?php echo $row['className']; ?></h5>
+                                    <a href="classes.php" class="btn btn-primary btn-sm">View Class</a>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }
+                ?>
+            </div>
+        </div>
+
+
         <!--        ///////////////////////////////////////////////////Our Instructors///////////////////////////////////////////////////////////////////////-->
-        <div class="container-fluid bg-dark pb-3">
+        <div class="container-fluid bg-light pb-3">
             <div class="container pt-5">
-                <h1 class="text-center text-white">Our Instructors</h1>
-                <h4 class="text-center text-white">Certified Professionals | Diverse Expertise | Passionate & Friendly</h4>
+                <h1 class="text-center text-dark">Our Instructors</h1>
+                <h4 class="text-center text-dark">Certified Professionals | Diverse Expertise | Passionate & Friendly</h4>
             </div>
 
             <div class="container">
@@ -198,9 +263,9 @@
                         while ($row = $result->fetch_assoc()) {
                             ?>
                             <div class="col-3 mb-5 text-center">
-                                <img src="system/uploads/<?php echo $row['profilePhoto']; ?>" class="rounded-circle" width="200px" height="200px">
+                                <img src="system/uploads/<?php echo $row['profilePhoto']; ?>" class="rounded-circle" style="height: 200px;object-fit: cover;width: 200px;">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title text-white"><?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></h5>
+                                    <h5 class="card-title text-dark"><?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></h5>
                                 </div>
                             </div>
                             <?php
@@ -210,56 +275,10 @@
                 </div>
             </div>
             <div class="container  d-flex justify-content-center">
-                <a href="instructor.php" class="btn btn-primary">Visit Instructor Page...</a>
+                <a href="instructor.php" class="btn btn-primary">Visit Instructor Page</a>
             </div>
         </div>
 
-        <!--        ///////////////////////////////////////////////////MEMBER REVIEWS///////////////////////////////////////////////////////////////////////-->
-        <div class="container mt-5">
-            <h1 class="text-center">| Member Reviews |</h1>
-            <h4 class="text-center">Success stories from our gym members</h4>
-            <div class="container mt-5 mb-5">
-                <?php
-                $sql = "SELECT * FROM tbl_reviews INNER JOIN tbl_members ON tbl_reviews.memberId=tbl_members.memberId LIMIT 3";
-                $result = $db->query($sql);
-                ?>
-                <div class="row g-2">
-                    <?php
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            ?>
-                            <div class="col-md-4">
-                                <div class="card p-3 text-center px-4">
-                                    <div class="user-image">
-                                        <img src="https://i.imgur.com/PKHvlRS.jpg" class="rounded-circle" width="80">
-                                    </div>
-                                    <div class="user-content">
-                                        <h5 class="mb-1"><?php echo $row['firstName']; ?> <?php echo $row['lastName']; ?></h5>
-                                        <p><?php echo $row['review']; ?></p>
-                                        <span><?php echo $row['reviewDate']; ?></span>
-                                    </div>
-                                    <div class="ratings">
-                                        <i class="bi bi-star-fill" style="color: blue"></i>
-                                        <i class="bi bi-star-fill" style="color: blue"></i>
-                                        <i class="bi bi-star-fill" style="color: blue"></i>
-                                        <i class="bi bi-star-fill" style="color: blue"></i>
-                                        <i class="bi bi-star-fill" style="color: blue"></i>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <?php
-                        }
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-        <!--        ///////////////////////////////////////////////////BODY TRANSFORMATIONS///////////////////////////////////////////////////////////////////////-->
-        <!--        <div class="container">
-                    <h1 class="text-center">Body Transformations</h1>
-                </div>-->
 
         <!--        ///////////////////////////////////////////////////FOOTER///////////////////////////////////////////////////////////////////////-->
         <footer class="p-0 m-0"> 

@@ -46,9 +46,9 @@ if (!isset($_SESSION['MEMBERID'])) {
                         <li class="nav-item">
                             <a class="nav-link text-info" href="classesLogin.php">Classes</a>
                         </li>
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link text-info" href="packagesLogin.php">Packages</a>
-                        </li>
+                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link text-info" href="instructor2.php">Our Instructors</a>
                         </li>
@@ -57,8 +57,6 @@ if (!isset($_SESSION['MEMBERID'])) {
                         </li>
                     </ul>
                 </div>
-<!--                <a href="register.php"><button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Register Now  </button></a>
-                <a href="login.php"> <button class="btn btn-outline-info btn-sm my-2 my-sm-0" type="submit" style="margin-right: 15px">  Login  </button></a>-->
                 <a href="index.php"> <button class="btn btn-outline-danger btn-sm my-2 my-sm-0" type="submit">  Logout  </button></a>
             </nav>
         </div>

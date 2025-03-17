@@ -46,9 +46,9 @@ if (!isset($_SESSION['MEMBERID'])) {
                         <li class="nav-item">
                             <a class="nav-link text-info" href="classesLogin.php">Classes</a>
                         </li>
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link text-info" href="packagesLogin.php">Packages</a>
-                        </li>
+                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link text-info" href="instructor2.php">Our Instructors</a>
                         </li>

@@ -9,12 +9,12 @@ include '../nav.php';
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Report on reservation by Monthly/Daily/Weekly/Yearly</h1>
+                    <h1 class="m-0">Report on Class Income</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Report</a></li>
-                        <li class="breadcrumb-item active">Reservation</li>
+                        <li class="breadcrumb-item active">Appointment</li>
                     </ol>
                 </div>
             </div>
@@ -24,8 +24,8 @@ include '../nav.php';
     <section class="content">
         <div class="container-fluid">
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-                <input type="date" name="from" placeholder="Enter from date" value="<?php echo @$from ?>">
-                <input type="date" name="to" placeholder="Enter to date" value="<?php echo @$to ?>">
+                <input type="date" name="from" placeholder="Enter from date">
+                <input type="date" name="to" placeholder="Enter to date">
                 <select name="rep_type">
                     <option value="">==</option>
                     <option value="D">Daily</option>
@@ -44,7 +44,7 @@ include '../nav.php';
 
                 //check from to dates
                 if (!empty($from) && !empty($to)) {
-                    $where .= " appointmentDate BETWEEN  '$from' AND '$to' AND";
+                    $where .= " invoiceDate BETWEEN  '$from' AND '$to' AND";
                 }
                 //generate dynamic query remove AND last characters from the string
                 if (!empty($where)) {
@@ -53,16 +53,16 @@ include '../nav.php';
                 }
 
                 if (@$rep_type == "D") {
-                    $sql = "SELECT appointmentDate,COUNT(appointmentId) AS mycount FROM tbl_appointments $where GROUP BY appointmentDate";
+                    $sql = "SELECT invoiceDate,SUM(total) AS mysum FROM tbl_class_invoice $where GROUP BY invoiceDate";
                 }
                 if (@$rep_type == "M") {
-                    $sql = "SELECT MONTH(appointmentDate)AS Month,COUNT(appointmentId) AS mycount FROM tbl_appointments $where GROUP BY MONTH(appointmentDate)";
+                    $sql = "SELECT MONTH(invoiceDate)AS Month,SUM(total) AS mysum FROM tbl_class_invoice $where GROUP BY MONTH(invoiceDate)";
                 }
                 if (@$rep_type == "Y") {
-                    $sql = "SELECT YEAR(appointmentDate)AS Year,COUNT(appointmentId) AS mycount FROM tbl_appointments $where GROUP BY YEAR(appointmentDate)";
+                    $sql = "SELECT YEAR(invoiceDate)AS Year,SUM(total) AS mysum FROM tbl_class_invoice $where GROUP BY YEAR(invoiceDate)";
                 }
                 if (@$rep_type == "W") {
-                    $sql = "SELECT WEEK(appointmentDate)AS Week,COUNT(appointmentId) AS mycount FROM tbl_appointments $where GROUP BY WEEK(appointmentDate)";
+                    $sql = "SELECT WEEK(invoiceDate)AS Week,SUM(total) AS mysum FROM tbl_class_invoice $where GROUP BY WEEK(invoiceDate)";
                 }
                 $result = $db->query($sql);
                 $total = 0;
@@ -77,23 +77,23 @@ include '../nav.php';
                                 <?php
                                 if (@$rep_type == "D") {
                                     ?>
-                                    <th>AppointmentDate</th>
+                                    <th>Invoice Date</th>
                                     <?php
                                 } else if (@$rep_type == "M") {
                                     ?>
-                                    <th>Appointment Month</th>
+                                    <th>Income Month</th>
                                     <?php
                                 } else if (@$rep_type == "Y") {
                                     ?>
-                                    <th>Appointment Year</th>
+                                    <th>Income Year</th>
                                     <?php
                                 } else {
                                     ?>
-                                    <th>Appointment Week</th>
+                                    <th>Income Week</th>
                                     <?php
                                 }
                                 ?>
-                                <th>No:of Appointments</th>
+                                <th>Total Income (Rs.)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -105,7 +105,7 @@ include '../nav.php';
                                         <?php
                                         if (@$rep_type == "D") {
                                             ?>
-                                            <td><?php echo $row['appointmentDate']; ?></td>
+                                            <td><?php echo $row['invoiceDate']; ?></td>
                                             <?php
                                         } else if (@$rep_type == "M") {
                                             ?>
@@ -123,9 +123,10 @@ include '../nav.php';
                                         ?>
 
                                         <td><?php
-                                            echo $row['mycount'];
-                                            $total += $row['mycount'];
+                                            echo number_format($row['mysum'],2);
+                                            $total += $row['mysum'];
                                             ?></td>
+                                       
                                     </tr>
                                     <?php
                                 }
@@ -133,15 +134,15 @@ include '../nav.php';
                             ?>
                             <tr>
                                 <td></td>
-                                <td class="bg-info"><?php echo $total ?></td>
+                                <td class="bg-primary"><?php echo number_format($total,2) ?></td>
 
                             </tr>
                         </tbody>
                     </table>
 
                 </div>
-                <button onclick="exportTableToExcel('tbl_Data', 'appointments-data')">Export Table Data To Excel File</button>
-                <button onclick="printTable('tbl_Data', 'Appointment Data');">Convert HTML to PDF</button>
+                <button onclick="exportTableToExcel('tbl_Data', 'income-data')">Export Table Data To Excel File</button>
+                <button onclick="printTable('tbl_Data', 'income Data');">Convert HTML to PDF</button>
             <?php } ?>
         </div>
     </section>
@@ -163,7 +164,6 @@ include '../footer.php';
     const yValues = [];
 
     //i index el element
-    //x and y values get from table
     $("tbody tr").each((i, el) => {
         const tds = $(el).children();
 
@@ -185,12 +185,11 @@ include '../footer.php';
             type: 'bar',
             data: {
                 labels: xValues,
-                //y axis may be have multiple dataset
                 datasets: [{
-                        label: 'Appointments',
+                        label: 'Income',
                         data: yValues,
-                        backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgb(255, 99, 132)'
+                        backgroundColor: 'rgb(153,255,153)',
+                        borderColor: 'rgb(153,255,153)'
                     }]
             },
             // make precission points 0 (only show integers)

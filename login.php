@@ -47,9 +47,9 @@ if (isset($_SESSION['memberRegistrationNo'])) {
                         <li class="nav-item">
                             <a class="nav-link text-primary" href="classes.php">Classes</a>
                         </li>
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link text-primary" href="packages.php">Packages</a>
-                        </li>
+                        </li>-->
                         <li class="nav-item">
                             <a class="nav-link text-primary" href="instructor.php">Our Instructors</a>
                         </li>

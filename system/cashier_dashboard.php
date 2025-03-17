@@ -5,11 +5,11 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0">Cashier Dashboard</h1>
-          </div><!-- /.col -->
+          </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard</li>
+              <li class="breadcrumb-item active">Cashier</li>
             </ol>
           </div>
         </div>
@@ -19,10 +19,8 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
         <div class="row">
           <div class="col-lg-3 col-6">
-            <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
                             <?php
@@ -32,61 +30,86 @@
                             $row = $result->fetch_assoc();
                             ?>
                             <h3><?php echo $row["countInvoice"]; ?></h3>
-                            <p>No of All Invoice</p>
+                            <p>All Workouts Invoice</p>
                         </div>
             </div>
           </div>
-          <!-- ./col -->
           <div class="col-lg-3 col-6">
-            <!-- small box -->
             <div class="small-box bg-success">
              <div class="inner">
                             <?php
                             $db = dbConn();
                             $currentD = date('y-m-d');
-                            $sql = "SELECT COUNT(appointmentId) AS countApp FROM tbl_appointments WHERE appointmentDate='$currentD' AND appointmentTypeId='1'";
+                            $sql = "SELECT COUNT(fitnessInvoiceId) AS countFinvoice FROM tbl_fitness_invoice";
                             $result = $db->query($sql);
                             $row = $result->fetch_assoc();
                             ?>
-                            <h3><?php echo $row["countApp"]; ?></h3>
-                            <p>Daily workouts appointments</p>
+                            <h3><?php echo $row["countFinvoice"]; ?></h3>
+                            <p>All fitness Invoice</p>
                         </div>
             </div>
           </div>
-          <!-- ./col -->
           <div class="col-lg-3 col-6">
-            <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
                             <?php
                             $db = dbConn();
-                            $currentD = date('y-m-d');
-                            $sql = "SELECT COUNT(workoutScheduleServiceId) AS countS FROM tbl_workout_schedule_services WHERE workoutScheduleDate='$currentD'";
+                            $sql = "SELECT COUNT(classInvoiceId) AS countC FROM tbl_class_invoice";
                             $result = $db->query($sql);
                             $row = $result->fetch_assoc();
                             ?>
-                            <h3><?php echo $row["countS"]; ?></h3>
-                            <p>Daily workout schedules</p>
+                            <h3><?php echo $row["countC"]; ?></h3>
+                            <p>All Class Invoice</p>
                         </div>
             </div>
           </div>
-          <!-- ./col -->
-<!--          <div class="col-lg-3 col-6">
-             small box 
+          <div class="col-lg-3 col-6">
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
-
-                <p>Unique Visitors</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <?php
+                            $db = dbConn();
+                            $sql = "SELECT SUM(total) AS classTotal FROM tbl_class_invoice";
+                            $result = $db->query($sql);
+                            $row = $result->fetch_assoc();
+                            ?>
+                            <h3>Rs. <?php echo $row["classTotal"]; ?></h3>
+                            <p>Total Class Income</p>
+                        </div>
             </div>
-          </div>-->
+          </div>
         </div>
-        
+          <div class="row">
+          <div class="col-lg-3 col-6">
+            <div class="small-box bg-danger">
+              <div class="inner">
+                            <?php
+                            $db = dbConn();
+                            $sql = "SELECT SUM(advancedPayment) AS sumAdvancedPayment,SUM(totalAmount) AS sumTotal FROM tbl_workouts_invoice ";
+                            $result = $db->query($sql);
+                            $row = $result->fetch_assoc();
+                            $finalT=$row["sumAdvancedPayment"]+$row["sumTotal"];
+                            ?>
+                            <h3>Rs. <?php echo $finalT; ?></h3>
+                            <p>Total Workout Income</p>
+                        </div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-6">
+            <div class="small-box bg-warning">
+             <div class="inner">
+                            <?php
+                            $db = dbConn();
+                            $currentD = date('y-m-d');
+                            $sql = "SELECT SUM(total) AS fitnessTotal FROM tbl_fitness_invoice";
+                            $result = $db->query($sql);
+                            $row = $result->fetch_assoc();
+                            ?>
+                            <h3>Rs. <?php echo $row["fitnessTotal"]; ?></h3>
+                            <p>Total Fitness Income</p>
+                        </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>

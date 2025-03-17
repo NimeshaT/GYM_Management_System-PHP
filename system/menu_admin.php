@@ -162,33 +162,8 @@
             </ul>
           </li>
           
-          <!--        ////////////////////////Packages Management////////////////////////////-->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-folder-open"></i>
-              <p>
-                Packages
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>packages/create.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Create Packages</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>packages/view.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>View Packages</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          
           <!--        ////////////////////////Reviews Management////////////////////////////-->
-          <li class="nav-item">
+<!--          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-address-book"></i>
               <p>
@@ -204,7 +179,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li>-->
           <!--        ////////////////////////Reports Management////////////////////////////-->
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -218,19 +193,19 @@
               <li class="nav-item">
                 <a href="<?php echo SITE_URL; ?>reports/reservations.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Reservations1</p>
+                  <p>Reservations by Workouts</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="<?php echo SITE_URL; ?>reports/reservationOne.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Reservations2</p>
+                  <p>Reservations by Date</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="<?php echo SITE_URL; ?>reports/slots.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Slots</p>
+                  <p>Reservations by Slots</p>
                 </a>
               </li>
             </ul>

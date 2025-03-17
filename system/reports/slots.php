@@ -9,7 +9,7 @@ include '../nav.php';
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Report</h1>
+                    <h1 class="m-0">Report on Reservation by Slots</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -110,8 +110,8 @@ include '../nav.php';
                     </tbody>
                 </table>
             </div>
-            <button onclick="exportTableToExcel('tbl_Data', 'appointments-data')">Export Table Data To Excel File</button>
-            <button onclick="printTable('tbl_Data', 'Appointment Data');">Convert HTML to PDF</button>
+            <button onclick="exportTableToExcel('tbl_Data', 'appointments-slots-data')">Export Table Data To Excel File</button>
+            <button onclick="printTable('tbl_Data', 'Appointment Slots Data');">Convert HTML to PDF</button>
         </div>
     </section>
     
@@ -125,7 +125,7 @@ include '../nav.php';
 include '../footer.php';
 ?>
 
-<script>
+<!--<script>
 
     const xValues = [];
     const yValues = [];
@@ -183,7 +183,7 @@ include '../footer.php';
     }
 
 
-</script>
+</script>-->
 
 
 

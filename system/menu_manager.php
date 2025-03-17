@@ -114,56 +114,37 @@
               </li>
             </ul>
           </li>
-          
-
-          <!--        ////////////////////////Packages Management////////////////////////////-->
+          <!--        ////////////////////////Reports Management////////////////////////////-->
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-folder-open"></i>
+              <i class="nav-icon fas fa-address-book"></i>
               <p>
-                Packages Management
+                Reports
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>packages/create.php" class="nav-link">
+                <a href="<?php echo SITE_URL; ?>reports/reservations.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Create Packages</p>
+                  <p>Reservations by Workouts</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>packages/view.php" class="nav-link">
+                <a href="<?php echo SITE_URL; ?>reports/reservationOne.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>View Packages</p>
+                  <p>Reservations by Date</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo SITE_URL; ?>reports/slots.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Reservations by Slots</p>
                 </a>
               </li>
             </ul>
           </li>
-         <!--        ////////////////////////Machines Management////////////////////////////-->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-folder-open"></i>
-              <p>
-                Machines
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>machines/create.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Create Machines</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?php echo SITE_URL; ?>machines/view.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>View Machines</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+         
           
           
           
