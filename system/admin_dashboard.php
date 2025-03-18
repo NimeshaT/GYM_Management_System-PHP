@@ -153,4 +153,21 @@
         </div>
       </div>
     </section>
-  </div>
+    
+<!----------Chart------------>
+<div class="container-fluid">
+    <section style="width: 70%" class="mx-auto">
+        <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Bar Chart of Bookings and Enrollments</h3>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+            </div>
+    </section>
+</div>  
+</div>
+

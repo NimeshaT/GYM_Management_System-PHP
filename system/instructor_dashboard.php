@@ -110,4 +110,31 @@
         </div>
       </div>
     </section>
+            <!----------Chart------------>
+<div class="container-fluid">
+    <section style="width: 70%" class="mx-auto">
+        <div class="row">
+            <div class="col">
+                 <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Pie Chart Workout Job Cards</h3>
+              </div>
+              <div class="card-body">
+                <canvas id="lineChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+              </div>
+            </div>
+            </div>
+            <div class="col">
+                <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Pie Chart Fitness Job Cards</h3>
+              </div>
+              <div class="card-body">
+                <canvas id="lineChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+              </div>
+            </div>
+            </div>
+        </div>
+    </section>
+</div> 
   </div>

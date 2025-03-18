@@ -1,7 +1,5 @@
 <footer class="main-footer text-center">
     <strong>Dashboard-Everest Fitness Center</strong>
-<!--    <div class="float-right d-none d-sm-inline-block">
-    </div>-->
   </footer>
 
   <!-- Control Sidebar -->
@@ -166,6 +164,364 @@
          
      }     
             
+</script>
+<!--<script>
+  $(function () {
+    
+    var areaChartData = {
+      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      datasets: [
+        {
+          label               : 'Digital Goods',
+          backgroundColor     : 'rgba(60,141,188,0.9)',
+          borderColor         : 'rgba(60,141,188,0.8)',
+          pointRadius          : false,
+          pointColor          : '#3b8bba',
+          pointStrokeColor    : 'rgba(60,141,188,1)',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(60,141,188,1)',
+          data                : [28, 48, 40, 19, 86, 27, 90]
+        },
+        {
+          label               : 'Electronics',
+          backgroundColor     : 'rgba(210, 214, 222, 1)',
+          borderColor         : 'rgba(210, 214, 222, 1)',
+          pointRadius         : false,
+          pointColor          : 'rgba(210, 214, 222, 1)',
+          pointStrokeColor    : '#c1c7d1',
+          pointHighlightFill  : '#fff',
+          pointHighlightStroke: 'rgba(220,220,220,1)',
+          data                : [65, 59, 80, 81, 56, 55, 40]
+        },
+      ]
+    }
+
+    var areaChartOptions = {
+      maintainAspectRatio : false,
+      responsive : true,
+      legend: {
+        display: false
+      },
+      scales: {
+        xAxes: [{
+          gridLines : {
+            display : false,
+          }
+        }],
+        yAxes: [{
+          gridLines : {
+            display : false,
+          }
+        }]
+      }
+    }
+    
+    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    var barChartData = $.extend(true, {}, areaChartData)
+    var temp0 = areaChartData.datasets[0]
+    var temp1 = areaChartData.datasets[1]
+    barChartData.datasets[0] = temp1
+    barChartData.datasets[1] = temp0
+
+    var barChartOptions = {
+      responsive              : true,
+      maintainAspectRatio     : false,
+      datasetFill             : false
+    }
+
+    new Chart(barChartCanvas, {
+      type: 'bar',
+      data: barChartData,
+      options: barChartOptions
+    })
+  })
+</script>-->
+
+<script>
+    $(document).ready(function () {
+    $.ajax({
+        url: 'getChartData.php', // Call PHP script
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            // Extract data from response
+            let bookingDates = response.bookings.map(item => item.date);
+            //let enrollmentsDates = response.enrollments.map(item => item.date);
+            let bookingCounts = response.bookings.map(item => item.count);
+            let enrollmentCounts = response.enrollments.map(item => item.count);
+
+            // Chart.js Data
+            var chartData = {
+                labels: bookingDates, // Dates from database
+                datasets: [
+                    {
+                        label: 'Bookings',
+                        backgroundColor: 'rgba(60,141,188,0.9)',
+                        borderColor: 'rgba(60,141,188,0.8)',
+                        data: bookingCounts
+                    },
+                    {
+                        label: 'Enrollments',
+                        backgroundColor: 'rgba(210, 214, 222, 1)',
+                        borderColor: 'rgba(210, 214, 222, 1)',
+                        data: enrollmentCounts
+                    }
+                ]
+            };
+
+            // Render Chart
+            var barChartCanvas = $('#barChart').get(0).getContext('2d');
+            var barChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                datasetFill: false
+            };
+
+            new Chart(barChartCanvas, {
+                type: 'bar',
+                data: chartData,
+                options: barChartOptions
+            });
+        },
+        error: function (xhr, status, error) {
+            console.log('Error:', error);
+        }
+    });
+});
+
+</script>
+<!--<script>
+    var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+    var pieData        = donutData;
+    var pieOptions     = {
+      maintainAspectRatio : false,
+      responsive : true,
+    }
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    new Chart(pieChartCanvas, {
+      type: 'pie',
+      data: pieData,
+      options: pieOptions
+    })
+</script>-->
+
+    <script>
+    $(document).ready(function() {
+        $.ajax({
+            url: 'getCashierChartData.php', // Call the PHP script
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                var labels = [];
+                var data = [];
+                var backgroundColors = ['#FF6384', '#36A2EB', '#FFCE56']; // Customize colors
+
+                response.forEach(function(item) {
+                    labels.push(item.category);
+                    data.push(item.total);
+                });
+
+                var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
+                var pieData = {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: backgroundColors
+                    }]
+                };
+
+                var pieOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true
+                };
+
+                new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                });
+            },
+            error: function(error) {
+                console.log("Error loading data: ", error);
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: 'getReceptionistChartData.php', // Call the PHP script
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                var labels = [];
+                var data = [];
+                var backgroundColors = ['#FF6384', '#36A2EB', '#FFCE56']; // Customize colors
+
+                response.forEach(function(item) {
+                    labels.push(item.category);
+                    data.push(item.total);
+                });
+
+                var pieChartCanvas = $('#pieChart1').get(0).getContext('2d');
+                var pieData = {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: backgroundColors
+                    }]
+                };
+
+                var pieOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true
+                };
+
+                new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                });
+            },
+            error: function(error) {
+                console.log("Error loading data: ", error);
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: 'getReceptionistChartData1.php', // Call the PHP script
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                var labels = [];
+                var data = [];
+                var backgroundColors = ['#FF6384', '#36A2EB', '#FFCE56']; // Customize colors
+
+                response.forEach(function(item) {
+                    labels.push(item.category);
+                    data.push(item.total);
+                });
+
+                var pieChartCanvas = $('#pieChart2').get(0).getContext('2d');
+                var pieData = {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: backgroundColors
+                    }]
+                };
+
+                var pieOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true
+                };
+
+                new Chart(pieChartCanvas, {
+                    type: 'pie',
+                    data: pieData,
+                    options: pieOptions
+                });
+            },
+            error: function(error) {
+                console.log("Error loading data: ", error);
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: 'getReceptionistChartData1.php', // Call the PHP script
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                var labels = [];
+                var data = [];
+                var backgroundColors = ['#FF6384', '#36A2EB', '#FFCE56']; // Customize colors
+
+                response.forEach(function(item) {
+                    labels.push(item.category);
+                    data.push(item.total);
+                });
+
+                var pieChartCanvas = $('#lineChart2').get(0).getContext('2d');
+                var pieData = {
+                    labels: labels,
+                    datasets: [{
+                        label: "Job Card Status",
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        fill: false,
+                        borderColor: '#36A2EB'
+                    }]
+                };
+
+                var pieOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true
+                };
+
+                new Chart(pieChartCanvas, {
+                    type: 'line',
+                    data: pieData,
+                    options: pieOptions
+                });
+            },
+            error: function(error) {
+                console.log("Error loading data: ", error);
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: 'getReceptionistChartData.php', // Call the PHP script
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                var labels = [];
+                var data = [];
+                var backgroundColors = ['#FF6384', '#36A2EB', '#FFCE56']; // Customize colors
+
+                response.forEach(function(item) {
+                    labels.push(item.category);
+                    data.push(item.total);
+                });
+
+                var lineChartCanvas = $('#lineChart1').get(0).getContext('2d');
+                var lineData = {
+                    labels: labels,
+                    datasets: [{
+                        label: "Job Card Status",
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        fill: false,
+                        borderColor: '#36A2EB'
+                    }]
+                };
+
+                var lineOptions = {
+                    maintainAspectRatio: false,
+                    responsive: true
+                   
+                };
+
+                new Chart(lineChartCanvas, {
+                    type: 'line',
+                    data: lineData,
+                    options: lineOptions
+                });
+            },
+            error: function(error) {
+                console.log("Error loading data: ", error);
+            }
+        });
+    });
 </script>
 </body>
 </html>

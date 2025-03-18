@@ -108,7 +108,7 @@ include 'system/function.php';
                                 </div>
                                 <div class="col-3 bg-light">
                                     <a href="editProfileImage.php" class="btn btn-outline-primary " >Edit Profile Image</a><br><br>
-                                        <a href="viewAppointments.php" class="btn btn-outline-primary " >Edit Profile</a><br><br>
+                                    <a href="editProfile.php" class="btn btn-outline-primary " >Edit Profile</a><br><br>
                                         <a href="changePassword.php" class="btn btn-outline-primary " >Change Password</a><br><br>
                                         <a href="myClasses.php" class="btn btn-outline-primary " >My Enrollments</a><br><br>
                                         <a href="myAppointments.php" class="btn btn-outline-primary " >My Appointments</a>

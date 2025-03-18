@@ -99,21 +99,21 @@ $db = dbConn();
                     <img src="images/carousal1.jpg" class="d-block w-100" alt="carousalImage1" >
                     <div class="carousel-caption d-none d-md-block">
                         <h1>WORKOUTS</h1>
-                        <p>Unlock your potential with guided workouts tailored for all fitness levels</p>
+                        <p>Elevate your strength and endurance with fitness</p>
                     </div>
                 </div>
                 <div class="carousel-item" style="height: 550px">
                     <img src="images/carousal4.jpg" class="d-block w-100" alt="carousalImage2">
                     <div class="carousel-caption d-none d-md-block">
                         <h1>Classes</h1>
-                        <p>Welcome to Your Fitness Journey</p>
+                        <p>Welcome to Your Classes Journey</p>
                     </div>
                 </div>
                 <div class="carousel-item" style="height: 550px">
                     <img src="images/carousal3.png" class="d-block w-100" alt="carousalImage3">
                     <div class="carousel-caption d-none d-md-block">
                         <h1>Packages</h1>
-                        <p>Track progress and celebrate every milestone via Packages</p>
+                        <p>Unlock your potential with guided workouts tailored for all fitness levels</p>
                     </div>
                 </div>
             </div>

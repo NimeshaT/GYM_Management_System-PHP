@@ -112,4 +112,18 @@
         </div>
       </div>
     </section>
+    
+    <!----------Chart------------>
+<div class="container-fluid">
+    <section style="width: 70%" class="mx-auto">
+        <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">Pie Chart of Income</h3>
+              </div>
+              <div class="card-body">
+                <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+              </div>
+            </div>
+    </section>
+</div> 
   </div>
